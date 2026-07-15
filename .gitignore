@@ -1,3 +1,20 @@
+# Sensitive/credential files
+.env
 *.tfstate*
 .terraform/
-.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE
+.idea/
+.vscode/
+
+# Misc
+*.log
