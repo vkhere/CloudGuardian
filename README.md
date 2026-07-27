@@ -16,7 +16,7 @@
 *Capstone Project (CAP-CSE-3W) — PG Certificate in AI/GenAI Powered Cybersecurity*
 *IIT Roorkee × Futurense | Cohort 2025–26*
 
-[Final Report (PDF)](CSE_Capstone_CloudGuardian.pdf) · [Streamlit App](4.streamlit_app/) · [Live Results Dashboard](5.Results/) · [License](LICENSE)
+[Client Report (PDF)](CSE_Capstone_CloudGuardian.pdf) · [Streamlit App](4.streamlit_app/) · [Live Results Dashboard](5.Results/) · [License](LICENSE)
 
 </div>
 
