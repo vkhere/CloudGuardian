@@ -1,0 +1,16 @@
+finding_id,remediation_id,risk_level,cloud,status,detail,timestamp
+FND-0300,rds_disable_public_access,RISKY,AWS,DRY_RUN_OK,"WOULD call rds.modify_db_instance(DBInstanceIdentifier=""cloudguardian-db"", PubliclyAccessible=False, ApplyImmediately=True)",2026-07-19 13:28:30
+FND-0464,rds_disable_public_access,RISKY,AWS,DRY_RUN_OK,"WOULD call rds.modify_db_instance(DBInstanceIdentifier=""scoutid-832ac82bd104fb2d98c59df699fbac166483817a"", PubliclyAccessible=False, ApplyImmediately=True)",2026-07-19 13:28:30
+FND-0299,sg_remove_open_ingress,RISKY,AWS,DRY_RUN_OK,"WOULD call ec2.revoke_security_group_ingress(GroupId=""sg-0be0be5f1a7d28519"", IpProtocol=""tcp"", FromPort=3306, ToPort=3306, CidrIp=""0.0.0.0/0"")",2026-07-19 13:28:30
+FND-0052,sg_remove_open_ingress,RISKY,AWS,DRY_RUN_OK,"WOULD call ec2.revoke_security_group_ingress(GroupId=""sg-0be0be5f1a7d28519"", IpProtocol=""tcp"", FromPort=3306, ToPort=3306, CidrIp=""0.0.0.0/0"")",2026-07-19 13:28:30
+FND-0318,azure_storage_restrict_network,SAFE,Azure,DRY_RUN_OK,"WOULD call storage_client.storage_accounts.update("""", ""stcloudguardianlab6thil"", {""public_network_access"": ""Disabled""})",2026-07-19 13:28:30
+FND-0317,azure_storage_disable_public_blob,SAFE,Azure,DRY_RUN_OK,"WOULD call storage_client.storage_accounts.update("""", ""stcloudguardianlab6thil"", {""allow_blob_public_access"": False})",2026-07-19 13:28:30
+FND-0051,sg_remove_open_ingress,RISKY,AWS,DRY_RUN_OK,"WOULD call ec2.revoke_security_group_ingress(GroupId=""sg-0fdba0a657788f1d7"", IpProtocol=""tcp"", FromPort=22, ToPort=22, CidrIp=""0.0.0.0/0"")",2026-07-19 13:28:30
+FND-0297,sg_remove_open_ingress,RISKY,AWS,DRY_RUN_OK,"WOULD call ec2.revoke_security_group_ingress(GroupId=""sg-0aaba2fb7e64252aa"", IpProtocol=""tcp"", FromPort=22, ToPort=22, CidrIp=""0.0.0.0/0"")",2026-07-19 13:28:30
+FND-0049,sg_remove_open_ingress,RISKY,AWS,FAILED,Could not extract group_id/from_port from status_detail,2026-07-19 13:28:30
+FND-0298,sg_remove_open_ingress,RISKY,AWS,DRY_RUN_OK,"WOULD call ec2.revoke_security_group_ingress(GroupId=""sg-0fdba0a657788f1d7"", IpProtocol=""tcp"", FromPort=22, ToPort=22, CidrIp=""0.0.0.0/0"")",2026-07-19 13:28:30
+FND-0043,sg_remove_open_ingress,RISKY,AWS,FAILED,Could not extract group_id/from_port from status_detail,2026-07-19 13:28:30
+FND-0266,azure_storage_disable_public_blob,SAFE,Azure,DRY_RUN_OK,"WOULD call storage_client.storage_accounts.update("""", ""stcloudguardianlab6thil"", {""allow_blob_public_access"": False})",2026-07-19 13:28:30
+FND-0044,sg_remove_open_ingress,RISKY,AWS,FAILED,Could not extract group_id/from_port from status_detail,2026-07-19 13:28:30
+FND-0184,azure_storage_disable_public_blob,SAFE,Azure,DRY_RUN_OK,"WOULD call storage_client.storage_accounts.update("""", ""stcloudguardianlabocdhx"", {""allow_blob_public_access"": False})",2026-07-19 13:28:30
+FND-0050,sg_remove_open_ingress,RISKY,AWS,FAILED,Could not extract group_id/from_port from status_detail,2026-07-19 13:28:30

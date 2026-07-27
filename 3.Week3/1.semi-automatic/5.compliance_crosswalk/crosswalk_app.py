@@ -153,6 +153,55 @@ def confidence_label(score: float, threshold_med: float, threshold_high: float) 
     return "Low - review manually"
 
 
+def guess_column(columns, keywords, fallback):
+    """Return the first column whose name contains any keyword, else fallback."""
+    cols = list(columns)
+    for kw in keywords:
+        for c in cols:
+            if kw in c.lower():
+                return c
+    return fallback
+
+
+def framework_prefix(framework_name: str) -> str:
+    return framework_name.split(":")[0].replace(" ", "_")
+
+
+def build_crosswalk_view(
+    working_df: pd.DataFrame,
+    id_col: str,
+    title_col: str,
+    selected_frameworks: list,
+    include_scores: bool,
+) -> pd.DataFrame:
+    """
+    Build the crosswalk-first export: check_id + finding title lead the table,
+    followed by every selected framework's matched Control_ID (and Control_Title,
+    and optionally Similarity_Score / Confidence) - grouped by framework, in the
+    order the frameworks were selected. No other original finding columns are
+    included, so every row is purely "this finding <-> its match in each
+    selected framework".
+    """
+    lead_cols = [id_col]
+    if title_col != id_col:
+        lead_cols.append(title_col)
+
+    ordered_cols = list(lead_cols)
+    for fw in selected_frameworks:
+        prefix = framework_prefix(fw)
+        ordered_cols.append(f"{prefix}_Control_ID")
+        ordered_cols.append(f"{prefix}_Control_Title")
+        if include_scores:
+            ordered_cols.append(f"{prefix}_Similarity_Score")
+            ordered_cols.append(f"{prefix}_Confidence")
+
+    # Guard against any missing column (shouldn't happen, but keeps this robust)
+    ordered_cols = [c for c in ordered_cols if c in working_df.columns]
+    crosswalk_df = working_df[ordered_cols].copy()
+    crosswalk_df = crosswalk_df.rename(columns={id_col: "check_id", title_col: "finding_title"})
+    return crosswalk_df
+
+
 # ----------------------------------------------------------------------
 # 3. Streamlit UI
 # ----------------------------------------------------------------------
@@ -197,18 +246,39 @@ if uploaded_file is not None:
     st.success(f"Loaded {len(df)} rows, {len(df.columns)} columns.")
     st.dataframe(df.head(10), use_container_width=True)
 
-    st.subheader("Step 2 - Which column holds the finding description?")
-    # Try to auto-suggest a likely text column
-    likely_cols = [c for c in df.columns if any(
-        key in c.lower() for key in ["status_detail", "description", "message", "finding", "detail"]
-    )]
-    default_col = likely_cols[0] if likely_cols else df.columns[0]
+    st.subheader("Step 2 - Which columns hold the Check ID, Finding Title, and Description?")
+    st.caption("These three are used to match findings AND to build the crosswalk export - check_id + finding title lead every download, matched against each framework you select below.")
 
-    text_col = st.selectbox(
-        "Column to use as the finding's text for matching",
-        options=list(df.columns),
-        index=list(df.columns).index(default_col),
-    )
+    col_id, col_title, col_desc = st.columns(3)
+
+    with col_id:
+        default_id_col = guess_column(df.columns, ["check_id", "checkid", "check id"], df.columns[0])
+        id_col = st.selectbox(
+            "Check ID column",
+            options=list(df.columns),
+            index=list(df.columns).index(default_id_col),
+        )
+
+    with col_title:
+        default_title_col = guess_column(df.columns, ["title", "finding_name", "name"], df.columns[0])
+        title_col = st.selectbox(
+            "Finding title column",
+            options=list(df.columns),
+            index=list(df.columns).index(default_title_col),
+        )
+
+    with col_desc:
+        # Try to auto-suggest a likely text column for matching (fuller text = better TF-IDF matches)
+        likely_cols = [c for c in df.columns if any(
+            key in c.lower() for key in ["status_detail", "description", "message", "finding", "detail"]
+        )]
+        default_col = likely_cols[0] if likely_cols else df.columns[0]
+
+        text_col = st.selectbox(
+            "Description column (used for TF-IDF matching)",
+            options=list(df.columns),
+            index=list(df.columns).index(default_col),
+        )
 
     st.subheader("Step 3 - Select at least 3 frameworks")
     selected_frameworks = st.multiselect(
@@ -227,6 +297,14 @@ if uploaded_file is not None:
     with col_b:
         threshold_high = st.slider("High-confidence threshold", 0.0, 1.0, 0.15, 0.01)
 
+    include_scores = st.checkbox(
+        "Include Similarity Score & Confidence columns in the crosswalk export",
+        value=False,
+        help="Off by default: the crosswalk export leads with check_id + finding title, then only the "
+             "matched Control_ID + Control_Title per framework. Turn this on if you also want the "
+             "similarity score and confidence label for each match.",
+    )
+
     if st.button("Generate Crosswalk", type="primary", disabled=(len(selected_frameworks) == 0)):
         with st.spinner("Computing TF-IDF vectors and cosine similarity..."):
             working_df = df.copy()
@@ -234,7 +312,7 @@ if uploaded_file is not None:
 
             for fw in selected_frameworks:
                 ids, titles, scores = match_findings_to_framework(finding_texts, fw)
-                prefix = fw.split(":")[0].replace(" ", "_")
+                prefix = framework_prefix(fw)
                 working_df[f"{prefix}_Control_ID"] = ids
                 working_df[f"{prefix}_Control_Title"] = titles
                 working_df[f"{prefix}_Similarity_Score"] = np.round(scores, 3)
@@ -243,35 +321,77 @@ if uploaded_file is not None:
                 ]
 
         st.success("Crosswalk generated.")
-        st.dataframe(working_df, use_container_width=True)
+
+        # ------------------------------------------------------------------
+        # Crosswalk-first view: check_id + finding title lead, followed by
+        # each selected framework's matched Control_ID / Control_Title
+        # (this is what gets downloaded by default)
+        # ------------------------------------------------------------------
+        crosswalk_df = build_crosswalk_view(
+            working_df, id_col, title_col, selected_frameworks, include_scores
+        )
+
+        st.subheader("Crosswalk (check_id + finding title -> matched control per framework)")
+        st.dataframe(crosswalk_df, use_container_width=True)
 
         # Summary of confidence distribution per framework
         st.subheader("Match confidence summary")
         summary_cols = st.columns(len(selected_frameworks))
         for i, fw in enumerate(selected_frameworks):
-            prefix = fw.split(":")[0].replace(" ", "_")
+            prefix = framework_prefix(fw)
             with summary_cols[i]:
                 st.markdown(f"**{fw}**")
                 st.write(working_df[f"{prefix}_Confidence"].value_counts())
 
+        with st.expander("Show full dataset (original columns + every framework match)"):
+            st.dataframe(working_df, use_container_width=True)
+
         # Downloads
         st.subheader("Step 5 - Download your crosswalk")
-        csv_bytes = working_df.to_csv(index=False).encode("utf-8")
-        st.download_button(
-            "Download as CSV",
-            data=csv_bytes,
-            file_name=f"cloudguardian_crosswalk_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
-            mime="text/csv",
+        st.caption(
+            "The CSV/Excel below contain check_id + finding title first, then each selected "
+            "framework's matched Control_ID / Control_Title in the order you selected them - "
+            "no other original finding columns are included."
         )
 
-        excel_buffer = io.BytesIO()
-        with pd.ExcelWriter(excel_buffer, engine="openpyxl") as writer:
-            working_df.to_excel(writer, index=False, sheet_name="Crosswalk")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+
+        crosswalk_csv_bytes = crosswalk_df.to_csv(index=False).encode("utf-8")
         st.download_button(
-            "Download as Excel",
-            data=excel_buffer.getvalue(),
-            file_name=f"cloudguardian_crosswalk_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
+            "Download Crosswalk CSV",
+            data=crosswalk_csv_bytes,
+            file_name=f"cloudguardian_crosswalk_{timestamp}.csv",
+            mime="text/csv",
+            type="primary",
+        )
+
+        crosswalk_excel_buffer = io.BytesIO()
+        with pd.ExcelWriter(crosswalk_excel_buffer, engine="openpyxl") as writer:
+            crosswalk_df.to_excel(writer, index=False, sheet_name="Crosswalk")
+        st.download_button(
+            "Download Crosswalk Excel",
+            data=crosswalk_excel_buffer.getvalue(),
+            file_name=f"cloudguardian_crosswalk_{timestamp}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
+
+        with st.expander("Need the full dataset instead? (all original columns + every framework match)"):
+            full_csv_bytes = working_df.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                "Download Full Dataset CSV",
+                data=full_csv_bytes,
+                file_name=f"cloudguardian_crosswalk_full_{timestamp}.csv",
+                mime="text/csv",
+            )
+
+            full_excel_buffer = io.BytesIO()
+            with pd.ExcelWriter(full_excel_buffer, engine="openpyxl") as writer:
+                working_df.to_excel(writer, index=False, sheet_name="Crosswalk_Full")
+            st.download_button(
+                "Download Full Dataset Excel",
+                data=full_excel_buffer.getvalue(),
+                file_name=f"cloudguardian_crosswalk_full_{timestamp}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
 else:
     st.info("Upload a CSV/Excel file to get started.")

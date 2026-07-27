@@ -1,0 +1,328 @@
+# ============================================================
+# CloudGuardian Human-Approval Workflow
+# ============================================================
+# Flow:
+#   Finding -> SNS "cloudguardian-remediation" -> Starter Lambda
+#   -> Step Function starts -> Notifier Lambda sends approval
+#      email (with Approve/Reject links) -> Step Function PAUSES
+#   -> Human clicks a link -> API Gateway -> Approval Handler
+#      Lambda -> tells Step Function to resume
+#   -> If approved: existing remediation Lambda is invoked
+#   -> If rejected/timed out: workflow ends, no action taken
+# ============================================================
+
+# ------------------------------------------------------------
+# 1. SNS Topic dedicated to approval emails (separate from the
+#    old direct-execute topic so email is purely informational
+#    with actionable links, not a trigger)
+# ------------------------------------------------------------
+resource "aws_sns_topic" "approval" {
+  name = "${var.project}-approval-request"
+  tags = { Name = "${var.project}-approval-request" }
+}
+
+resource "aws_sns_topic_subscription" "approval_email" {
+  topic_arn = aws_sns_topic.approval.arn
+  protocol  = "email"
+  endpoint  = "megha22knit@gmail.com" # <-- change if needed
+}
+
+# ------------------------------------------------------------
+# 2. API Gateway (HTTP API) - catches the email link clicks
+#    Defined early so its URL can be passed to the notifier Lambda
+# ------------------------------------------------------------
+resource "aws_apigatewayv2_api" "approval_api" {
+  name          = "${var.project}-approval-api"
+  protocol_type = "HTTP"
+}
+
+resource "aws_apigatewayv2_stage" "prod" {
+  api_id      = aws_apigatewayv2_api.approval_api.id
+  name        = "prod"
+  auto_deploy = true
+}
+
+# ------------------------------------------------------------
+# 3. Notifier Lambda - invoked BY the Step Function as the
+#    waitForTaskToken task. Builds properly URL-encoded links
+#    and publishes the approval email. Does NOT call
+#    SendTaskSuccess itself, so the state machine stays paused.
+# ------------------------------------------------------------
+resource "aws_iam_role" "notifier_role" {
+  name = "${var.project}-notifier-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "notifier_basic" {
+  role       = aws_iam_role.notifier_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy" "notifier_policy" {
+  name = "${var.project}-notifier-policy"
+  role = aws_iam_role.notifier_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid      = "PublishApprovalEmail"
+      Effect   = "Allow"
+      Action   = ["sns:Publish"]
+      Resource = aws_sns_topic.approval.arn
+    }]
+  })
+}
+
+resource "aws_lambda_function" "notifier" {
+  filename      = "notifier.zip"
+  function_name = "${var.project}-approval-notifier"
+  role          = aws_iam_role.notifier_role.arn
+  handler       = "notifier.lambda_handler"
+  runtime       = "python3.12"
+  timeout       = 30
+
+  environment {
+    variables = {
+      SNS_TOPIC_ARN = aws_sns_topic.approval.arn
+      API_ENDPOINT  = aws_apigatewayv2_stage.prod.invoke_url
+    }
+  }
+}
+
+# ------------------------------------------------------------
+# 4. IAM Role for Step Functions
+# ------------------------------------------------------------
+resource "aws_iam_role" "step_functions_role" {
+  name = "${var.project}-stepfunctions-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "states.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "step_functions_policy" {
+  name = "${var.project}-stepfunctions-policy"
+  role = aws_iam_role.step_functions_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid      = "InvokeNotifier"
+        Effect   = "Allow"
+        Action   = ["lambda:InvokeFunction"]
+        Resource = aws_lambda_function.notifier.arn
+      },
+      {
+        Sid      = "InvokeRemediationLambda"
+        Effect   = "Allow"
+        Action   = ["lambda:InvokeFunction"]
+        Resource = aws_lambda_function.remediator.arn
+      }
+    ]
+  })
+}
+
+# ------------------------------------------------------------
+# 5. Step Functions State Machine
+# ------------------------------------------------------------
+resource "aws_sfn_state_machine" "approval_workflow" {
+  name     = "${var.project}-approval-workflow"
+  role_arn = aws_iam_role.step_functions_role.arn
+
+  definition = jsonencode({
+    Comment = "CloudGuardian human-approval remediation workflow"
+    StartAt = "RequestApproval"
+    States = {
+       RequestApproval = {
+         Type     = "Task"
+         Resource = "arn:aws:states:::lambda:invoke.waitForTaskToken"
+         Parameters = {
+          FunctionName = aws_lambda_function.notifier.function_name
+          Payload = {
+            "TaskToken.$"    = "$$.Task.Token"
+            "finding_type.$" = "$.finding_type"
+            "bucket_name.$"  = "$.bucket_name"
+          }
+        }
+        TimeoutSeconds = 3600
+        ResultPath     = "$.approvalResult"
+        Next           = "IsApproved"
+        Catch = [{
+          ErrorEquals = ["States.ALL"]
+          ResultPath  = "$.error"
+          Next        = "Rejected"
+        }]
+      }
+      IsApproved = {
+        Type = "Choice"
+        Choices = [{
+          Variable     = "$.approvalResult.decision"
+          StringEquals = "approve"
+          Next         = "InvokeRemediation"
+        }]
+        Default = "Rejected"
+      }
+	InvokeRemediation = {
+          Type     = "Task"
+          Resource = "arn:aws:states:::lambda:invoke"
+          Parameters = {
+            FunctionName = aws_lambda_function.remediator.function_name
+            "Payload.$"  = "$"}
+        End = true
+      } 
+        Type   = "Pass"
+        Result = { status = "Rejected, timed out, or errored - no action taken" }
+        End    = true
+      }
+    }
+  })
+}
+
+# ------------------------------------------------------------
+# 6. Starter Lambda - subscribes to the ORIGINAL finding topic
+#    (cloudguardian-remediation) and starts the Step Function
+#    execution instead of remediating directly.
+# ------------------------------------------------------------
+resource "aws_iam_role" "starter_role" {
+  name = "${var.project}-starter-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "starter_basic" {
+  role       = aws_iam_role.starter_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy" "starter_policy" {
+  name = "${var.project}-starter-policy"
+  role = aws_iam_role.starter_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["states:StartExecution"]
+      Resource = aws_sfn_state_machine.approval_workflow.arn
+    }]
+  })
+}
+
+resource "aws_lambda_function" "starter" {
+  filename      = "starter.zip"
+  function_name = "${var.project}-approval-starter"
+  role          = aws_iam_role.starter_role.arn
+  handler       = "starter.lambda_handler"
+  runtime       = "python3.12"
+  timeout       = 30
+
+  environment {
+    variables = {
+      STATE_MACHINE_ARN = aws_sfn_state_machine.approval_workflow.arn
+    }
+  }
+}
+
+resource "aws_lambda_permission" "starter_sns" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.starter.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.remediation.arn
+}
+
+resource "aws_sns_topic_subscription" "starter_sub" {
+  topic_arn = aws_sns_topic.remediation.arn
+  protocol  = "lambda"
+  endpoint  = aws_lambda_function.starter.arn
+}
+
+# ------------------------------------------------------------
+# 7. Approval Handler Lambda - receives the link click from
+#    API Gateway and resumes the Step Function.
+# ------------------------------------------------------------
+resource "aws_iam_role" "approval_handler_role" {
+  name = "${var.project}-approval-handler-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "approval_handler_basic" {
+  role       = aws_iam_role.approval_handler_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy" "approval_handler_policy" {
+  name = "${var.project}-approval-handler-policy"
+  role = aws_iam_role.approval_handler_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "states:SendTaskSuccess",
+        "states:SendTaskFailure"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
+resource "aws_lambda_function" "approval_handler" {
+  filename      = "approval_handler.zip"
+  function_name = "${var.project}-approval-handler"
+  role          = aws_iam_role.approval_handler_role.arn
+  handler       = "approval_handler.lambda_handler"
+  runtime       = "python3.12"
+  timeout       = 30
+}
+
+resource "aws_apigatewayv2_integration" "approval_integration" {
+  api_id                 = aws_apigatewayv2_api.approval_api.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.approval_handler.invoke_arn
+  payload_format_version = "2.0"
+}
+
+resource "aws_apigatewayv2_route" "respond_route" {
+  api_id    = aws_apigatewayv2_api.approval_api.id
+  route_key = "GET /respond"
+  target    = "integrations/${aws_apigatewayv2_integration.approval_integration.id}"
+}
+
+resource "aws_lambda_permission" "apigw_invoke" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.approval_handler.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.approval_api.execution_arn}/*/*"
+}
+
+# ------------------------------------------------------------
+# Output - the URL you'll use to verify the API is live
+# ------------------------------------------------------------
+output "approval_api_endpoint" {
+  value = aws_apigatewayv2_stage.prod.invoke_url
+}
