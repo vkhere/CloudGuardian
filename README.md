@@ -22,6 +22,65 @@
 
 ---
 
+## 🔗 Quick Links
+
+### 📄 Top-Level Files
+| File | Description |
+|---|---|
+| [`CSE_Capstone_CloudGuardian.pdf`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/CSE_Capstone_CloudGuardian.pdf) | Full capstone report |
+| [`week2_notebook.ipynb`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/week2_notebook.ipynb) | Source notebook behind the Streamlit app |
+| [`LICENSE`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/LICENSE) | MIT License |
+| [`.gitignore`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/.gitignore) | Excludes tfstate · secrets · credentials |
+
+### 📂 Week 1 — Build & Break
+| Folder | Description |
+|---|---|
+| [`1.Week1/1. AWS/1.baseline/1.terraform/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/1.baseline/1.terraform) | Clean 3-tier AWS Terraform (VPC·EC2·RDS·S3·IAM) |
+| [`1.Week1/1. AWS/1.baseline/2. prowler/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/1.baseline/2.%20prowler) | Baseline Prowler scan (50+ frameworks) |
+| [`1.Week1/1. AWS/1.baseline/3. scoutesuite/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/1.baseline/3.%20scoutesuite) | Baseline ScoutSuite HTML dashboard |
+| [`1.Week1/1. AWS/1.baseline/4.steampipe/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/1.baseline/4.steampipe) | Baseline Steampipe SQL queries |
+| [`1.Week1/1. AWS/2.misconfig/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/2.misconfig) | 12 deliberate misconfigurations (M01–M12) |
+| [`1.Week1/1. AWS/2.misconfig/1.1.Prowler/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/2.misconfig/1.1.Prowler) | Post-misconfig Prowler scan + compliance CSVs |
+| [`1.Week1/1. AWS/2.misconfig/5.snapshots/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/1.%20AWS/2.misconfig/5.snapshots) | Terraform plan/apply + scanner screenshots |
+| [`1.Week1/2.Azure/1.baseline/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/2.Azure/1.baseline) | Azure baseline — Terraform · Prowler · ScoutSuite · Steampipe |
+| [`1.Week1/2.Azure/2.Misconfig/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/1.Week1/2.Azure/2.Misconfig) | Azure misconfigured Terraform + 3-tool rescan |
+
+### 📂 Week 2 — Detect & Prioritize
+| Folder / File | Description |
+|---|---|
+| [`2.Week2/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/2.Week2) | Full Week 2 detection & prioritization output |
+| [`2.Week2/consolidated_findings.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/2.Week2/consolidated_findings.csv) | Merged Prowler + ScoutSuite + Steampipe findings (AWS+Azure) |
+| [`2.Week2/llm_remediation_guidance.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/2.Week2/llm_remediation_guidance.csv) | RAG-grounded 2-line fixes per finding |
+| [`2.Week2/rag_retrieval_audit.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/2.Week2/rag_retrieval_audit.csv) | Retrieval confidence / grounding audit trail |
+| [`2.Week2/llm-outputs/owasp_redaction_proof.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/2.Week2/llm-outputs/owasp_redaction_proof.csv) | Proof of OWASP LLM06 redaction before LLM calls |
+| [`2.Week2/remediation_dry_run_log.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/2.Week2/remediation_dry_run_log.csv) | Dry-run remediation simulation log |
+
+### 📂 Week 3 — Remediate & Govern
+| Folder / File | Description |
+|---|---|
+| [`3.Week3/1.semi-automatic/1.lambda_functions/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/1.semi-automatic/1.lambda_functions) | S3 public-access · IAM key rotation · encryption Lambdas |
+| [`3.Week3/1.semi-automatic/2.iam_role/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/1.semi-automatic/2.iam_role) | Least-privilege remediation IAM role (Terraform) |
+| [`3.Week3/1.semi-automatic/3.test_evidence/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/1.semi-automatic/3.test_evidence) | Dry-run · real-run · CloudWatch logs · screenshots |
+| [`3.Week3/1.semi-automatic/4.prowler_before_after/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/1.semi-automatic/4.prowler_before_after) | Before/after remediation compliance rescans |
+| [`3.Week3/1.semi-automatic/5.compliance_crosswalk/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/1.semi-automatic/5.compliance_crosswalk) | Streamlit compliance crosswalk app (ISO/HIPAA/CIS/PCI/DPDP) |
+| [`3.Week3/2.automated/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/2.automated) | Fully automated, human-approval-gated remediation pipeline |
+| [`3.Week3/2.automated/evidence/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/3.Week3/2.automated/evidence) | End-to-end live remediation proof logs |
+| [`3.Week3/3.SOP-semiautomatic.docx`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/3.Week3/3.SOP-semiautomatic.docx) | Semi-automatic remediation SOP |
+| [`3.Week3/report.docx`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/3.Week3/report.docx) | Week 3 report |
+| [`3.Week3/week_3_CloudGuardian_AutoRemediation_Documentation.docx`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/3.Week3/week_3_CloudGuardian_AutoRemediation_Documentation.docx) | Auto-remediation workflow documentation |
+
+### 📂 App & Results
+| Folder / File | Description |
+|---|---|
+| [`4.streamlit_app/app.py`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/app.py) | Streamlit pipeline app — Upload → Prioritize → Classify → Redact → RAG → Export |
+| [`4.streamlit_app/README.md`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/README.md) | How to run the Streamlit app |
+| [`4.streamlit_app/requirements.txt`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/requirements.txt) | Python dependencies |
+| [`5.Results/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/5.Results) | Consolidated, presentation-ready outputs & dashboards |
+| [`5.Results/consolidated_findings.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/5.Results/consolidated_findings.csv) | Final merged findings dataset |
+| [`5.Results/llm_remediation_guidance.csv`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/5.Results/llm_remediation_guidance.csv) | Final RAG remediation guidance dataset |
+
+---
+
 ## 🎯 Problem Statement
 
 A health-tech scale-up keeps failing ISO 27001 / HIPAA audits due to recurring cloud misconfigurations — public S3 buckets, over-privileged IAM roles, unencrypted databases, and missing logging — across **both** its AWS and Azure estates.
