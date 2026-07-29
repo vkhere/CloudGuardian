@@ -72,7 +72,7 @@
 ### 📂 App & Results
 | Folder / File | Description |
 |---|---|
-| [`4.streamlit_app/app.py`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/app.py) | Streamlit pipeline app — Upload → Prioritize → Classify → Redact → RAG → Export |
+| [`4.streamlit_app/app.py`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/app.py) | Streamlit app pipeline — Upload → Prioritize → Classify → Redact → RAG → Export |
 | [`4.streamlit_app/README.md`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/README.md) | How to run the Streamlit app |
 | [`4.streamlit_app/requirements.txt`](https://github.com/meghaInfosec/Cloudguardian_Capstone/blob/main/4.streamlit_app/requirements.txt) | Python dependencies |
 | [`5.Results/`](https://github.com/meghaInfosec/Cloudguardian_Capstone/tree/main/5.Results) | Consolidated, presentation-ready outputs & dashboards |
