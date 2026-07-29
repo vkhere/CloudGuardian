@@ -131,9 +131,9 @@ Cloudguardian_Capstone/
 │   │   └── 2.misconfig/                     # 12 deliberate misconfigurations (M01–M12)
 │   │       ├── 1.0 Misconfig/               # Misconfigured Terraform + CloudTrail
 │   │       ├── 1.1.Prowler/                 # Post-misconfig Prowler scan + compliance CSVs
-│   │       ├── 1.2.scoutsuite/               # Post-misconfig ScoutSuite scan
-│   │       ├── 1.3steampipe/                 # M01–M12 targeted SQL evidence CSVs
-│   │       └── 5.snapshots/                  # Terraform plan/apply + scanner screenshots
+│   │       ├── 1.2.scoutsuite/              # Post-misconfig ScoutSuite scan
+│   │       ├── 1.3steampipe/                # M01–M12 targeted SQL evidence CSVs
+│   │       └── 5.snapshots/                 # Terraform plan/apply + scanner screenshots
 │   └── 2.Azure/                             # Cross-cloud validation (same Build & Break flow)
 │       ├── 1.baseline/                      # Terraform · Prowler · ScoutSuite · Steampipe
 │       └── 2.Misconfig/                     # Misconfigured Terraform + 3-tool rescan
