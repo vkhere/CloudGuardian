@@ -112,7 +112,7 @@ A health-tech scale-up keeps failing ISO 27001 / HIPAA audits due to recurring c
 | **GenAI / RAG** | NVIDIA NIM API (`meta/llama-3.1-8b-instruct`) · TF-IDF + cosine similarity retrieval over a 25 chunks · 6 frameworks compliance knowledge base (CIS, MCSB, ISO 27001, DPDP, HIPAA) |
 | **AI Safety** | OWASP LLM06-compliant redaction engine (strips AWS keys, ARNs, IPs, instance/VPC/SG IDs before any LLM call) |
 | **Auto-Remediation** | AWS Lambda · Step Functions · SNS · API Gateway · DynamoDB (human-approval gate) |
-| **App / Reporting** | Streamlit (interactive pipeline UI) · Jupyter Notebook · Markdown / DOCX / PDF |
+| **App / Reporting** | Streamlit (interactive pipeline UI) · Jupyter Notebook · Markdown / docx / pdf |
 
 ---
 
