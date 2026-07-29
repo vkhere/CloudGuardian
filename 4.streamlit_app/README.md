@@ -1,35 +1,34 @@
 # CloudGuardian — Streamlit App
 
-Week 2 notebook (`week2_notebook.ipynb`) ka streamlined, portable Streamlit version. 22 notebook cells se sirf har step ka final/production version liya hai — SMOTE-baseline comparison, overfitting/learning-curve diagnostics jaise report-only cells skip kiye hain (agar wo bhi chahiye ho to bata dena, alag se add kar dunga).
+Week 2 notebook (`week2_notebook.ipynb`) streamlined, portable Streamlit version. 22. We have taken Final/Production version from Notebook Cells.
 
-## Kya-kya hai isme
+## Contents:
 
-| Tab | Notebook cell(s) | Kya karta hai |
+| Tab | Notebook cell(s) | What it does |
 |---|---|---|
-| 1. Upload & Consolidate | Cell 3, 4 | Prowler + Steampipe + ScoutSuite ko upload karke ek DataFrame mein merge karta hai (AWS + Azure) |
+| 1. Upload & Consolidate | Cell 3, 4 | Upload Prowler + Steampipe + ScoutSuite data and then merger in a single DataFrame. (AWS + Azure) |
 | 2. Prioritize | Cell 5 | CVSS × Exposure × Blast Radius scoring, negation-aware keyword matching |
-| 3. AI Classify | Cell 6 + 6.1 | RandomForest + SMOTE (final balanced model — baseline comparison skip kiya) |
-| 4. Redact | Cell 9 (OWASPRedactionEngine) | OWASP LLM06-compliant redaction, pehle jaisa hi |
-| 5. RAG Remediation | Cell 11 (updated version) | NVIDIA NIM (`meta/llama-3.1-8b-instruct`) se RAG-grounded 2-line guidance, 29-chunk KB (CIS, MCSB, ISO 27001, DPDP, HIPAA) |
+| 3. AI Classify | Cell 6 + 6.1 | RandomForest + SMOTE (final balanced model — Skipped baseline comparison) |
+| 4. Redact | Cell 9 (OWASPRedactionEngine) | OWASP LLM06-compliant redaction, as it is |
+| 5. RAG Remediation | Cell 11 (updated version) | Used NVIDIA NIM (`meta/llama-3.1-8b-instruct`) for RAG-grounded 2-line guidance, 25 chunks · 6 frameworks KB (CIS, MCSB, ISO 27001, DPDP, HIPAA) |
 | 6. Auto-Remediate | Cell 13 | **Dry-run only** — 4 remediation functions (RDS public access, SG open ingress, Azure storage x2) |
 | 7. Export | Cell 12 | CSV/JSON download buttons |
 
-## Kaise chalayein (Kali par, `kali` user se, root se nahi)
+## How to use it (In Kali Linux, used separate `kali` user not "root" user)
 
 ```bash
-cd ~/Desktop/Cloudguardian_Capstone   # ya jahan bhi ye files rakhi hain
+cd ~/Desktop/Cloudguardian_Capstone   # This is the location where all files of CLoudGuradian are kept
 pip install -r requirements.txt --break-system-packages
 
-# NVIDIA API key optional hai — bina iske bhi app chalega, bas Tab 5 mein
-# sirf retrieval dikhega, LLM se live guidance nahi aayegi.
+# NVIDIA API key )optional) App shall work without it as well. However, it will show only retrieval in Tab 5 no Live Guidance from LLM.
 export NVIDIA_API_KEY='nvapi-...'
 
 streamlit run app.py
 ```
 
-Browser mein `http://localhost:8501` khul jayega.
+In Browser `http://localhost:8501` shall open.
 
-## File upload — kya kahan daalna hai
+## File upload — What and Where
 
 Notebook mein hardcoded paths the (`/home/kali/Desktop/Cloudguardian_Capstone/...`); app mein ab file uploader hai, kahin bhi demo chal sakta hai:
 
