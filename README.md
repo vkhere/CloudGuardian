@@ -263,7 +263,7 @@ Run on **both AWS and Azure**, before and after misconfiguration, and again afte
 2. **Score** — `Priority = CVSS × Exposure Weight × Blast Radius`, with negation-aware keyword matching to avoid false severity inflation.
 3. **Classify** — RandomForest + SMOTE model buckets each finding into **LOW / MEDIUM / CRITICAL**; before/after SMOTE class-balance comparison documented in `5.Results/before_after_smote_comparison.png`.
 4. **Redact** — OWASP LLM06-compliant engine strips AWS keys, ARNs, IP addresses, and resource IDs before anything is sent to the LLM.
-5. **Explain** — Dual-verification RAG pipeline over a 29-chunk compliance knowledge base (CIS, Microsoft Cloud Security Benchmark, ISO 27001, DPDP, HIPAA) via NVIDIA NIM, producing a 2-line plain-English fix per finding, cross-checked against raw scanner data.
+5. **Explain** — Dual-verification RAG pipeline over a 25 chunks · 6 frameworks compliance knowledge base (CIS, Microsoft Cloud Security Benchmark, ISO 27001, DPDP, HIPAA) via NVIDIA NIM, producing a 2-line plain-English fix per finding, cross-checked against raw scanner data.
 6. **Export** — CSV/JSON download of the fully enriched findings table.
 
 **Try it interactively:** [`4.streamlit_app/`](4.streamlit_app/) — upload your own Prowler/Steampipe/ScoutSuite exports and run the full pipeline locally.
