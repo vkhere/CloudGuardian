@@ -253,7 +253,7 @@ Full rationale, CIS references, and evidence for each finding live in `1.Week1/1
 | **ScoutSuite** | Full account/tenant service-wise risk breakdown | Interactive HTML dashboard |
 | **Steampipe** | Targeted SQL queries: S3 · IAM · RDS · Security Groups · EBS · CloudTrail (AWS) · Compute · Storage · NSG · SQL (Azure) | CSV |
 
-Run on **both AWS and Azure**, before and after misconfiguration, and again after remediation — giving a full before/misconfig/after evidence trail.
+Run on **both AWS and Azure**, before and after misconfiguration, and again after remediation - giving a full before/misconfig/after evidence trail.
 
 ---
 
