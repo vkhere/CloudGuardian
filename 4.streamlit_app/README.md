@@ -30,22 +30,22 @@ In Browser `http://localhost:8501` shall open.
 
 ## File upload — What and Where
 
-Notebook mein hardcoded paths the (`/home/kali/Desktop/Cloudguardian_Capstone/...`); app mein ab file uploader hai, kahin bhi demo chal sakta hai:
+The notebook had hardcoded paths (`/home/kali/Desktop/Cloudguardian_Capstone/...`); the app now has a file uploader, so the demo can run anywhere:
 
-- **Prowler CSV**: seedha `prowler-output-*.csv` (semicolon-delimited, jaisa Prowler v4 deta hai)
-- **Steampipe CSVs (AWS)**: `M01_M02_...csv` se `M12_...csv` tak, plus `CloudTrail_logging_validation_region_coverage.csv` aur `CloudTrail_log_bucket_public_check.csv` — sab ek saath multi-upload kar sakte ho
+- **Prowler CSV**: Directly upload `prowler-output-*.csv` (semicolon-delimited, as provided by Prowler v4)
+- **Steampipe CSVs (AWS)**: From `M01_M02_...csv` to `M12_...csv`, plus `CloudTrail_logging_validation_region_coverage.csv` and `CloudTrail_log_bucket_public_check.csv` — all of these can be multi-uploaded together
 - **Steampipe CSVs (Azure)**: `steampipe_compute.csv`, `steampipe_iam.csv`, `steampipe_logging.csv`, `steampipe_nsg.csv`, `steampipe_sql.csv`, `steampipe_storage.csv`
-- **ScoutSuite**: `scoutsuite_results_*.js` file (poora folder nahi, sirf ye ek `.js` file)
+- **ScoutSuite**: `scoutsuite_results_*.js` file (not the entire folder, only this single `.js` file)
 
-## Important — safety design maintained hai
+## Important — Safety design is maintained
 
-- **AWS/Azure credentials app kabhi store ya display nahi karta.**
-- **Auto-remediation (Tab 6) hamesha dry-run mode mein hai** — koi live API call nahi hoti, sirf "ye call hoti" dikhata hai. Agar live remediation chalana ho to original notebook/Python script apne machine par proper credentials ke saath chalana, is web app se nahi (jaanbujh kar aisa design kiya hai — shared app se live cloud mutations karna risky hai).
-- Redaction engine (Tab 4) pehle jaisa hi hai — AWS keys, ARNs, IPs, instance/VPC/SG IDs sab redact hote hain LLM ko bhejne se pehle.
+- **The app never stores or displays AWS/Azure credentials.**
+- **Auto-remediation (Tab 6) is always in dry-run mode** — no live API calls are made, it only shows "this call would be made". If you want to run live remediation, run the original notebook/Python script on your machine with proper credentials, not from this web app (this is by design — performing live cloud mutations from a shared app is risky).
+- The redaction engine (Tab 4) is the same as before — AWS keys, ARNs, IPs, instance/VPC/SG IDs are all redacted before being sent to the LLM.
 
-## Jo notebook cells is app mein NAHI hain (streamlined choice ke hisaab se)
+## Notebook cells that are NOT in this app (based on the streamlined choice)
 
-- Cell 6 ka standalone baseline RandomForest display (SMOTE version hi final hai, wahi use kiya)
-- Cell 6.2–6.6: ML visualization dashboards, before/after SMOTE comparison, overfitting/learning-curve diagnostics — ye report/PPT ke liye the, working app mein zaroori nahi the
-- Cell 8: matplotlib PNG dashboard — iski jagah Streamlit ke native bar charts use kiye hain (interactive, koi PNG file nahi banti)
-- Cell 10 (RAG v1, superseded): sirf Cell 11 ka updated version (source_url citations wala) rakha hai
+- Cell 6 standalone baseline RandomForest display (the SMOTE version is the final one, and that is what we used)
+- Cell 6.2–6.6: ML visualization dashboards, before/after SMOTE comparison, overfitting/learning-curve diagnostics — these were for the report/PPT, they were not necessary in the working app
+- Cell 8: matplotlib PNG dashboard — instead of this, Streamlit's native bar charts were used (interactive, no PNG files are generated)
+- Cell 10 (RAG v1, superseded): only the updated version from Cell 11 (with source_url citations) has been kept
