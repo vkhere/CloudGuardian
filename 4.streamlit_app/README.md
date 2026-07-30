@@ -14,7 +14,7 @@ Week 2 notebook (`week2_notebook.ipynb`) streamlined, portable Streamlit version
 | 6. Auto-Remediate | Cell 13 | **Dry-run only** — 4 remediation functions (RDS public access, SG open ingress, Azure storage x2) |
 | 7. Export | Cell 12 | CSV/JSON download buttons |
 
-## How to use it (In Kali Linux, used separate `kali` user not "root" user)
+## How to use it (In Kali Linux, used separate `"kali"` user not "root" user)
 
 ```bash
 cd ~/Desktop/Cloudguardian_Capstone   # This is the location where all files of CLoudGuradian are kept
