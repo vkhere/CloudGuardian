@@ -138,12 +138,26 @@ Week 1 Scan Outputs
 | P2 - MEDIUM | ~129 | 8.5% |
 | P3 - LOW | ~1,333 | 87.5% |
 
+```mermaid
+pie title Priority Band Distribution
+    "P0 - CRITICAL" : 2
+    "P1 - HIGH" : 58
+    "P2 - MEDIUM" : 129
+    "P3 - LOW" : 1333
+```
+
 ### Cloud Provider Split
 
 | Cloud | Findings |
 |-------|----------|
 | AWS | ~497 (33%) |
 | Azure | ~1,025 (67%) |
+
+```mermaid
+pie title Cloud Provider Split
+    "AWS" : 497
+    "Azure" : 1025
+```
 
 ---
 
