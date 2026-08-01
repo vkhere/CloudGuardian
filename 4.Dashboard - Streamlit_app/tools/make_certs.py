@@ -1,4 +1,4 @@
-"""
+﻿"""
 tools/make_certs.py
 ===================
 Generates a self-signed WILDCARD certificate so the console can be served over
@@ -148,7 +148,7 @@ def main() -> int:
     print("  3. Start the console over HTTPS:")
     print("     .\\run_https.ps1")
     print(f"  4. Browse to: https://console.{args.domain}:8501")
-    print("\nNever commit certs/cloudguardian.key to Git — .gitignore already excludes it.")
+    print("\nNever commit certs/cloudguardian.key to Git - .gitignore already excludes it.")
     return 0
 
 

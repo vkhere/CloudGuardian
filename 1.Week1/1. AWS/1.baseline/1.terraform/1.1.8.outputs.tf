@@ -1,6 +1,6 @@
-# ============================================================
-# outputs.tf — Output Values
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# outputs.tf - Output Values
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Prints important resource information after
 #           terraform apply completes successfully
 # ============================================================
@@ -23,9 +23,9 @@ output "private_subnet_id" {
   value       = aws_subnet.private.id
 }
 
-# EC2 Public IP — open this in browser to see Apache page
+# EC2 Public IP - open this in browser to see Apache page
 output "web_public_ip" {
-  description = "Public IP of the web server — open in browser"
+  description = "Public IP of the web server - open in browser"
   value       = aws_instance.web.public_ip
 }
 

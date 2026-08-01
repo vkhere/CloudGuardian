@@ -1,4 +1,4 @@
-"""views/trend.py — scan history: the Week 1 -> Week 3 story per cloud."""
+﻿"""views/trend.py - scan history: the Week 1 -> Week 3 story per cloud."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from core import loader, metrics
 
 def render(df_all) -> None:
     st.title("Scan history & trend")
-    st.caption("Open findings over time — baseline, after the deliberate misconfigs, and after remediation.")
+    st.caption("Open findings over time - baseline, after the deliberate misconfigs, and after remediation.")
 
     if df_all.empty:
         st.info("No reports loaded.")

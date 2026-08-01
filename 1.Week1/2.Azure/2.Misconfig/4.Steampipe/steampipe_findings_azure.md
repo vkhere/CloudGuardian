@@ -1,5 +1,5 @@
-# Steampipe Targeted Query Report — Azure
-## CloudGuardian — CAP-CSE-3W | IIT Roorkee × Futurense
+﻿# Steampipe Targeted Query Report - Azure
+## CloudGuardian - CAP-CSE-3W | IIT Roorkee × Futurense
 ### PG Certificate in AI/GenAI Powered Cybersecurity
 
 ---
@@ -47,14 +47,14 @@ Subscription 7e3283a3-d466-4e6f-95b1-543eec016e08 | Region: Central US
 
 | Service | FAIL Count | Critical | High | Medium | Low |
 |---------|------------|----------|------|--------|-----|
-| defender | 30 | — | 30 | — | — |
-| monitor | 26 | — | 11 | 15 | — |
-| entra | 20 | 2 | 8 | 10 | — |
-| network | 17 | — | 5 | 10 | 2 |
-| storage | 15 | — | 5 | 8 | 2 |
-| sqlserver | 9 | — | 5 | 3 | 1 |
-| vm | 7 | — | 3 | 4 | — |
-| appinsights | 2 | — | — | — | 2 |
+| defender | 30 | - | 30 | - | - |
+| monitor | 26 | - | 11 | 15 | - |
+| entra | 20 | 2 | 8 | 10 | - |
+| network | 17 | - | 5 | 10 | 2 |
+| storage | 15 | - | 5 | 8 | 2 |
+| sqlserver | 9 | - | 5 | 3 | 1 |
+| vm | 7 | - | 3 | 4 | - |
+| appinsights | 2 | - | - | - | 2 |
 
 > Output files saved at:
 > - CSV: `prowler-report/insecure/prowler-insecure.csv`
@@ -78,12 +78,12 @@ steampipe query
 
 ---
 
-## Query 1 — Storage Account Public Access & Transport Security
+## Query 1 - Storage Account Public Access & Transport Security
 
 ### Misconfig Introduced
-- Public network access set to "Allow" (open to internet) — `misconfig_storage_allow_public_network_access`
-- HTTPS-only disabled (`enable_https_traffic_only = false`) — `misconfig_storage_disable_secure_transfer`
-- Minimum TLS version lowered to TLS 1.0 — `misconfig_storage_min_tls_version`
+- Public network access set to "Allow" (open to internet) - `misconfig_storage_allow_public_network_access`
+- HTTPS-only disabled (`enable_https_traffic_only = false`) - `misconfig_storage_disable_secure_transfer`
+- Minimum TLS version lowered to TLS 1.0 - `misconfig_storage_min_tls_version`
 
 ### SQL Query
 ```sql
@@ -122,10 +122,10 @@ public access tested in Query 2. This is a multi-layered data exposure vulnerabi
 
 ---
 
-## Query 2 — Storage Container Public Access Level
+## Query 2 - Storage Container Public Access Level
 
 ### Misconfig Introduced
-Blob container `app-data` set to public access level `blob` — anyone with the URL can read files.
+Blob container `app-data` set to public access level `blob` - anyone with the URL can read files.
 
 ### SQL Query
 ```sql
@@ -153,11 +153,11 @@ where resource_group = 'rg-cloudguardian-lab';
 | public_access | Blob | None (private) | ❌ MISCONFIG |
 
 **Risk:** Container `app-data` is world-readable. Any user with the blob URL
-can download sensitive files — the classic "public S3/blob bucket" data leak.
+can download sensitive files - the classic "public S3/blob bucket" data leak.
 
 ---
 
-## Query 3 — IAM Over-Privileged Role Assignments
+## Query 3 - IAM Over-Privileged Role Assignments
 
 ### Misconfig Introduced
 - `Owner` role assigned at Resource Group scope (excessive human identity privilege)
@@ -193,16 +193,16 @@ where d.role_name in ('Owner', 'Contributor')
 | Deploying identity | Owner | Resource Group | Scoped custom role | ❌ MISCONFIG |
 | VM Managed Identity | Contributor | Subscription | Reader at RG only | ❌ MISCONFIG |
 
-**Risk:** The deploying identity has `Owner` at RG level — full control including
+**Risk:** The deploying identity has `Owner` at RG level - full control including
 delete. The VM's managed identity has `Contributor` at subscription scope. If the
 web server is compromised, an attacker can control the entire Azure subscription.
 
 ---
 
-## Query 4 — SQL Server Firewall Rules
+## Query 4 - SQL Server Firewall Rules
 
 ### Misconfig Introduced
-SQL Server firewall rule allows traffic from `0.0.0.0` to `255.255.255.255` — database
+SQL Server firewall rule allows traffic from `0.0.0.0` to `255.255.255.255` - database
 exposed to entire internet.
 
 ### SQL Query
@@ -247,7 +247,7 @@ brute-forcing, or other database attacks without any network barrier.
 
 ---
 
-## Query 5 — NSG Security Rules (SSH Open to Internet)
+## Query 5 - NSG Security Rules (SSH Open to Internet)
 
 ### Misconfig Introduced
 - NSG rule opens SSH (port 22) to `*` (entire internet)
@@ -296,15 +296,15 @@ where
 | MISCONFIG-Allow-Any-Any | * | * | * | ❌ MISCONFIG |
 
 **Risk:** SSH (port 22) is open to the entire internet, inviting automated brute-force
-attacks. The `Allow-Any-Any` rule completely disables network perimeter defense —
+attacks. The `Allow-Any-Any` rule completely disables network perimeter defense -
 all ports and services on the VM are exposed.
 
 ---
 
-## Query 6 — VM Password Authentication
+## Query 6 - VM Password Authentication
 
 ### Misconfig Introduced
-VM SSH password authentication enabled instead of key-only — weak authentication.
+VM SSH password authentication enabled instead of key-only - weak authentication.
 
 ### SQL Query
 ```sql
@@ -338,17 +338,17 @@ or guessed. Combined with port 22 open to internet (Query 5), this creates a
 direct attack vector for ransomware and botnet infections.
 
 > **Note:** This is the Azure equivalent of Megha's AWS "EC2 IMDSv1" finding.
-> Azure IMDS has no v1/v2 toggle — the closest "weak authentication" finding
+> Azure IMDS has no v1/v2 toggle - the closest "weak authentication" finding
 > on Azure is password-based SSH being allowed.
 
 ---
 
-## Query 7 — OS Disk Encryption (Informational — AWS Cross-Reference)
+## Query 7 - OS Disk Encryption (Informational - AWS Cross-Reference)
 
 ### Context
 This query has **no corresponding misconfig toggle** in the Azure Terraform deployment.
 It exists for cross-platform comparison with Megha's AWS Q5 (EBS Unencrypted).
-Azure managed disks are **always encrypted with SSE** by default — unlike AWS EBS
+Azure managed disks are **always encrypted with SSE** by default - unlike AWS EBS
 which can be completely unencrypted.
 
 ### SQL Query
@@ -375,16 +375,16 @@ where resource_group = 'rg-cloudguardian-lab';
 | Field | Value | Expected (Secure) | Status |
 |-------|-------|-------------------|--------|
 | encryption_type | EncryptionAtRestWithPlatformKey | EncryptionAtRestWithCustomerKey | ℹ️ AZURE DEFAULT |
-| disk_state | Attached | — | ℹ️ Active |
+| disk_state | Attached | - | ℹ️ Active |
 
-**Observation:** OS disk is encrypted with Azure-managed keys (SSE-PMK) — the platform
+**Observation:** OS disk is encrypted with Azure-managed keys (SSE-PMK) - the platform
 default. This is **NOT one of the 16 deliberate misconfigurations**. CIS benchmarks
 recommend CMK for sensitive workloads, but the absence of CMK is a governance gap, not
 a missing encryption vulnerability. Unlike AWS EBS, Azure disks cannot be unencrypted.
 
 ---
 
-## Query 8 — Diagnostic Settings (Storage & SQL Logging)
+## Query 8 - Diagnostic Settings (Storage & SQL Logging)
 
 ### Misconfig Introduced
 - Storage blob diagnostic settings not configured (no logging of read/write/delete)
@@ -421,10 +421,10 @@ access would be completely undetectable.
 
 ---
 
-## Query 9 — Subnet NSG Associations
+## Query 9 - Subnet NSG Associations
 
 ### Misconfig Introduced
-Network Security Group association removed from the web subnet — no network-layer
+Network Security Group association removed from the web subnet - no network-layer
 filtering at all.
 
 ### SQL Query
@@ -461,11 +461,11 @@ boundaries and exposes services directly to the internet.
 
 ---
 
-## Query 10 — SQL Server TLS & Auditing
+## Query 10 - SQL Server TLS & Auditing
 
 ### Misconfig Introduced
 - SQL Server auditing disabled (no audit policy configured)
-- SQL Server minimum TLS verified (remains 1.2 — Azure enforced)
+- SQL Server minimum TLS verified (remains 1.2 - Azure enforced)
 
 ### SQL Query
 ```sql
@@ -500,7 +500,7 @@ SQL Server since August 2025, so TLS downgrade is not possible.
 
 ---
 
-## Query 11 — Storage Account CORS & Authentication Default
+## Query 11 - Storage Account CORS & Authentication Default
 
 ### Misconfig Introduced
 - CORS rules set to allow `*` (all origins, all methods)
@@ -557,11 +557,11 @@ where name = 'stcloudguardianlab6thil';
 **Risk:** CORS allows any website to make cross-origin API calls to read or
 delete storage data on behalf of an authenticated user. Defaulting to Shared Key
 authentication means permanent access keys are used instead of identity-based
-access — keys are harder to scope, audit, and rotate.
+access - keys are harder to scope, audit, and rotate.
 
 ---
 
-## Query 12 — Log Analytics Workspace Retention
+## Query 12 - Log Analytics Workspace Retention
 
 ### Misconfig Introduced
 Log Analytics workspace retention reduced from 90 days to 30 days.
@@ -597,7 +597,7 @@ analysis of breaches becomes impossible.
 
 ---
 
-## All 16 Misconfigs — Steampipe Confirmation Summary
+## All 16 Misconfigs - Steampipe Confirmation Summary
 
 Each row maps 1:1 to a Terraform toggle in [`variables.tf`](file:///C:/Users/DELL/Documents/Capstone/CSE/2.%20azure-3tier-terraform%20(Misconfigs)/variables.tf).
 
@@ -615,7 +615,7 @@ Each row maps 1:1 to a Terraform toggle in [`variables.tf`](file:///C:/Users/DEL
 | M10 | Networking | SSH Port 22 Open to Internet | `misconfig_ssh_open_to_internet` | Q5 | ❌ CONFIRMED |
 | M11 | Networking | NSG Allow Any-Any Rule | `misconfig_nsg_allow_any_any` | Q5 | ❌ CONFIRMED |
 | M12 | Networking | Subnet NSG Association Removed | `misconfig_vm_remove_nsg_association` | Q9 | ❌ CONFIRMED |
-| M13 | Database | SQL Firewall Allow All IPs (0.0.0.0–255.255.255.255) | `misconfig_sql_allow_all_ips` | Q4 | ❌ CONFIRMED |
+| M13 | Database | SQL Firewall Allow All IPs (0.0.0.0-255.255.255.255) | `misconfig_sql_allow_all_ips` | Q4 | ❌ CONFIRMED |
 | M14 | Logging | Storage Diagnostic Settings Disabled | `misconfig_disable_storage_logging` | Q8 | ❌ CONFIRMED |
 | M15 | Logging | SQL Diagnostic Settings Disabled | `misconfig_disable_sql_logging` | Q8 | ❌ CONFIRMED |
 | M16 | Logging | Log Retention Shortened to 30 days | `misconfig_short_log_retention` | Q12 | ❌ CONFIRMED |
@@ -623,7 +623,7 @@ Each row maps 1:1 to a Terraform toggle in [`variables.tf`](file:///C:/Users/DEL
 **Confirmation Rate: 16/16 (100%) ✅**
 
 > **Note:** Query 7 (OS Disk Encryption) is included for AWS cross-platform comparison only.
-> Azure managed disks are always encrypted with SSE by default — this is NOT one of the 16
+> Azure managed disks are always encrypted with SSE by default - this is NOT one of the 16
 > deliberate misconfigurations. The `allow_blob_public_access = true` finding in Q1 is an
 > Azure default (prerequisite for M1's container-level access), not a separate toggle.
 
@@ -640,11 +640,11 @@ Each row maps 1:1 to a Terraform toggle in [`variables.tf`](file:///C:/Users/DEL
 | IAM | (via entra: 20) | Role assignments | ✅ Owner at RG + Contributor at subscription | ✅ |
 | Logging/Monitor | 26 | Diagnostic gaps | ✅ Missing diag settings + short retention | ✅ |
 
-**Cross-tool agreement: 100%** — All three tools confirm the same misconfigurations.
+**Cross-tool agreement: 100%** - All three tools confirm the same misconfigurations.
 
 ---
 
-## AWS ↔ Azure Comparison — Teammate Reference
+## AWS ↔ Azure Comparison - Teammate Reference
 
 This section maps Megha's 12 AWS Steampipe findings to the equivalent Azure queries above,
 demonstrating platform parity across the CloudGuardian project.
@@ -661,8 +661,8 @@ demonstrating platform parity across the CloudGuardian project.
 | Q8: IAM Admin Role | IAM Role | Q3: Over-privileged Roles | Azure RBAC | Same concept; Azure scope = subscription/RG |
 | Q9: NACL All Open | VPC NACL | Q5 + Q9: NSG Any-Any + Subnet | NSG + Subnet | Azure has no separate NACL; NSG serves both |
 | Q10: RDS SSL Not Enforced | RDS | Q10: SQL TLS Version | SQL Server | Azure retired TLS < 1.2 for SQL in Aug 2025 |
-| Q11: S3 Versioning | S3 | Q11: CORS + Auth Default | Storage Account | Versioning vs CORS/auth — different storage risks |
-| — | — | Q12: Log Retention | Log Analytics | Azure-only: shortened workspace retention |
+| Q11: S3 Versioning | S3 | Q11: CORS + Auth Default | Storage Account | Versioning vs CORS/auth - different storage risks |
+| - | - | Q12: Log Retention | Log Analytics | Azure-only: shortened workspace retention |
 
 ---
 
@@ -692,4 +692,4 @@ steampipe-findings_Azure/
 
 ---
 
-*Report generated for CAP-CSE-3W CloudGuardian Capstone — IIT Roorkee × Futurense Cohort 1*
+*Report generated for CAP-CSE-3W CloudGuardian Capstone - IIT Roorkee × Futurense Cohort 1*

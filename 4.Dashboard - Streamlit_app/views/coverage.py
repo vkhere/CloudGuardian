@@ -1,4 +1,4 @@
-"""views/coverage.py — did the pipeline catch every deliberate misconfiguration?"""
+﻿"""views/coverage.py - did the pipeline catch every deliberate misconfiguration?"""
 
 from __future__ import annotations
 
@@ -61,7 +61,7 @@ def render(df_all, current) -> None:
     else:
         st.warning(
             "These were introduced but no scanner raised them. Absence-of-control "
-            "issues are the usual cause — CSPM rules assert on what exists, not on "
+            "issues are the usual cause - CSPM rules assert on what exists, not on "
             "what is missing."
         )
         st.dataframe(

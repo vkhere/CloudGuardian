@@ -1,8 +1,8 @@
-# How to feed reports into the console
+﻿# How to feed reports into the console
 
 The console reads **every `.csv` in this folder**. Each CSV is **one scan run**
-(one cloud, one stage). Drop as many as you like — Azure and AWS, across
-Week 1, 2 and 3 — and the console merges them automatically.
+(one cloud, one stage). Drop as many as you like - Azure and AWS, across
+Week 1, 2 and 3 - and the console merges them automatically.
 
 You do **not** point the console at raw Prowler / ScoutSuite / Steampipe output.
 You point it at the *normalized* CSV your Week 2 pipeline produces (your
@@ -40,7 +40,7 @@ Finding-level (one row per check result):
 
 | column | example | notes |
 | --- | --- | --- |
-| `finding_id` | AZ-STG-PUBLIC-CONTAINER | **stable** id — reuse the same id for the same issue across scans so decisions and trends line up |
+| `finding_id` | AZ-STG-PUBLIC-CONTAINER | **stable** id - reuse the same id for the same issue across scans so decisions and trends line up |
 | `account_id` | sub-0f3a2b / 1111… | subscription / account |
 | `service` | Storage, SQL, Network, IAM, S3 … | |
 | `resource_name` | stcloudguardianlab | |
@@ -51,7 +51,7 @@ Finding-level (one row per check result):
 | `severity` | Critical / High / Medium / Low / Informational | |
 | `status` | PASS / FAIL / MANUAL | FAIL rows are the "open findings" |
 | `source_tool` | Prowler / ScoutSuite / Steampipe | |
-| `risk_score` | 0–100 | from your Week 2 prioritization model |
+| `risk_score` | 0-100 | from your Week 2 prioritization model |
 | `cvss` | 9.1 | optional |
 | `exposure` | Public / Internal / Private | optional |
 | `blast_radius` | Account / Subscription / Resource | optional |

@@ -1,4 +1,4 @@
-"""views/audit.py — full history of reviewer decisions."""
+﻿"""views/audit.py - full history of reviewer decisions."""
 
 from __future__ import annotations
 

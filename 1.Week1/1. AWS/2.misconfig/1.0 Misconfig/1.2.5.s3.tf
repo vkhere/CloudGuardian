@@ -1,7 +1,7 @@
-# ============================================================
-# s3.tf — Object Storage
-# Project : CloudGuardian — CAP-CSE-3W
-# Purpose : Creates S3 bucket — MISCONFIGURED STATE
+﻿# ============================================================
+# s3.tf - Object Storage
+# Project : CloudGuardian - CAP-CSE-3W
+# Purpose : Creates S3 bucket - MISCONFIGURED STATE
 #
 # MISCONFIGURATIONS INTRODUCED:
 #   [M04] S3 public access block disabled (all 4 flags = false)
@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "data" {
 }
 
 # ---------------------------------------------------------------
-# [M05] MISCONFIGURATION — Versioning suspended
+# [M05] MISCONFIGURATION - Versioning suspended
 #  Baseline:  status = "Enabled"    (SECURE)
 #  Misconfig: status = "Suspended"  (INSECURE)
 #
@@ -38,7 +38,7 @@ resource "aws_s3_bucket_versioning" "data" {
 }
 
 # ---------------------------------------------------------------
-# [M10] MISCONFIGURATION — S3 server-side encryption REMOVED
+# [M10] MISCONFIGURATION - S3 server-side encryption REMOVED
 #  Baseline:  aws_s3_bucket_server_side_encryption_configuration
 #             resource existed with AES256 SSE enabled
 #  Misconfig: Entire encryption resource block is DELETED
@@ -57,16 +57,16 @@ resource "aws_s3_bucket_versioning" "data" {
 #    }
 #  }
 # ---------------------------------------------------------------
-# NOTE: SSE resource intentionally absent — this IS the misconfiguration
+# NOTE: SSE resource intentionally absent - this IS the misconfiguration
 
 
 # ---------------------------------------------------------------
-# [M04] MISCONFIGURATION — Public access block disabled
-#  Baseline:  All 4 flags = true   (SECURE — fully blocked)
-#  Misconfig: All 4 flags = false  (INSECURE — public access possible)
+# [M04] MISCONFIGURATION - Public access block disabled
+#  Baseline:  All 4 flags = true   (SECURE - fully blocked)
+#  Misconfig: All 4 flags = false  (INSECURE - public access possible)
 #
 #  Risk: Bucket can be made publicly accessible via bucket policy
-#        or ACLs — any data uploaded can be exposed to internet
+#        or ACLs - any data uploaded can be exposed to internet
 #  Real-world: Majority of S3 data breach incidents (Capital One,
 #              Twitch, etc.) involved disabled public access blocks
 #  Fix: Set all 4 flags back to true

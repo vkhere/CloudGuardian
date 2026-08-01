@@ -1,4 +1,4 @@
-[{
+﻿[{
     "message": "There are no AppInsight configured in subscription Azure subscription 1 (524e42fc-65bd-4b6c-b65d-da2abce9b1d9).",
     "metadata": {
         "event_code": "appinsights_ensure_is_configured",
@@ -7125,7 +7125,7 @@
         "region": "centralus"
     },
     "remediation": {
-        "desc": "Associate a **Network Security Group** with every subnet. Create NSG rules following **least privilege** — deny all by default and allow only required traffic. Exclude Azure-managed subnets (GatewaySubnet, AzureFirewallSubnet, AzureBastionSubnet) which have their own security controls.",
+        "desc": "Associate a **Network Security Group** with every subnet. Create NSG rules following **least privilege** - deny all by default and allow only required traffic. Exclude Azure-managed subnets (GatewaySubnet, AzureFirewallSubnet, AzureBastionSubnet) which have their own security controls.",
         "references": [
             "https://hub.prowler.com/check/network_subnet_nsg_associated"
         ]
@@ -7250,7 +7250,7 @@
         "region": "centralus"
     },
     "remediation": {
-        "desc": "Associate a **Network Security Group** with every subnet. Create NSG rules following **least privilege** — deny all by default and allow only required traffic. Exclude Azure-managed subnets (GatewaySubnet, AzureFirewallSubnet, AzureBastionSubnet) which have their own security controls.",
+        "desc": "Associate a **Network Security Group** with every subnet. Create NSG rules following **least privilege** - deny all by default and allow only required traffic. Exclude Azure-managed subnets (GatewaySubnet, AzureFirewallSubnet, AzureBastionSubnet) which have their own security controls.",
         "references": [
             "https://hub.prowler.com/check/network_subnet_nsg_associated"
         ]
@@ -7573,7 +7573,7 @@
         "region": "centralus"
     },
     "remediation": {
-        "desc": "Enable **Azure DDoS Network Protection** on virtual networks hosting internet-facing workloads. Consider cost implications — DDoS Network Protection has a monthly charge per plan. Use **DDoS IP Protection** as a lower-cost alternative for individual public IPs.",
+        "desc": "Enable **Azure DDoS Network Protection** on virtual networks hosting internet-facing workloads. Consider cost implications - DDoS Network Protection has a monthly charge per plan. Use **DDoS IP Protection** as a lower-cost alternative for individual public IPs.",
         "references": [
             "https://hub.prowler.com/check/network_vnet_ddos_protection_enabled"
         ]

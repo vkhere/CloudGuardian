@@ -1,5 +1,5 @@
-# ScoutSuite Audit Report — Azure
-## CloudGuardian — CAP-CSE-3W | IIT Roorkee × Futurense
+﻿# ScoutSuite Audit Report - Azure
+## CloudGuardian - CAP-CSE-3W | IIT Roorkee × Futurense
 ### PG Certificate in AI/GenAI Powered Cybersecurity
 
 ---
@@ -21,7 +21,7 @@
 
 ScoutSuite is an open-source multi-cloud security auditing tool maintained by NCC Group.
 Unlike Steampipe (SQL-based) or Prowler (CIS benchmark-driven), ScoutSuite uses a
-**rule-engine approach** — it fetches the full configuration of your cloud environment
+**rule-engine approach** - it fetches the full configuration of your cloud environment
 and evaluates it against a library of pre-defined security rules.
 
 It produces an **interactive HTML dashboard** that lets you drill into each service,
@@ -43,7 +43,7 @@ python cspm/run_scout.py azure --cli --report-dir scoutsuite-report/insecure
 | **Total Flagged** | 43 | 52 | **+9** |
 | **Services Affected** | 5 | 8 | +3 |
 | **Danger-Level Findings** | 2 | 4 | +2 |
-| **Misconfigs Detected** | — | 7 / 16 | **44%** |
+| **Misconfigs Detected** | - | 7 / 16 | **44%** |
 
 ### Detection Rate Summary
 
@@ -59,7 +59,7 @@ python cspm/run_scout.py azure --cli --report-dir scoutsuite-report/insecure
 
 ---
 
-## Baseline vs Insecure — Delta Analysis
+## Baseline vs Insecure - Delta Analysis
 
 The following table shows the 9 **NEW** findings that appeared only after
 the 16 misconfigurations were injected via Terraform:
@@ -76,7 +76,7 @@ the 16 misconfigurations were injected via Terraform:
 | Δ8 | Storage | `storageaccount-public-traffic-allowed` | Storage Allowing Public Traffic | 🟡 warning |
 | Δ9 | SQL | `sqldatabase-allow-any-ip` | SQL Database Allow Ingress 0.0.0.0/0 (Any IP) | 🟡 warning |
 
-### Screenshot (ScoutSuite Dashboard — Summary)
+### Screenshot (ScoutSuite Dashboard - Summary)
 ![ScoutSuite Summary](./images/Scout_Suite_Summary_page_Dashboard.PNG)
 
 ---
@@ -85,7 +85,7 @@ the 16 misconfigurations were injected via Terraform:
 
 ---
 
-### Service 1 — Storage Accounts (6 flagged)
+### Service 1 - Storage Accounts (6 flagged)
 
 #### Finding S1: Public Blob Container
 | Field | Value |
@@ -143,7 +143,7 @@ This is the #1 cause of cloud data breaches.
 | **Level** | 🟡 warning |
 | **Flagged Items** | 1 |
 | **Resource** | `stcloudguardianlab6thil` |
-| **Terraform Toggle** | N/A (Azure default — platform-managed key) |
+| **Terraform Toggle** | N/A (Azure default - platform-managed key) |
 | **Delta** | Pre-existing (also in baseline) |
 
 **Risk:** Without a Customer-Managed Key (CMK), the organization cannot independently revoke encryption access.
@@ -166,14 +166,14 @@ This is the #1 cause of cloud data breaches.
 
 ---
 
-### Service 2 — SQL Database (13 flagged)
+### Service 2 - SQL Database (13 flagged)
 
 #### Finding SQL1: Allow Ingress from Any IP ⭐
 | Field | Value |
 |-------|-------|
 | **Rule ID** | `sqldatabase-allow-any-ip` |
 | **Level** | 🟡 warning |
-| **Flagged Items** | 2 (AllowAzureServices 0.0.0.0 + MISCONFIG-AllowAllIPs 0.0.0.0–255.255.255.255) |
+| **Flagged Items** | 2 (AllowAzureServices 0.0.0.0 + MISCONFIG-AllowAllIPs 0.0.0.0-255.255.255.255) |
 | **Resource** | `sql-cloudguardian-lab-6thil` |
 | **Terraform Toggle** | `misconfig_sql_allow_all_ips = true` |
 | **Delta** | ✅ NEW (not in baseline) |
@@ -188,7 +188,7 @@ This is the #1 cause of cloud data breaches.
 | **Flagged Items** | 1 |
 | **Resource** | `sql-cloudguardian-lab-6thil` |
 | **Terraform Toggle** | `misconfig_disable_sql_logging = true` |
-| **Delta** | Pre-existing (also in baseline — auditing was never configured) |
+| **Delta** | Pre-existing (also in baseline - auditing was never configured) |
 
 **Risk:** No audit trail for database operations. Failed logins, SQL injection, and unauthorized queries leave no trace.
 
@@ -228,7 +228,7 @@ This is the #1 cause of cloud data breaches.
 | **Level** | 🟡 warning |
 | **Flagged Items** | 1 |
 
-#### Finding SQL8–SQL12: Vulnerability Assessment & Alerts
+#### Finding SQL8-SQL12: Vulnerability Assessment & Alerts
 | Rule ID | Description | Flagged |
 |---------|-------------|---------|
 | `sqldatabase-servers-threat-detection-send-alerts-disabled` | ATP Alerts Disabled (Server) | 1 |
@@ -244,7 +244,7 @@ This is the #1 cause of cloud data breaches.
 
 ---
 
-### Service 3 — Network (5 flagged)
+### Service 3 - Network (5 flagged)
 
 All 5 findings are **NEW** in the insecure scan and originate from two NSG rules:
 - `MISCONFIG-Allow-Any-Any` (any protocol, any port, from `*`)
@@ -257,7 +257,7 @@ All 5 findings are **NEW** in the insecure scan and originate from two NSG rules
 | **Level** | 🔴 danger |
 | **Flagged Items** | 1 |
 | **NSG** | `nsg-web-cloudguardian-lab` |
-| **Source Rule** | `MISCONFIG-Allow-Any-Any` — priority 100, protocol `*`, port `*`, source `*` |
+| **Source Rule** | `MISCONFIG-Allow-Any-Any` - priority 100, protocol `*`, port `*`, source `*` |
 | **Terraform Toggle** | `misconfig_nsg_allow_any_any = true` |
 
 **Risk:** Complete network perimeter collapse. Every port and protocol on the VM is exposed to the internet.
@@ -269,7 +269,7 @@ All 5 findings are **NEW** in the insecure scan and originate from two NSG rules
 | **Level** | 🟡 warning |
 | **Terraform Toggle** | `misconfig_ssh_open_to_internet = true` |
 
-#### Finding N3–N5: RDP, MsSQL, UDP Access
+#### Finding N3-N5: RDP, MsSQL, UDP Access
 | Rule ID | Port | Triggered By |
 |---------|------|-------------|
 | `network-security-groups-rule-inbound-RDP` | 3389 | MISCONFIG-Allow-Any-Any |
@@ -282,7 +282,7 @@ All 5 findings are **NEW** in the insecure scan and originate from two NSG rules
 
 ---
 
-### Service 4 — Logging & Monitoring (8 flagged)
+### Service 4 - Logging & Monitoring (8 flagged)
 
 All 8 findings are **pre-existing** (also in baseline). They indicate that
 Activity Log Alerts are not configured for critical administrative actions.
@@ -302,7 +302,7 @@ Activity Log Alerts are not configured for critical administrative actions.
 
 ---
 
-### Service 5 — Security Center (17 flagged)
+### Service 5 - Security Center (17 flagged)
 
 All 17 findings are **pre-existing** (also in baseline). They indicate that
 Azure Defender (Standard Tier) is not enabled for 16 resource types, and
@@ -317,27 +317,27 @@ no security contact email is configured.
 
 ---
 
-### Service 6 — Azure Active Directory (1 flagged)
+### Service 6 - Azure Active Directory (1 flagged)
 
 | Rule ID | Description | Level |
 |---------|-------------|-------|
 | `aad-users-create-security-groups-disabled` | Users Can Create Security Groups | 🔴 danger |
 
-**Note:** Pre-existing tenant-level setting — not caused by Terraform misconfigs.
+**Note:** Pre-existing tenant-level setting - not caused by Terraform misconfigs.
 
 ---
 
-### Service 7 — RBAC (1 flagged)
+### Service 7 - RBAC (1 flagged)
 
 | Rule ID | Description | Level |
 |---------|-------------|-------|
 | `rbac-administering-resource-locks-assigned` | No Resource Locks Role | 🔴 danger |
 
-**Note:** Pre-existing — no resource lock management role assigned in the subscription.
+**Note:** Pre-existing - no resource lock management role assigned in the subscription.
 
 ---
 
-### Service 8 — Virtual Machines (1 flagged)
+### Service 8 - Virtual Machines (1 flagged)
 
 | Rule ID | Description | Level |
 |---------|-------------|-------|
@@ -355,25 +355,25 @@ this finding flags the absence of a Customer-Managed Key (CMK).
 | M1 | Public Blob Container | `misconfig_storage_public_container` | `storageaccount-public-blob-container` (🔴) | ✅ Detected |
 | M2 | Public Network Access | `misconfig_storage_allow_public_network_access` | `storageaccount-public-traffic-allowed` | ✅ Detected |
 | M3 | Secure Transfer Disabled | `misconfig_storage_disable_secure_transfer` | `storageaccount-account-allowing-clear-text` | ✅ Detected |
-| M4 | Min TLS Lowered (1.0) | `misconfig_storage_min_tls_version` | — | ❌ Not Detected |
-| M5 | Shared Key Access | `misconfig_storage_allow_shared_key_access` | — | ❌ Not Detected |
-| M6 | CORS Allow All | `misconfig_storage_cors_allow_all` | — | ❌ Not Detected |
-| M7 | Owner Role at RG | `misconfig_iam_owner_role_at_rg_scope` | — | ❌ Not Detected |
-| M8 | VM Identity Over-Privileged | `misconfig_vm_identity_over_privileged` | — | ❌ Not Detected |
-| M9 | SSH Password Auth | `misconfig_vm_allow_password_auth` | — | ❌ Not Detected |
+| M4 | Min TLS Lowered (1.0) | `misconfig_storage_min_tls_version` | - | ❌ Not Detected |
+| M5 | Shared Key Access | `misconfig_storage_allow_shared_key_access` | - | ❌ Not Detected |
+| M6 | CORS Allow All | `misconfig_storage_cors_allow_all` | - | ❌ Not Detected |
+| M7 | Owner Role at RG | `misconfig_iam_owner_role_at_rg_scope` | - | ❌ Not Detected |
+| M8 | VM Identity Over-Privileged | `misconfig_vm_identity_over_privileged` | - | ❌ Not Detected |
+| M9 | SSH Password Auth | `misconfig_vm_allow_password_auth` | - | ❌ Not Detected |
 | M10 | SSH Open to Internet | `misconfig_ssh_open_to_internet` | `network-...-inbound-SSH` | ✅ Detected |
 | M11 | NSG Allow Any-Any | `misconfig_nsg_allow_any_any` | `network-...-inbound-internet-all` (🔴) | ✅ Detected |
-| M12 | Subnet NSG Removed | `misconfig_vm_remove_nsg_association` | — | ❌ Not Detected |
+| M12 | Subnet NSG Removed | `misconfig_vm_remove_nsg_association` | - | ❌ Not Detected |
 | M13 | SQL Allow All IPs | `misconfig_sql_allow_all_ips` | `sqldatabase-allow-any-ip` | ✅ Detected |
-| M14 | Storage Logging Disabled | `misconfig_disable_storage_logging` | — | ❌ Not Detected |
+| M14 | Storage Logging Disabled | `misconfig_disable_storage_logging` | - | ❌ Not Detected |
 | M15 | SQL Logging Disabled | `misconfig_disable_sql_logging` | `sqldatabase-servers-no-auditing` | ⚠️ Partial |
-| M16 | Short Log Retention | `misconfig_short_log_retention` | — | ❌ Not Detected |
+| M16 | Short Log Retention | `misconfig_short_log_retention` | - | ❌ Not Detected |
 
 ### Confirmation: 7 / 16 Detected (43.75%)
 
 ---
 
-## Gap Analysis — ScoutSuite Blind Spots
+## Gap Analysis - ScoutSuite Blind Spots
 
 The following 9 misconfigurations are **NOT detected** by ScoutSuite.
 These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-tool pipeline.
@@ -382,35 +382,35 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 
 | Misconfig | Why ScoutSuite Misses It | Covered By |
 |-----------|------------------------|------------|
-| M4 — TLS 1.0 | No rule checking `minimum_tls_version` on storage accounts | Prowler ✅, Steampipe ✅ |
-| M5 — Shared Key Access | No rule checking `allow_shared_key_access` property | Steampipe ✅ |
-| M6 — CORS wildcard | No rule inspecting CORS configuration on blob services | Steampipe ✅ |
+| M4 - TLS 1.0 | No rule checking `minimum_tls_version` on storage accounts | Prowler ✅, Steampipe ✅ |
+| M5 - Shared Key Access | No rule checking `allow_shared_key_access` property | Steampipe ✅ |
+| M6 - CORS wildcard | No rule inspecting CORS configuration on blob services | Steampipe ✅ |
 
 ### IAM/RBAC Gaps (2)
 
 | Misconfig | Why ScoutSuite Misses It | Covered By |
 |-----------|------------------------|------------|
-| M7 — Owner at RG scope | Only checks generic RBAC (resource locks), not specific overprivileged role assignments | Prowler ✅, Steampipe ✅ |
-| M8 — VM Managed Identity | Does not evaluate managed identity role assignments at subscription scope | Steampipe ✅ |
+| M7 - Owner at RG scope | Only checks generic RBAC (resource locks), not specific overprivileged role assignments | Prowler ✅, Steampipe ✅ |
+| M8 - VM Managed Identity | Does not evaluate managed identity role assignments at subscription scope | Steampipe ✅ |
 
 ### Compute Gap (1)
 
 | Misconfig | Why ScoutSuite Misses It | Covered By |
 |-----------|------------------------|------------|
-| M9 — SSH Password Auth | VM checks limited to disk encryption; no SSH authentication method inspection | Prowler ✅, Steampipe ✅ |
+| M9 - SSH Password Auth | VM checks limited to disk encryption; no SSH authentication method inspection | Prowler ✅, Steampipe ✅ |
 
 ### Network Gap (1)
 
 | Misconfig | Why ScoutSuite Misses It | Covered By |
 |-----------|------------------------|------------|
-| M12 — Subnet NSG removed | Checks NSG *rules* but not whether NSGs are *associated* with subnets | Steampipe ✅ |
+| M12 - Subnet NSG removed | Checks NSG *rules* but not whether NSGs are *associated* with subnets | Steampipe ✅ |
 
 ### Logging/Monitoring Gaps (2)
 
 | Misconfig | Why ScoutSuite Misses It | Covered By |
 |-----------|------------------------|------------|
-| M14 — Storage Diagnostics | Checks Activity Log alerts but not per-resource diagnostic settings | Steampipe ✅ |
-| M16 — Log Retention | No check on Log Analytics workspace retention period | Steampipe ✅ |
+| M14 - Storage Diagnostics | Checks Activity Log alerts but not per-resource diagnostic settings | Steampipe ✅ |
+| M16 - Log Retention | No check on Log Analytics workspace retention period | Steampipe ✅ |
 
 ---
 
@@ -438,7 +438,7 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 
 > **Conclusion:** No single CSPM tool detects all 16 misconfigurations. The combination of
 > Prowler (broad CIS coverage), ScoutSuite (visual dashboard + network/storage depth),
-> and Steampipe (precision SQL targeting) achieves **100% coverage** — validating the
+> and Steampipe (precision SQL targeting) achieves **100% coverage** - validating the
 > CloudGuardian multi-tool approach.
 
 ---

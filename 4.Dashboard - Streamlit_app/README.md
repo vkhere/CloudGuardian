@@ -1,11 +1,11 @@
-<div align="center">
+﻿<div align="center">
 
 # 🛡️ CloudGuardian Console
 
 ### A single pane of glass for multi-cloud, multi-tool security posture
 
 **Consolidates Prowler, ScoutSuite, and Steampipe findings across Azure and AWS into one
-governance console — with cross-tool detection validation, ATT&CK mapping, a
+governance console - with cross-tool detection validation, ATT&CK mapping, a
 privacy-preserving LLM assurance layer, and a human-approval remediation gate.**
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
@@ -16,23 +16,23 @@ privacy-preserving LLM assurance layer, and a human-approval remediation gate.**
 [![License](https://img.shields.io/badge/License-Educational-lightgrey?style=flat-square)](#-license)
 [![Status](https://img.shields.io/badge/Status-Capstone%20Project-orange?style=flat-square)](#)
 
-<sub>Built for the IIT Roorkee × Futurense PG Certificate in AI/GenAI-Powered Cybersecurity — Capstone CAP-CSE-3W</sub>
+<sub>Built for the IIT Roorkee × Futurense PG Certificate in AI/GenAI-Powered Cybersecurity - Capstone CAP-CSE-3W</sub>
 
 </div>
 
 <br/>
 
 <div align="center">
-<img src="docs/screenshots/executive-overview-latest.png" alt="CloudGuardian Console — Executive Overview" width="880"/>
+<img src="docs/screenshots/executive-overview-latest.png" alt="CloudGuardian Console - Executive Overview" width="880"/>
 
-<sub><i>Executive overview — latest scan across Azure and AWS: 6 open findings, ISO 27001 at 44.4%,
+<sub><i>Executive overview - latest scan across Azure and AWS: 6 open findings, ISO 27001 at 44.4%,
 CIS at 64.3%, and the remediation-gate funnel showing all 6 findings still Pending.</i></sub>
 </div>
 
 <br/>
 
 > **Scope note.** This README documents the console exactly as implemented. It does **not** claim automated
-> remediation execution, a backend API, or live cloud SDK calls at runtime — the project deliberately does not
+> remediation execution, a backend API, or live cloud SDK calls at runtime - the project deliberately does not
 > include these (see [Design Principle](#-design-principle) and [Roadmap](#-roadmap-not-yet-built)).
 
 ---
@@ -70,7 +70,7 @@ CIS at 64.3%, and the remediation-gate funnel showing all 6 findings still Pendi
 
 ## 🎯 Executive Summary
 
-Cloud security posture management tools produce a lot of output — CSV exports, JSON dumps, benchmark reports —
+Cloud security posture management tools produce a lot of output - CSV exports, JSON dumps, benchmark reports -
 and very little of it is *reviewable* by a human on a deadline. CloudGuardian Console exists to close that gap
 for a specific, common shape of problem: **you have run several scanners against several clouds, and you need
 one screen that tells you what's wrong, how confident you should be about it, and what happens if you fix it.**
@@ -95,11 +95,11 @@ This is the single architectural decision everything else follows from, and it w
 than by omission:
 
 - **Reports are read-only input.** Scan output lands in `reports/` as CSV. Adding a new cloud, a new scanner,
-  or a new scan is a matter of dropping in a file that matches the schema — zero code changes.
+  or a new scan is a matter of dropping in a file that matches the schema - zero code changes.
 - **State lives in one place.** Every reviewer decision (approve / reject / mark remediated) is written to a
   local SQLite database (`data/console.db`), independent of the source reports.
 - **No write path to production.** The console has no credentials, no SDK client, and no code path that calls
-  Azure, AWS, or any live API to change infrastructure. It cannot misconfigure — or fix — anything it observes.
+  Azure, AWS, or any live API to change infrastructure. It cannot misconfigure - or fix - anything it observes.
 
 This has a direct, practical consequence worth stating plainly: **"remediated" in this console is a review
 status, not an executed action.** A reviewer marks a finding remediated after they (or a separate script) have
@@ -114,7 +114,7 @@ Every CSPM exercise eventually runs into the same three problems:
 
 **One tool's output isn't trustworthy alone.** Different scanners implement different rule logic against the
 same benchmark. A finding raised by only one of three tools is a different class of evidence than a finding
-all three agree on — and most tooling doesn't surface that distinction at all.
+all three agree on - and most tooling doesn't surface that distinction at all.
 
 **Findings without traceable context don't get prioritized well.** A CVSS score tells you almost nothing about
 whether a finding is one step in a live attack chain or an isolated, low-blast-radius issue. Severity alone
@@ -124,7 +124,7 @@ flattens that difference.
 until one is wrong. The console treats every piece of generated guidance as a claim to be checked against the
 raw finding it describes, before a reviewer ever sees it as trustworthy.
 
-CloudGuardian Console addresses these three problems directly, at the scale of a lab environment — not by
+CloudGuardian Console addresses these three problems directly, at the scale of a lab environment - not by
 promising automation it doesn't have.
 
 ---
@@ -138,13 +138,13 @@ promising automation it doesn't have.
 | **Cross-tool agreement matrix** | Per-finding Prowler / ScoutSuite / Steampipe detection flags with an agreement count | Shows exactly which findings only one tool would have caught | `detected_by` column |
 | **Detection coverage & gap analysis** | Joins your deliberate misconfiguration catalogue to what the scanners actually raised | Surfaces absence-of-control gaps no scanner flags | `catalogue/toggles.csv` |
 | **ATT&CK coverage heatmap** | Open findings mapped to MITRE ATT&CK techniques and tactics | Reframes findings as adversary capability, not just a rule violation | `mitre_attck` column |
-| **Attack-path / blast-radius graph** | Renders catalogued multi-step chains; marks a path "live" only while every step is still open | A chain breaks the instant any one step is fixed — shows which fixes matter most | `catalogue/attack_paths.csv` |
+| **Attack-path / blast-radius graph** | Renders catalogued multi-step chains; marks a path "live" only while every step is still open | A chain breaks the instant any one step is fixed - shows which fixes matter most | `catalogue/attack_paths.csv` |
 | **Remediation planner (what-if)** | Select candidate fixes; see projected ISO/CIS compliance and residual severity mix before acting | Turns a flat backlog into a ranked decision | Computed from current view |
 | **LLM verification scorecard** | Verified / needs-review / flagged counts for every generated remediation | A hallucination rate, not a trust assumption | `verification_status`, `llm_confidence` |
 | **Privacy-preserving redaction** | Live, working tokenizer for GUIDs, ARNs, account numbers, UPNs, IPs, resource names | Nothing reaches a model in plaintext, and it's provable, not asserted | `core/redaction.py` |
 | **Compliance crosswalk** | ISO 27001 Annex A × CIS Benchmark × DPDP Act 2023, per control | One artifact instead of three separate mappings | `catalogue/dpdp_map.csv` |
 | **Environment inventory & drift** | Resource health and Terraform drift from a point-in-time snapshot | Confirms deployed state still matches code | `data/*_snapshot.json` |
-| **Point-in-time comparison** | Flips the entire console between Baseline / After-misconfig / After-remediation | Same views, three moments — the story, not just the ending | `scan_stage` column |
+| **Point-in-time comparison** | Flips the entire console between Baseline / After-misconfig / After-remediation | Same views, three moments - the story, not just the ending | `scan_stage` column |
 | **Executive PDF export** | One-click management summary: posture, top risks, compliance, coverage, gate status | A leave-behind document that needs no live console | `core/pdfreport.py` |
 | **Audit trail** | Full history of who decided what, and when | Defensible, not just usable | `data/console.db` |
 
@@ -154,13 +154,13 @@ promising automation it doesn't have.
 
 ```mermaid
 flowchart TB
-    subgraph Input["📥 Read-only input — never written to"]
+    subgraph Input["📥 Read-only input - never written to"]
         R["reports/*.csv<br/>Prowler · ScoutSuite · Steampipe<br/>normalized schema"]
         C["catalogue/*.csv<br/>toggles · attack paths · DPDP map<br/>hand-maintained reference data"]
         S["data/*_snapshot.json<br/>Azure / AWS environment snapshot<br/>captured by a separate script"]
     end
 
-    subgraph App["🖥️ CloudGuardian Console — Streamlit, runs locally"]
+    subgraph App["🖥️ CloudGuardian Console - Streamlit, runs locally"]
         L["core/loader.py<br/>schema validation · normalization"]
         M["core/metrics.py<br/>posture · compliance · cross-tool ·<br/>ATT&CK · coverage · what-if"]
         RD["core/redaction.py<br/>identifier tokenizer"]
@@ -168,7 +168,7 @@ flowchart TB
         V["14 views<br/>Posture · Analysis · Decide ·<br/>Assurance · Records"]
     end
 
-    subgraph State["💾 Local state — the only thing the console writes"]
+    subgraph State["💾 Local state - the only thing the console writes"]
         DB[("data/console.db<br/>SQLite<br/>decisions + audit log")]
     end
 
@@ -234,11 +234,11 @@ sequenceDiagram
 | **UI framework** | [Streamlit](https://streamlit.io/) 1.40+ | Renders all 14 pages; handles routing, filters, session state |
 | **Data handling** | [pandas](https://pandas.pydata.org/) | Loads, normalizes, and joins all CSV/JSON input |
 | **Visualization** | [Plotly](https://plotly.com/python/) | Gauges, treemaps, bar charts, pie charts |
-| **Graph rendering** | Streamlit's built-in Graphviz support (DOT syntax) | Attack-path chain diagrams — no external binary required |
-| **PDF generation** | [ReportLab](https://www.reportlab.com/) | Executive summary export, built from primitives — no headless-browser or image-rendering dependency |
+| **Graph rendering** | Streamlit's built-in Graphviz support (DOT syntax) | Attack-path chain diagrams - no external binary required |
+| **PDF generation** | [ReportLab](https://www.reportlab.com/) | Executive summary export, built from primitives - no headless-browser or image-rendering dependency |
 | **Local persistence** | Python `sqlite3` (standard library) | Decisions and audit trail |
 | **HTTPS certificate** | [`cryptography`](https://cryptography.io/) | Generates a self-signed wildcard certificate for local TLS |
-| **Runtime** | Python 3.10+ | — |
+| **Runtime** | Python 3.10+ | - |
 
 **Explicitly not in the stack:** Azure SDK for Python, Boto3, Azure Functions, AWS Lambda, Terraform (invoked
 by the console), or any backend/API framework. The console consumes their *output*; it does not call them.
@@ -248,21 +248,21 @@ by the console), or any backend/API framework. The console consumes their *outpu
 ## 🖼️ Console Walkthrough
 
 Fourteen pages, organized into five sidebar sections. Every screenshot below is a real capture of the running
-console with its sample dataset — nothing has been staged or edited.
+console with its sample dataset - nothing has been staged or edited.
 
 ### Posture
 
 <table>
 <tr><td width="50%">
 
-**Executive Overview — Baseline**
+**Executive Overview - Baseline**
 <img src="docs/screenshots/executive-overview-baseline.png" width="100%"/>
-<sub>Before any misconfiguration is introduced: 2 open findings, ISO 27001 at 77.8%, CIS at 85.7% —
+<sub>Before any misconfiguration is introduced: 2 open findings, ISO 27001 at 77.8%, CIS at 85.7% -
 the healthy starting state.</sub>
 
 </td><td width="50%">
 
-**Executive Overview — After Misconfig**
+**Executive Overview - After Misconfig**
 <img src="docs/screenshots/executive-overview-after-misconfig.png" width="100%"/>
 <sub>After the deliberate misconfigurations are applied: 15 open findings, 11 critical + high,
 compliance collapses to 0% on both frameworks.</sub>
@@ -270,7 +270,7 @@ compliance collapses to 0% on both frameworks.</sub>
 </td></tr>
 <tr><td width="50%">
 
-**Executive Overview — Latest (Post-Remediation)**
+**Executive Overview - Latest (Post-Remediation)**
 <img src="docs/screenshots/executive-overview-latest.png" width="100%"/>
 <sub>Latest scan across both clouds: 6 open findings remain, ISO 27001 recovered to 44.4%,
 CIS to 64.3%. All 6 findings are still Pending review.</sub>
@@ -285,7 +285,7 @@ CVSS/MITRE/ISO/CIS detail, and the Approve / Reject / Mark remediated controls.<
 </td></tr>
 </table>
 
-> Point-in-time comparison in practice — the same console, the same layout, three different moments in the
+> Point-in-time comparison in practice - the same console, the same layout, three different moments in the
 > Week 1 → Week 3 story, driven entirely by the **Point in time** selector in the sidebar.
 
 ### Analysis
@@ -302,7 +302,7 @@ remediation. Every individual scan run is listed below with its pass/fail counts
 
 **ATT&CK Coverage**
 <img src="docs/screenshots/attck-coverage.png" width="100%"/>
-<sub>3 techniques observed across 3 tactics, mapped from 6 findings — T1110 (Brute force) dominates
+<sub>3 techniques observed across 3 tactics, mapped from 6 findings - T1110 (Brute force) dominates
 Credential access, with T1078 in Privilege escalation and T1562 in Defense evasion.</sub>
 
 </td></tr>
@@ -310,16 +310,16 @@ Credential access, with T1078 in Privilege escalation and T1562 in Defense evasi
 
 **Cross-Tool Agreement**
 <img src="docs/screenshots/cross-tool-agreement.png" width="100%"/>
-<sub>Mean agreement 1.67 of 3. Two findings — <code>AZ-IAM-MI-MISSING</code> and
-<code>AZ-VM-PWD-AUTH</code> — were caught by exactly one scanner (ScoutSuite), called out explicitly
+<sub>Mean agreement 1.67 of 3. Two findings - <code>AZ-IAM-MI-MISSING</code> and
+<code>AZ-VM-PWD-AUTH</code> - were caught by exactly one scanner (ScoutSuite), called out explicitly
 as the evidence for running a multi-tool pipeline.</sub>
 
 </td><td width="50%">
 
 **Detection Coverage**
 <img src="docs/screenshots/detection-coverage.png" width="100%"/>
-<sub>15 of 16 deliberately introduced misconfigurations detected (93.8%). The one miss —
-<code>AZ-SQL-TDE</code> — is a manual-verification item, listed with the reason no scanner would
+<sub>15 of 16 deliberately introduced misconfigurations detected (93.8%). The one miss -
+<code>AZ-SQL-TDE</code> - is a manual-verification item, listed with the reason no scanner would
 have raised it.</sub>
 
 </td></tr>
@@ -362,7 +362,7 @@ controls are failing; logging, cryptography, and access restriction are passing.
 
 **LLM Verification**
 <img src="docs/screenshots/llm-verification.png" width="100%"/>
-<sub>13 verified, 1 needs review, 2 flagged — a 12.5% flagged rate. Both flagged items
+<sub>13 verified, 1 needs review, 2 flagged - a 12.5% flagged rate. Both flagged items
 (<code>AWS-IAM-ADMIN</code>, <code>AZ-KV-PUBLIC</code>) are listed with the generated guidance that
 triggered the flag.</sub>
 
@@ -376,13 +376,13 @@ triggered the flag.</sub>
 
 <sub>A real finding prompt tokenized live: subscription ID, resource name, and reporter email replaced
 with <code>&lt;ACCT_001&gt;</code>, <code>&lt;RES_001&gt;</code>, and <code>&lt;UPN_001&gt;</code>.
-4 identifiers tokenized, 0 leaked — confirmed by the leak check.</sub>
+4 identifiers tokenized, 0 leaked - confirmed by the leak check.</sub>
 
 </div>
 
 ---
 
-## 🔁 The Approval Gate — what "remediation" means here
+## 🔁 The Approval Gate - what "remediation" means here
 
 This section exists because the word "remediation" is easy to over-read, and precision matters for a
 security tool.
@@ -404,8 +404,8 @@ flowchart LR
 ```
 
 **What actually happens when you click "Mark remediated":** a row is written to a local SQLite table.
-Nothing is called on Azure or AWS. The fix itself — editing a Terraform toggle, changing a firewall rule,
-rotating a key — happens separately, by the reviewer, using their own tooling. The console's job is to make
+Nothing is called on Azure or AWS. The fix itself - editing a Terraform toggle, changing a firewall rule,
+rotating a key - happens separately, by the reviewer, using their own tooling. The console's job is to make
 that decision reviewable and auditable, not to perform it. The Findings & Approvals screenshot above shows
 this exactly: the decision buttons sit next to raw finding detail, not next to any "run fix" control.
 
@@ -416,7 +416,7 @@ This is a design boundary, not a gap discovered late: see [Design Principle](#-d
 ## 🔒 Privacy-Preserving Redaction
 
 Before any finding text is framed as an LLM prompt, `core/redaction.py` tokenizes it. This is implemented,
-tested, and demonstrable on the **Privacy & Redaction** page — see the screenshot above, not a
+tested, and demonstrable on the **Privacy & Redaction** page - see the screenshot above, not a
 described-but-unbuilt feature.
 
 **What it catches**, in fixed pass order (most specific first, so overlapping values can't be partially
@@ -435,9 +435,9 @@ replaced):
 
 Guarantees, verified in `core/redaction.py`'s own test path:
 
-- **Deterministic** — the same value always maps to the same token within a session
-- **Reversible, locally only** — `Redactor.restore()` puts originals back; the mapping is never transmitted
-- **Leak-checked** — `leak_check()` confirms no original value survives into the redacted text
+- **Deterministic** - the same value always maps to the same token within a session
+- **Reversible, locally only** - `Redactor.restore()` puts originals back; the mapping is never transmitted
+- **Leak-checked** - `leak_check()` confirms no original value survives into the redacted text
 
 ---
 
@@ -451,7 +451,7 @@ ISO 27001 Annex A control  →  shared CIS Benchmark controls  →  DPDP Act 202
 
 Sourced from `catalogue/dpdp_map.csv`. Because the DPDP Act 2023 does not itself enumerate technical
 controls, the mapping is presented as an **argued link** between each technical control and a statutory
-obligation (e.g., Section 8(5)'s "reasonable security safeguards" requirement) — not as a certified legal
+obligation (e.g., Section 8(5)'s "reasonable security safeguards" requirement) - not as a certified legal
 mapping. The console states this explicitly on the page itself.
 
 ---
@@ -460,7 +460,7 @@ mapping. The console states this explicitly on the page itself.
 
 ```
 cloudguardian-console/
-├── app.py                        # Entry point — sidebar, routing, filters, point-in-time selector
+├── app.py                        # Entry point - sidebar, routing, filters, point-in-time selector
 │
 ├── core/                         # Business logic, no UI code
 │   ├── loader.py                 #   Report schema, normalization, view selection
@@ -490,9 +490,9 @@ cloudguardian-console/
 │   ├── dpdp_map.csv              #   ISO 27001 control → DPDP Act 2023 obligation
 │   └── README_catalogue.md
 │
-├── data/                         # Runtime state — NOT input
+├── data/                         # Runtime state - NOT input
 │   ├── console.db                #   SQLite: decisions + audit trail (gitignored)
-│   ├── azure_snapshot.json       #   Environment snapshot (gitignored — may contain subscription IDs)
+│   ├── azure_snapshot.json       #   Environment snapshot (gitignored - may contain subscription IDs)
 │   └── aws_snapshot.json
 │
 ├── docs/screenshots/             # Real console captures used in this README
@@ -503,7 +503,7 @@ cloudguardian-console/
 │   ├── snapshot_azure.py         #   Read-only az CLI + terraform plan calls
 │   └── make_certs.py             #   Self-signed wildcard certificate generator
 │
-├── certs/                        # TLS material (gitignored — private key never committed)
+├── certs/                        # TLS material (gitignored - private key never committed)
 ├── run_https.ps1 / run_https.sh  # HTTPS launchers
 ├── .streamlit/config.toml        # Theme (SSL paths deliberately not set here)
 ├── requirements.txt
@@ -547,8 +547,8 @@ python tools\generate_catalogue.py
 python -m streamlit run app.py
 ```
 
-Open **http://localhost:8501**. The sidebar's top control is a **Section** dropdown — Posture, Analysis,
-Decide, Assurance, Records — each revealing its own set of pages below it, as shown throughout the
+Open **http://localhost:8501**. The sidebar's top control is a **Section** dropdown - Posture, Analysis,
+Decide, Assurance, Records - each revealing its own set of pages below it, as shown throughout the
 [Console Walkthrough](#-console-walkthrough) above.
 
 ---
@@ -563,7 +563,7 @@ python tools\make_certs.py
 
 > **Why self-signed:** a public certificate authority will only issue a wildcard certificate for a domain
 > you can prove you own via a DNS challenge. No CA will ever issue one for `localhost` or a private hostname.
-> This generates a certificate for `*.cloudguardian.local`, valid once you trust it locally — the encryption
+> This generates a certificate for `*.cloudguardian.local`, valid once you trust it locally - the encryption
 > is identical to a publicly-trusted certificate; only the identity attestation differs.
 
 ```powershell
@@ -581,17 +581,17 @@ Browse to **https://console.cloudguardian.local:8501**.
 
 ## 📥 Bringing Your Own Data
 
-Replace the sample files — the console reads whatever matches the schema, filename is irrelevant.
+Replace the sample files - the console reads whatever matches the schema, filename is irrelevant.
 
-**Reports** (`reports/*.csv`) — required columns include `cloud`, `scan_stage`, `finding_id`, `severity`,
+**Reports** (`reports/*.csv`) - required columns include `cloud`, `scan_stage`, `finding_id`, `severity`,
 `status`, `source_tool`, `risk_score`; optional columns `detected_by`, `iso_27001`, `cis_control`,
 `mitre_attck`, `remediation`, `verification_status` unlock the cross-tool, compliance, ATT&CK, and LLM
 assurance pages respectively. Full contract in `reports/README_reports.md`.
 
-**Catalogue** (`catalogue/*.csv`) — optional. Missing files simply make the dependent page show an
+**Catalogue** (`catalogue/*.csv`) - optional. Missing files simply make the dependent page show an
 explanation instead of failing. Full contract in `catalogue/README_catalogue.md`.
 
-**Environment snapshot** (`data/*_snapshot.json`) — generate with:
+**Environment snapshot** (`data/*_snapshot.json`) - generate with:
 
 ```powershell
 python tools\snapshot_azure.py --resource-group rg-cloudguardian-lab --terraform-dir <path>
@@ -611,7 +611,7 @@ is applied.
 | Decisions database | `data/console.db` | Auto-created on first run; delete to reset all decisions |
 | ATT&CK technique dictionary | `core/metrics.py` → `ATTCK_REFERENCE` | Extend as your catalogue grows |
 
-No environment variables, no cloud credentials, and no secrets are required to run the console itself —
+No environment variables, no cloud credentials, and no secrets are required to run the console itself -
 it has no code path that authenticates to Azure or AWS. `tools/snapshot_azure.py` is the one script that
 does, and it reuses your existing `az login` session; it is never imported by `app.py`.
 
@@ -637,8 +637,8 @@ Listed explicitly so scope is never ambiguous. None of the following exist in th
 - **Automated remediation execution** (Azure Function / Lambda triggered by an approved decision)
 - **Backend API** between the dashboard and any cloud provider
 - **Live SDK calls** (Azure SDK for Python, Boto3) at runtime
-- **Multi-user authentication / RBAC** — currently a free-text reviewer name field
-- **Azure-hosted deployment** (Container Apps + managed identity + Entra ID Easy Auth) — architecture is
+- **Multi-user authentication / RBAC** - currently a free-text reviewer name field
+- **Azure-hosted deployment** (Container Apps + managed identity + Entra ID Easy Auth) - architecture is
   understood and documented separately; not deployed
 - Notifications, SSO, multi-cloud beyond Azure/AWS, predictive analytics
 
@@ -647,7 +647,7 @@ Listed explicitly so scope is never ambiguous. None of the following exist in th
 ## 📚 Lessons Learned
 
 - **Multi-tool CSPM only pays off if disagreement is visible.** Consolidating Prowler, ScoutSuite, and
-  Steampipe into one schema wasn't the hard part — surfacing *which* findings only one tool caught (the
+  Steampipe into one schema wasn't the hard part - surfacing *which* findings only one tool caught (the
   Cross-Tool Agreement screenshot above shows 2 such findings) is what makes the multi-tool approach
   defensible rather than just redundant.
 - **"Detected" and "existing" are different failure modes.** CSPM rules assert on what's present, not what's
@@ -664,15 +664,15 @@ Listed explicitly so scope is never ambiguous. None of the following exist in th
 
 ## 📄 License
 
-Educational / academic use — produced as a capstone deliverable for the IIT Roorkee × Futurense PG
+Educational / academic use - produced as a capstone deliverable for the IIT Roorkee × Futurense PG
 Certificate in AI/GenAI-Powered Cybersecurity.
 
 ---
 
 ## 🙏 Acknowledgements
 
-- **Prowler**, **ScoutSuite**, and **Steampipe** — the open-source CSPM tools this console consolidates output from
-- **MITRE ATT&CK** — technique and tactic reference used in the coverage mapping
+- **Prowler**, **ScoutSuite**, and **Steampipe** - the open-source CSPM tools this console consolidates output from
+- **MITRE ATT&CK** - technique and tactic reference used in the coverage mapping
 - IIT Roorkee × Futurense, PG Certificate Program in AI/GenAI-Powered Cybersecurity, Cohort 1
 
 </div>

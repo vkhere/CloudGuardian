@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 
 # TEAM CYBERSENTINEL - ☁️ CloudGuardian
@@ -27,8 +27,8 @@
 [![Streamlit](https://img.shields.io/badge/App-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
 [![NVIDIA NIM](https://img.shields.io/badge/GenAI-NVIDIA%20NIM-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://build.nvidia.com)
 
-*Capstone Project (CAP-CSE-3W) — PG Certificate in AI/GenAI Powered Cybersecurity*
-*IIT Roorkee × Futurense | Cohort 2025–26*
+*Capstone Project (CAP-CSE-3W) - PG Certificate in AI/GenAI Powered Cybersecurity*
+*IIT Roorkee × Futurense | Cohort 2025-26*
 
 [📄 Client Report](CSE_Capstone_CloudGuardian.pdf) &nbsp;•&nbsp; [🖥️ Streamlit App](4.streamlit_app/) &nbsp;•&nbsp; [📊 Results Dashboard](5.Results/) &nbsp;•&nbsp; [📜 License](LICENSE)
 
@@ -58,7 +58,7 @@
 - [📁 Repository Structure](#-repository-structure)
 - [✨ Features](#-features)
 - [📅 Implementation Phases](#-implementation-phases)
-- [🔴 Misconfigurations Introduced (M01–M12)](#-misconfigurations-introduced-12-total--m01m12)
+- [🔴 Misconfigurations Introduced (M01-M12)](#-misconfigurations-introduced-12-total--m01m12)
 - [🔐 Security Controls](#-security-controls)
 - [📜 Compliance Mapping](#-compliance-mapping)
 - [🖼️ Screenshots](#️-screenshots)
@@ -83,11 +83,11 @@
 
 ### The Business Problem
 
-A health-tech scale-up keeps failing **ISO 27001** and **HIPAA** audits due to recurring cloud misconfigurations — public S3 buckets, over-privileged IAM roles, unencrypted databases, and missing logging — across **both** its AWS and Azure estates. Manual, point-in-time audits cannot keep pace with the rate of change in modern cloud environments, where a single Terraform apply or console click can silently reopen a previously remediated exposure.
+A health-tech scale-up keeps failing **ISO 27001** and **HIPAA** audits due to recurring cloud misconfigurations - public S3 buckets, over-privileged IAM roles, unencrypted databases, and missing logging - across **both** its AWS and Azure estates. Manual, point-in-time audits cannot keep pace with the rate of change in modern cloud environments, where a single Terraform apply or console click can silently reopen a previously remediated exposure.
 
 ### Why CSPM Matters
 
-Cloud Security Posture Management (CSPM) is the discipline of continuously discovering, assessing, and remediating misconfiguration and compliance risk across cloud environments. As organizations adopt multi-cloud and hybrid strategies, the attack surface expands non-linearly: every new subscription, account, service, and IAM principal is a potential blast-radius amplifier. Gartner and multiple industry breach reports consistently attribute **the majority of cloud security incidents to misconfiguration, not to zero-day exploits** — making CSPM one of the highest-leverage investments a security organization can make.
+Cloud Security Posture Management (CSPM) is the discipline of continuously discovering, assessing, and remediating misconfiguration and compliance risk across cloud environments. As organizations adopt multi-cloud and hybrid strategies, the attack surface expands non-linearly: every new subscription, account, service, and IAM principal is a potential blast-radius amplifier. Gartner and multiple industry breach reports consistently attribute **the majority of cloud security incidents to misconfiguration, not to zero-day exploits** - making CSPM one of the highest-leverage investments a security organization can make.
 
 ### Industry Background &amp; Cloud Security Challenges
 
@@ -102,7 +102,7 @@ Cloud Security Posture Management (CSPM) is the discipline of continuously disco
 
 ### Why Organizations Need CSPM
 
-CSPM platforms shift security from **periodic, manual review** to **continuous, automated assurance** — closing the gap between "we deployed it correctly" and "it is still configured correctly today." This is foundational to Zero Trust, DevSecOps, and modern compliance programs (SOC 2, ISO 27001, PCI-DSS, HIPAA, DPDP).
+CSPM platforms shift security from **periodic, manual review** to **continuous, automated assurance** - closing the gap between "we deployed it correctly" and "it is still configured correctly today." This is foundational to Zero Trust, DevSecOps, and modern compliance programs (SOC 2, ISO 27001, PCI-DSS, HIPAA, DPDP).
 
 ### Business Benefits &amp; Expected Outcomes
 
@@ -328,7 +328,7 @@ flowchart TD
     Notify --> Human{Admin Decision}
     Human -->|Approve| APIGW[API Gateway + Approval Lambda]
     APIGW --> Remediate[Remediation Lambda Executes Fix]
-    Human -->|Reject| End[Workflow Ends Safely — No Changes]
+    Human -->|Reject| End[Workflow Ends Safely - No Changes]
 ```
 
 ---
@@ -355,8 +355,8 @@ flowchart TD
 
 | Category | Technology | Purpose |
 |---|---|---|
-| ☁️ Cloud — Primary | ![AWS](https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white) | Free Tier target environment |
-| ☁️ Cloud — Secondary | ![Azure](https://img.shields.io/badge/-Azure-0089D6?style=flat-square&logo=microsoftazure&logoColor=white) | Cross-cloud validation |
+| ☁️ Cloud - Primary | ![AWS](https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white) | Free Tier target environment |
+| ☁️ Cloud - Secondary | ![Azure](https://img.shields.io/badge/-Azure-0089D6?style=flat-square&logo=microsoftazure&logoColor=white) | Cross-cloud validation |
 | 🧱 IaC | ![Terraform](https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white) | Reproducible infrastructure deployment |
 | 🐍 Language | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | ML pipeline, RAG, Streamlit app |
 | 🔎 CSPM Scanner | ![Prowler](https://img.shields.io/badge/-Prowler-CC0000?style=flat-square) | 50+ compliance frameworks |
@@ -380,18 +380,18 @@ flowchart TD
 ```
 CloudGuardian/
 │
-├── 📦 1.Week1/                                   # Build & Break — baseline + controlled misconfigs
+├── 📦 1.Week1/                                   # Build & Break - baseline + controlled misconfigs
 │   ├── ☁️ 1. AWS/
 │   │   ├── 🧱 1.baseline/                        # Clean 3-tier infra (VPC·EC2·RDS·S3·IAM)
 │   │   │   ├── 📜 1.terraform/                   # main·vpc·ec2·rds·s3·iam·variables·outputs.tf
 │   │   │   ├── 🔎 2. prowler/                    # Baseline Prowler scan (50+ frameworks)
 │   │   │   ├── 🔎 3. scoutsuite/                 # Baseline ScoutSuite HTML dashboard
 │   │   │   └── 🔎 4.steampipe/                   # Baseline Steampipe SQL queries
-│   │   └── ⚠️ 2.misconfig/                       # 12 deliberate misconfigurations (M01–M12)
+│   │   └── ⚠️ 2.misconfig/                       # 12 deliberate misconfigurations (M01-M12)
 │   │       ├── 🧱 1.0 Misconfig/                 # Misconfigured Terraform + CloudTrail
 │   │       ├── 🔎 1.1.Prowler/                   # Post-misconfig Prowler scan + compliance CSVs
 │   │       ├── 🔎 1.2.scoutsuite/                # Post-misconfig ScoutSuite scan
-│   │       ├── 🔎 1.3steampipe/                  # M01–M12 targeted SQL evidence CSVs
+│   │       ├── 🔎 1.3steampipe/                  # M01-M12 targeted SQL evidence CSVs
 │   │       └── 🖼️ 5.snapshots/                   # Terraform plan/apply + scanner screenshots
 │   └── ☁️ 2.Azure/                               # Cross-cloud validation (same Build & Break flow)
 │       ├── 🧱 1.baseline/                        # Terraform · Prowler · ScoutSuite · Steampipe
@@ -438,7 +438,7 @@ CloudGuardian/
 └── ⚖️ LICENSE                                    # MIT
 ```
 
-> 📌 Folder numbering (`1.`, `2.`…) mirrors the 3-week execution plan below — each maps directly to a graded deliverable.
+> 📌 Folder numbering (`1.`, `2.`…) mirrors the 3-week execution plan below - each maps directly to a graded deliverable.
 
 ---
 
@@ -446,11 +446,11 @@ CloudGuardian/
 
 | | | |
 |---|---|---|
-| ✅ **Multi-Cloud Support** — AWS + Azure, identical pipeline | ✅ **Azure Security Assessment** — Compute, Storage, SQL, NSG, IAM | ✅ **AWS Security Assessment** — VPC, EC2, RDS, S3, IAM |
-| ✅ **Terraform Automation** — Fully reproducible 3-tier deployments | ✅ **Infrastructure as Code** — Version-controlled, auditable | ✅ **Compliance Mapping** — ISO 27001 · HIPAA · CIS · PCI-DSS · DPDP |
-| ✅ **Misconfiguration Detection** — 3 tools × 2 clouds | ✅ **Risk Prioritization** — CVSS × Exposure × Blast Radius + ML | ✅ **RAG-Grounded Guidance** — Dual-verified, plain-English fixes |
-| ✅ **Semi-Automatic Remediation** — Human-invoked, dry-run by default | ✅ **Fully Automated Remediation** — Human-approval-gated pipeline | ✅ **Security Dashboard** — Streamlit interactive UI |
-| ✅ **OWASP LLM06 Redaction** — No secrets ever reach the LLM | ✅ **Before/After Evidence** — Full audit trail per finding | ✅ **Executive Reporting** — docx / pdf / CSV / JSON exports |
+| ✅ **Multi-Cloud Support** - AWS + Azure, identical pipeline | ✅ **Azure Security Assessment** - Compute, Storage, SQL, NSG, IAM | ✅ **AWS Security Assessment** - VPC, EC2, RDS, S3, IAM |
+| ✅ **Terraform Automation** - Fully reproducible 3-tier deployments | ✅ **Infrastructure as Code** - Version-controlled, auditable | ✅ **Compliance Mapping** - ISO 27001 · HIPAA · CIS · PCI-DSS · DPDP |
+| ✅ **Misconfiguration Detection** - 3 tools × 2 clouds | ✅ **Risk Prioritization** - CVSS × Exposure × Blast Radius + ML | ✅ **RAG-Grounded Guidance** - Dual-verified, plain-English fixes |
+| ✅ **Semi-Automatic Remediation** - Human-invoked, dry-run by default | ✅ **Fully Automated Remediation** - Human-approval-gated pipeline | ✅ **Security Dashboard** - Streamlit interactive UI |
+| ✅ **OWASP LLM06 Redaction** - No secrets ever reach the LLM | ✅ **Before/After Evidence** - Full audit trail per finding | ✅ **Executive Reporting** - docx / pdf / CSV / JSON exports |
 
 ---
 
@@ -458,15 +458,15 @@ CloudGuardian/
 
 ```mermaid
 timeline
-    title CloudGuardian — 3-Week Execution Timeline
-    section Week 1 — Build & Break
+    title CloudGuardian - 3-Week Execution Timeline
+    section Week 1 - Build & Break
         Phase 1 : Infrastructure Deployment (AWS + Azure Terraform)
-        Phase 2 : Misconfiguration Injection (M01–M12)
-    section Week 2 — Detect & Prioritize
+        Phase 2 : Misconfiguration Injection (M01-M12)
+    section Week 2 - Detect & Prioritize
         Phase 3 : Scanning (Prowler · ScoutSuite · Steampipe)
         Phase 4 : Normalization (Unified Findings Schema)
         Phase 5 : Risk Prioritization (RandomForest + SMOTE + RAG)
-    section Week 3 — Remediate & Govern
+    section Week 3 - Remediate & Govern
         Phase 6 : Reporting (Dashboards, Crosswalk, Streamlit)
         Phase 7 : Remediation (Semi-Automatic + Fully Automated)
 ```
@@ -474,43 +474,43 @@ timeline
 ### Status Tracker
 
 <details>
-<summary><b>Week 1 — Build and Break ✅</b> — Deploy infrastructure on two clouds, document baseline, introduce controlled misconfigurations</summary>
+<summary><b>Week 1 - Build and Break ✅</b> - Deploy infrastructure on two clouds, document baseline, introduce controlled misconfigurations</summary>
 
 | # | Task | Status |
 |---|------|--------|
-| 1 | Deploy 3-tier workload via Terraform (VPC · EC2 · RDS · S3 · IAM) — **AWS** | ✅ Done |
-| 2 | Deploy equivalent workload — **Azure** (compute · database · storage · network · IAM) | ✅ Done |
+| 1 | Deploy 3-tier workload via Terraform (VPC · EC2 · RDS · S3 · IAM) - **AWS** | ✅ Done |
+| 2 | Deploy equivalent workload - **Azure** (compute · database · storage · network · IAM) | ✅ Done |
 | 3 | Run Prowler + ScoutSuite + Steampipe baseline scans (pre-misconfig) on both clouds | ✅ Done |
-| 4 | Introduce 12 controlled misconfigurations (M01–M12) across IAM · Storage · Networking · Encryption · Logging | ✅ Done |
+| 4 | Introduce 12 controlled misconfigurations (M01-M12) across IAM · Storage · Networking · Encryption · Logging | ✅ Done |
 | 5 | Rescan post-misconfig with all three CSPM tools, both clouds | ✅ Done |
 
 </details>
 
 <details>
-<summary><b>Week 2 — Detect and Prioritize ✅</b> — Consolidate findings, prioritize with ML, generate LLM guidance</summary>
+<summary><b>Week 2 - Detect and Prioritize ✅</b> - Consolidate findings, prioritize with ML, generate LLM guidance</summary>
 
 | # | Task | Status |
 |---|------|--------|
 | 1 | Consolidate Prowler + ScoutSuite + Steampipe → normalized CSV/JSON (AWS + Azure) | ✅ Done |
-| 2 | Priority scoring — `Score = CVSS × Exposure Weight × Blast Radius`, negation-aware keyword matching | ✅ Done |
+| 2 | Priority scoring - `Score = CVSS × Exposure Weight × Blast Radius`, negation-aware keyword matching | ✅ Done |
 | 3 | RandomForest + SMOTE classification (LOW / MEDIUM / CRITICAL) with before/after class-balance comparison | ✅ Done |
-| 4 | OWASP LLM06 redaction engine — strips credentials/ARNs/IPs before any LLM call | ✅ Done |
-| 5 | RAG-grounded remediation guidance via NVIDIA NIM — dual-verification pipeline (retrieval gate 0.30, Stage A grounding 0.55, Stage B grounding 0.35) | ✅ Done |
-| 6 | Streamlit app — portable, uploader-based version of the full pipeline | ✅ Done |
+| 4 | OWASP LLM06 redaction engine - strips credentials/ARNs/IPs before any LLM call | ✅ Done |
+| 5 | RAG-grounded remediation guidance via NVIDIA NIM - dual-verification pipeline (retrieval gate 0.30, Stage A grounding 0.55, Stage B grounding 0.35) | ✅ Done |
+| 6 | Streamlit app - portable, uploader-based version of the full pipeline | ✅ Done |
 
 </details>
 
 <details>
-<summary><b>Week 3 — Remediate and Govern ✅</b> — Two remediation tracks: human-invoked (semi-automatic) and fully automated with a human-approval gate</summary>
+<summary><b>Week 3 - Remediate and Govern ✅</b> - Two remediation tracks: human-invoked (semi-automatic) and fully automated with a human-approval gate</summary>
 
 | # | Task | Status |
 |---|------|--------|
-| 1 | Semi-automatic Lambda fixes — S3 public access · IAM key rotation · default encryption | ✅ Done |
+| 1 | Semi-automatic Lambda fixes - S3 public access · IAM key rotation · default encryption | ✅ Done |
 | 2 | Least-privilege remediation IAM role (Terraform) | ✅ Done |
 | 3 | Dry-run + real-run test evidence with CloudWatch logs &amp; screenshots | ✅ Done |
-| 4 | Fully automated pipeline — SNS → Starter Lambda → Step Functions → human approval (email) → Approval Lambda → Remediation Lambda | ✅ Done |
-| 5 | End-to-end live test — S3 public-access-block remediation confirmed via API Gateway approval flow | ✅ Done |
-| 6 | Compliance crosswalk — ISO 27001:2022 · HIPAA · CIS Controls v8 · PCI-DSS v4.0 · DPDP Act 2023 (TF-IDF cosine similarity, Streamlit app) | ✅ Done |
+| 4 | Fully automated pipeline - SNS → Starter Lambda → Step Functions → human approval (email) → Approval Lambda → Remediation Lambda | ✅ Done |
+| 5 | End-to-end live test - S3 public-access-block remediation confirmed via API Gateway approval flow | ✅ Done |
+| 6 | Compliance crosswalk - ISO 27001:2022 · HIPAA · CIS Controls v8 · PCI-DSS v4.0 · DPDP Act 2023 (TF-IDF cosine similarity, Streamlit app) | ✅ Done |
 | 7 | Before/after Prowler compliance rescans | ✅ Done |
 | 8 | Final report + SOPs | ✅ Done |
 
@@ -518,7 +518,7 @@ timeline
 
 ---
 
-## 🔴 Misconfigurations Introduced (12 Total — M01–M12)
+## 🔴 Misconfigurations Introduced (12 Total - M01-M12)
 
 | # | ID | Service | Misconfiguration | Severity |
 |---|----|---------|-------------------|----------|
@@ -545,7 +545,7 @@ timeline
 | **ScoutSuite** | Full account/tenant service-wise risk breakdown | Interactive HTML dashboard |
 | **Steampipe** | Targeted SQL queries: S3 · IAM · RDS · Security Groups · EBS · CloudTrail (AWS) · Compute · Storage · NSG · SQL (Azure) | CSV |
 
-> Run on **both AWS and Azure**, before and after misconfiguration, and again after remediation — giving a full before/misconfig/after evidence trail.
+> Run on **both AWS and Azure**, before and after misconfiguration, and again after remediation - giving a full before/misconfig/after evidence trail.
 
 ---
 
@@ -589,16 +589,16 @@ TF-IDF + cosine similarity mapping across seven frameworks (five live in the cro
 
 | View | Preview |
 |---|---|
-| Azure Portal — Resource Overview | `![Azure Portal](assets/screenshots/azure-portal.png)` |
-| Azure Resources — Provisioned Estate | `![Azure Resources](assets/screenshots/azure-resources.png)` |
-| Terraform Deployment — Apply Output | `![Terraform Deployment](assets/screenshots/terraform-deploy.png)` |
-| Prowler Scan — Compliance Report | `![Prowler Scan](assets/screenshots/prowler-scan.png)` |
-| CSV Reports — Consolidated Findings | `![CSV Reports](assets/screenshots/csv-reports.png)` |
-| Security Findings — Severity Breakdown | `![Security Findings](assets/screenshots/security-findings.png)` |
-| Risk Dashboard — ML Prioritization | `![Risk Dashboard](assets/screenshots/risk-dashboard.png)` |
-| GitHub Actions — CI Pipeline | `![GitHub Actions](assets/screenshots/github-actions.png)` |
-| Architecture — System Diagram | `![Architecture](assets/screenshots/architecture.png)` |
-| Final Dashboard — Streamlit App | `![Final Dashboard](assets/screenshots/final-dashboard.png)` |
+| Azure Portal - Resource Overview | `![Azure Portal](assets/screenshots/azure-portal.png)` |
+| Azure Resources - Provisioned Estate | `![Azure Resources](assets/screenshots/azure-resources.png)` |
+| Terraform Deployment - Apply Output | `![Terraform Deployment](assets/screenshots/terraform-deploy.png)` |
+| Prowler Scan - Compliance Report | `![Prowler Scan](assets/screenshots/prowler-scan.png)` |
+| CSV Reports - Consolidated Findings | `![CSV Reports](assets/screenshots/csv-reports.png)` |
+| Security Findings - Severity Breakdown | `![Security Findings](assets/screenshots/security-findings.png)` |
+| Risk Dashboard - ML Prioritization | `![Risk Dashboard](assets/screenshots/risk-dashboard.png)` |
+| GitHub Actions - CI Pipeline | `![GitHub Actions](assets/screenshots/github-actions.png)` |
+| Architecture - System Diagram | `![Architecture](assets/screenshots/architecture.png)` |
+| Final Dashboard - Streamlit App | `![Final Dashboard](assets/screenshots/final-dashboard.png)` |
 
 ### 📈 Sample Outputs (live in repo)
 
@@ -614,14 +614,14 @@ TF-IDF + cosine similarity mapping across seven frameworks (five live in the cro
 
 > ℹ️ **Info:** These steps assume Python 3.11+, an AWS Free Tier account, and/or an Azure subscription with contributor access. Terraform ≥ 1.5 recommended.
 
-**Step 1 — Clone the repository**
+**Step 1 - Clone the repository**
 
 ```bash
 git clone https://github.com/vkhere/CloudGuardian.git
 cd CloudGuardian
 ```
 
-**Step 2 — Provision infrastructure (optional — for full lifecycle replay)**
+**Step 2 - Provision infrastructure (optional - for full lifecycle replay)**
 
 ```bash
 cd "1.Week1/1. AWS/1.baseline/1.terraform"
@@ -639,14 +639,14 @@ vpc_id = "vpc-0abc123..."
 s3_bucket_name = "cloudguardian-baseline-..."
 ```
 
-**Step 3 — Install the Streamlit app dependencies**
+**Step 3 - Install the Streamlit app dependencies**
 
 ```bash
 cd 4.streamlit_app
 pip install -r requirements.txt --break-system-packages
 ```
 
-**Step 4 — Configure environment (optional, enables RAG)**
+**Step 4 - Configure environment (optional, enables RAG)**
 
 ```bash
 export NVIDIA_API_KEY='nvapi-...'
@@ -670,7 +670,7 @@ export NVIDIA_API_KEY='nvapi-...'
 git clone https://github.com/vkhere/CloudGuardian.git
 cd CloudGuardian/4.streamlit_app
 pip install -r requirements.txt --break-system-packages
-export NVIDIA_API_KEY='nvapi-...'   # optional — app runs without it, RAG tab shows retrieval only
+export NVIDIA_API_KEY='nvapi-...'   # optional - app runs without it, RAG tab shows retrieval only
 streamlit run app.py
 ```
 
@@ -693,7 +693,7 @@ Then open **`http://localhost:8501`**. Full usage notes in [`4.streamlit_app/REA
 streamlit run 4.streamlit_app/app.py
 
 # 2. Or process the pre-consolidated dataset directly
-python week2_notebook.ipynb   # via Jupyter — Upload → Prioritize → Classify → Redact → RAG → Export
+python week2_notebook.ipynb   # via Jupyter - Upload → Prioritize → Classify → Redact → RAG → Export
 ```
 
 **Trigger semi-automatic remediation (dry-run by default):**
@@ -717,7 +717,7 @@ Expected output:
 
 | # | Member | Role |
 |---|--------|------|
-| 1 | **Megha Sharma** | Web Application Co-Lead — CSPM pipeline, ML prioritization, RAG remediation, Streamlit app, Week 3 auto-remediation |
+| 1 | **Megha Sharma** | Web Application Co-Lead - CSPM pipeline, ML prioritization, RAG remediation, Streamlit app, Week 3 auto-remediation |
 | 2 | **Vinay Kumar** | Web Application Security Lead | Azure Security Architect | Test Evidence & Validation Lead | Project Manager  
 | 3 | **Kedar Pavaskar** | Azure Cloud Security Architect | Threat Modelling Lead |Security Testing & Remediation Verification Lead| Observability and Streamlit Dashboarding Lead | Report Authoring & Executive Presentation Lead   
 
@@ -727,10 +727,10 @@ Expected output:
 
 | Item | Detail |
 |---|---|
-| Model | NVIDIA NIM — `meta/llama-3.1-8b-instruct` |
+| Model | NVIDIA NIM - `meta/llama-3.1-8b-instruct` |
 | Purpose | 2-line plain-English remediation guidance per finding, grounded via RAG |
 | Verification | Dual-stage grounding check (Stage A ≥ 0.55, Stage B ≥ 0.35) + manual cross-check against raw scanner data |
-| Privacy | No credentials, secrets, or customer data submitted to the LLM — enforced by the OWASP LLM06 redaction engine before every call |
+| Privacy | No credentials, secrets, or customer data submitted to the LLM - enforced by the OWASP LLM06 redaction engine before every call |
 
 ---
 
@@ -751,7 +751,7 @@ Expected output:
 ## 🗺️ Roadmap
 
 - [x] Multi-cloud baseline deployment (AWS + Azure)
-- [x] Controlled misconfiguration injection (M01–M12)
+- [x] Controlled misconfiguration injection (M01-M12)
 - [x] 3-tool consolidated detection pipeline
 - [x] ML-based risk prioritization (RandomForest + SMOTE)
 - [x] RAG-grounded, redaction-safe remediation guidance
@@ -767,7 +767,7 @@ Expected output:
 
 ### Future Enhancements
 
-> 🧩 Community contributions toward any roadmap item above are welcome — see [Contributing](#-contributing).
+> 🧩 Community contributions toward any roadmap item above are welcome - see [Contributing](#-contributing).
 
 ---
 
@@ -783,7 +783,7 @@ Contributions are welcome and appreciated. To propose a change:
 3. **Test** your changes locally (Terraform `plan`, Python unit tests, Streamlit smoke test).
 4. **Open a Pull Request** describing the motivation and scope of the change.
 
-> 📄 See `CONTRIBUTING.md` (recommended addition — see [GitHub Best Practices](#-github-best-practices-recommendations)) for coding standards, commit conventions, and review process.
+> 📄 See `CONTRIBUTING.md` (recommended addition - see [GitHub Best Practices](#-github-best-practices-recommendations)) for coding standards, commit conventions, and review process.
 
 <details>
 <summary><b>❓ FAQ</b></summary>
@@ -819,21 +819,21 @@ A: No. All data is synthetic/lab-generated, and the OWASP LLM06 redaction engine
 
 ## 📜 License
 
-This project is licensed under the **MIT License** — see [`LICENSE`](LICENSE) for details.
+This project is licensed under the **MIT License** - see [`LICENSE`](LICENSE) for details.
 
 ---
 
 ## 🙏 Acknowledgements
 
-- **Microsoft Azure** — cross-cloud validation environment
-- **Amazon Web Services** — primary Free Tier lab environment
-- **HashiCorp Terraform** — infrastructure as code
-- **Prowler, ScoutSuite &amp; Steampipe** — open-source CSPM tooling
-- **NVIDIA NIM** — GenAI inference for remediation guidance
-- **GitHub** — hosting, version control, and collaboration
-- **Microsoft Learn** — Azure security benchmark references
-- **IIT Roorkee × Futurense** — PG Certificate in AI/GenAI Powered Cybersecurity program
-- **The Open Source Community** — for the tools this project builds upon
+- **Microsoft Azure** - cross-cloud validation environment
+- **Amazon Web Services** - primary Free Tier lab environment
+- **HashiCorp Terraform** - infrastructure as code
+- **Prowler, ScoutSuite &amp; Steampipe** - open-source CSPM tooling
+- **NVIDIA NIM** - GenAI inference for remediation guidance
+- **GitHub** - hosting, version control, and collaboration
+- **Microsoft Learn** - Azure security benchmark references
+- **IIT Roorkee × Futurense** - PG Certificate in AI/GenAI Powered Cybersecurity program
+- **The Open Source Community** - for the tools this project builds upon
 
 ---
 
@@ -848,7 +848,7 @@ This project is licensed under the **MIT License** — see [`LICENSE`](LICENSE) 
 [![Portfolio](https://img.shields.io/badge/Portfolio-Visit-000000?style=for-the-badge&logo=googlechrome&logoColor=white)](#)
 [![Email](https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:appskp2314@gmail.com)
 
-<sub>PG Certificate in AI/GenAI Powered Cybersecurity · IIT Roorkee × Futurense · Cohort 2025–26</sub><br/>
+<sub>PG Certificate in AI/GenAI Powered Cybersecurity · IIT Roorkee × Futurense · Cohort 2025-26</sub><br/>
 <sub>MIT Licensed · © 2026 CloudGuardian Contributors</sub>
 
 </div>

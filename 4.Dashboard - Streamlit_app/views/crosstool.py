@@ -1,4 +1,4 @@
-"""views/crosstool.py — which scanner caught what."""
+﻿"""views/crosstool.py - which scanner caught what."""
 
 from __future__ import annotations
 
@@ -58,7 +58,7 @@ def render(current, view_label: str) -> None:
     if not singles.empty:
         st.warning(
             f"**{len(singles)} finding(s) were caught by exactly one scanner.** "
-            "Running a single tool would have missed them entirely — this is the "
+            "Running a single tool would have missed them entirely - this is the "
             "evidence for a multi-tool pipeline."
         )
         st.dataframe(

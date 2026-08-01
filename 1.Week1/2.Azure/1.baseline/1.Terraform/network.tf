@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network" "main" {
+﻿resource "azurerm_virtual_network" "main" {
   name                = local.vnet_name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
@@ -74,7 +74,7 @@ resource "azurerm_network_security_group" "web" {
 
 # Secure default: NSG attached to the web subnet. misconfig_vm_remove_nsg_
 # association = true skips creating this association entirely, leaving the
-# subnet with no network-layer filtering at all — a "missing firewall"
+# subnet with no network-layer filtering at all - a "missing firewall"
 # finding that's distinct from (and more severe than) the SSH-only one above.
 resource "azurerm_subnet_network_security_group_association" "web" {
   count                      = var.misconfig_vm_remove_nsg_association ? 0 : 1
@@ -84,7 +84,7 @@ resource "azurerm_subnet_network_security_group_association" "web" {
 
 # THE misconfig: a standalone rule allowing every protocol, every port, from
 # every source. Kept as its own toggle/resource so you can demonstrate it
-# independently of the SSH-only rule above — both show up as distinct
+# independently of the SSH-only rule above - both show up as distinct
 # Prowler findings.
 resource "azurerm_network_security_rule" "misconfig_allow_any_any" {
   count                        = var.misconfig_nsg_allow_any_any ? 1 : 0

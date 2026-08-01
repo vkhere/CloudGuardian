@@ -1,4 +1,4 @@
-"""views/attackpath.py — blast radius and attack-path chains."""
+﻿"""views/attackpath.py - blast radius and attack-path chains."""
 
 from __future__ import annotations
 
@@ -88,10 +88,10 @@ def render(current) -> None:
     c3.metric("Broken by remediation", len(sm) - live_count)
 
     if live_count:
-        st.error(f"{live_count} attack path(s) are fully open right now — every step in "
+        st.error(f"{live_count} attack path(s) are fully open right now - every step in "
                  "the chain has a failing finding behind it.")
     else:
-        st.success("No path is fully open — at least one step in every chain is remediated.")
+        st.success("No path is fully open - at least one step in every chain is remediated.")
 
     st.divider()
     st.subheader("Path summary")
@@ -109,7 +109,7 @@ def render(current) -> None:
     choice = st.selectbox(
         "Choose a path",
         sm["path_id"].tolist(),
-        format_func=lambda p: f"{p} — {sm[sm['path_id'] == p]['path_name'].iloc[0]}",
+        format_func=lambda p: f"{p} - {sm[sm['path_id'] == p]['path_name'].iloc[0]}",
     )
     steps = paths[paths["path_id"] == choice]
     row = sm[sm["path_id"] == choice].iloc[0]
@@ -126,7 +126,7 @@ def render(current) -> None:
 
     st.graphviz_chart(_dot(steps, open_ids), use_container_width=True)
     st.caption("Solid nodes are steps whose underlying finding is still failing. "
-               "Dimmed nodes are already remediated — breaking any one of them breaks the chain.")
+               "Dimmed nodes are already remediated - breaking any one of them breaks the chain.")
 
     st.markdown("**Steps**")
     for s in steps.itertuples():
@@ -139,7 +139,7 @@ def render(current) -> None:
             st.caption(s.note)
 
     st.info(
-        "**How to read this.** Each chain is only as strong as its weakest link — "
+        "**How to read this.** Each chain is only as strong as its weakest link - "
         "remediating any single step breaks the whole path. That makes shared steps "
         "the highest-value fixes in the backlog."
     )

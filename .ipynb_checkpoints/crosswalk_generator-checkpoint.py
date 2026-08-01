@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 CloudGuardian - Automatic Compliance Crosswalk Generator
 ===========================================================
@@ -96,7 +96,7 @@ def select_file_gui(title, filetypes, required=True):
         if path:
             return path
         if required:
-            print("No file selected. This file is required — please try again.")
+            print("No file selected. This file is required - please try again.")
             return select_file_gui(title, filetypes, required=required)
         return None
     except Exception:
@@ -218,7 +218,7 @@ def build_crosswalk(prowler_csv_path, dpdp_map):
     if not rows:
         raise ValueError("Prowler CSV appears to be empty.")
     if "COMPLIANCE" not in rows[0]:
-        raise ValueError("This CSV has no COMPLIANCE column — is it a raw Prowler output file?")
+        raise ValueError("This CSV has no COMPLIANCE column - is it a raw Prowler output file?")
 
     crosswalk_rows = []
     for r in rows:
@@ -263,7 +263,7 @@ def build_crosswalk(prowler_csv_path, dpdp_map):
                 "CIS_Benchmark": f"{cis_version}: " + ", ".join(cis_refs) if cis_refs else "Not Mapped",
                 "DPDP_Section": "Not Assessed",
                 "DPDP_Relevance": "Not Assessed",
-                "DPDP_Justification": "No entry in dpdp_crosswalk.csv yet — add one if this check is relevant to personal-data handling.",
+                "DPDP_Justification": "No entry in dpdp_crosswalk.csv yet - add one if this check is relevant to personal-data handling.",
             })
 
     return crosswalk_rows
@@ -321,9 +321,9 @@ def write_summary_md(rows, path, source_file):
         f"| DPDP Act 2023 | {dpdp_c[0]} | {dpdp_c[1]} | {dpdp_c[2]}% |",
         "",
         "> ISO 27001, HIPAA, NIST CSF and CIS are auto-extracted from Prowler's "
-        "built-in COMPLIANCE metadata — coverage should be near 100%. "
+        "built-in COMPLIANCE metadata - coverage should be near 100%. "
         "DPDP coverage depends entirely on how many checks exist in your "
-        "`dpdp_crosswalk.csv` — extend that file to raise this number.",
+        "`dpdp_crosswalk.csv` - extend that file to raise this number.",
         "",
         "## FAIL findings without a DPDP mapping yet",
         "",
@@ -339,7 +339,7 @@ def write_summary_md(rows, path, source_file):
             seen.add(r["CHECK_ID"])
             lines.append(f"| `{r['CHECK_ID']}` | {r['CHECK_TITLE']} | {r['SEVERITY']} |")
     else:
-        lines.append("None — every FAIL finding has a DPDP assessment. 🎉")
+        lines.append("None - every FAIL finding has a DPDP assessment. 🎉")
 
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
@@ -368,7 +368,7 @@ def main():
     if dpdp_csv is None:
         print("\nNow select your DPDP crosswalk CSV. Click Cancel to skip if you don't have one yet.")
         dpdp_csv = select_file_gui(
-            "Select dpdp_crosswalk.csv (OPTIONAL — Cancel to skip)",
+            "Select dpdp_crosswalk.csv (OPTIONAL - Cancel to skip)",
             [("CSV files", "*.csv"), ("All files", "*.*")],
             required=False,
         )
@@ -378,7 +378,7 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     print(f"\nProwler CSV : {prowler_csv}")
-    print(f"DPDP CSV    : {dpdp_csv or '(skipped — DPDP will be marked Not Assessed)'}")
+    print(f"DPDP CSV    : {dpdp_csv or '(skipped - DPDP will be marked Not Assessed)'}")
     print(f"Output dir  : {output_dir}\n")
     print("Building crosswalk...")
 

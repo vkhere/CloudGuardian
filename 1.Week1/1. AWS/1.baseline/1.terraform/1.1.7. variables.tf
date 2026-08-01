@@ -1,6 +1,6 @@
-# ============================================================
-# variables.tf — All Variables for CloudGuardian Project
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# variables.tf - All Variables for CloudGuardian Project
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Central place for all configurable values
 # ============================================================
 
@@ -10,7 +10,7 @@ variable "region" {
   description = "AWS region for deployment"
 }
 
-# Project name — used as prefix for all resource names
+# Project name - used as prefix for all resource names
 variable "project" {
   default     = "cloudguardian"
   description = "Project name prefix"

@@ -1,8 +1,8 @@
-# ============================================================
-# s3.tf — Object Storage
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# s3.tf - Object Storage
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Creates S3 bucket with encryption and versioning
-#           Baseline: secure — public access blocked
+#           Baseline: secure - public access blocked
 # ============================================================
 
 # Random suffix for globally unique bucket name
@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "data" {
   tags          = { Name = "${var.project}-bucket" }
 }
 
-# Enable versioning — protects against accidental deletion
+# Enable versioning - protects against accidental deletion
 resource "aws_s3_bucket_versioning" "data" {
   bucket = aws_s3_bucket.data.id
   versioning_configuration {
@@ -25,7 +25,7 @@ resource "aws_s3_bucket_versioning" "data" {
   }
 }
 
-# Enable default encryption — data at rest is encrypted
+# Enable default encryption - data at rest is encrypted
 resource "aws_s3_bucket_server_side_encryption_configuration" "data" {
   bucket = aws_s3_bucket.data.id
   rule {
@@ -35,7 +35,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "data" {
   }
 }
 
-# Block all public access — baseline secure configuration
+# Block all public access - baseline secure configuration
 resource "aws_s3_bucket_public_access_block" "data" {
   bucket                  = aws_s3_bucket.data.id
   block_public_acls       = true

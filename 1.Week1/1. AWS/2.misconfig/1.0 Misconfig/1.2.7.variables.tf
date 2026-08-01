@@ -1,6 +1,6 @@
-# ============================================================
-# variables.tf — All Variables for CloudGuardian Project
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# variables.tf - All Variables for CloudGuardian Project
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Central place for all configurable values
 # Status  : UNCHANGED FROM BASELINE
 # ============================================================

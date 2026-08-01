@@ -1,14 +1,14 @@
-# CloudGuardian Week 3 — Auto-Remediation Lambda Functions
+﻿# CloudGuardian Week 3 - Auto-Remediation Lambda Functions
 
 Three safe, reversible auto-remediation functions for findings M01, M02, M07/M09.
-All default to `dry_run: true` — nothing executes unless you explicitly pass `"dry_run": false`.
+All default to `dry_run: true` - nothing executes unless you explicitly pass `"dry_run": false`.
 
 ## Files
 | File | Finding | Fixes |
 |---|---|---|
 | `remediate_s3_public_access.py` | M02/M06 | Re-enables S3 Block Public Access |
 | `remediate_iam_key_rotation.py` | M01 | Deactivates (not deletes) exposed IAM access key |
-| `remediate_default_encryption.py` | M07/M09 | Enables SSE-S3 on buckets; **flags** unencrypted RDS for human approval (does not auto-fix RDS encryption — that requires a disruptive snapshot/restore) |
+| `remediate_default_encryption.py` | M07/M09 | Enables SSE-S3 on buckets; **flags** unencrypted RDS for human approval (does not auto-fix RDS encryption - that requires a disruptive snapshot/restore) |
 
 ## Deploy (per function, example for S3 one)
 ```bash
@@ -29,7 +29,7 @@ aws lambda create-function \
 - IAM function: `iam:ListAccessKeys`, `iam:UpdateAccessKey`
 - Encryption function: `s3:GetEncryptionConfiguration`, `s3:PutEncryptionConfiguration`, `rds:DescribeDBInstances`
 
-## Test invoke (dry run — safe, default)
+## Test invoke (dry run - safe, default)
 ```bash
 aws lambda invoke \
   --function-name cloudguardian-remediate-s3-public-access \
@@ -38,7 +38,7 @@ aws lambda invoke \
   response.json && cat response.json
 ```
 
-## Test invoke (real remediation — only after dry run looks correct)
+## Test invoke (real remediation - only after dry run looks correct)
 ```bash
 aws lambda invoke \
   --function-name cloudguardian-remediate-s3-public-access \
@@ -50,5 +50,5 @@ aws lambda invoke \
 ## Note
 Replace the M-ID comments (`M01`, `M02`, `M07/M09`) in each file's docstring
 with your team's actual catalogue IDs from `05_CSE_Capstone_CloudGuardian.pdf`
-if they differ — I used the pattern from your prior CloudGuardian work
+if they differ - I used the pattern from your prior CloudGuardian work
 (M01=IAM wildcard, M02/M06=S3 public access, M07/M09=encryption).

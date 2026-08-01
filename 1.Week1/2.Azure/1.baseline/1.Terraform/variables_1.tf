@@ -1,4 +1,4 @@
-############################
+﻿############################
 # Core / naming
 ############################
 
@@ -15,7 +15,7 @@ variable "environment" {
 }
 
 variable "location" {
-  description = "Azure region to deploy into. Central US recommended over Central India for free/student subscriptions — several VM SKUs (including the basic B-series) are commonly restricted in Central India for non-enterprise subscriptions."
+  description = "Azure region to deploy into. Central US recommended over Central India for free/student subscriptions - several VM SKUs (including the basic B-series) are commonly restricted in Central India for non-enterprise subscriptions."
   type        = string
   default     = "Central US"
 }
@@ -56,7 +56,7 @@ variable "data_subnet_prefix" {
 ############################
 
 variable "vm_size" {
-  description = "VM size for the web tier. Standard_B1s is in Azure's free-account 12-month allowance in principle, but is frequently SkuNotAvailable on free/student subscriptions in many regions. Standard_D2s_v3 is a safer default — check availability for your subscription with: az vm list-skus --location <region> --resource-type virtualMachines --query \"[?restrictions[0]==null].name\" --output table"
+  description = "VM size for the web tier. Standard_B1s is in Azure's free-account 12-month allowance in principle, but is frequently SkuNotAvailable on free/student subscriptions in many regions. Standard_D2s_v3 is a safer default - check availability for your subscription with: az vm list-skus --location <region> --resource-type virtualMachines --query \"[?restrictions[0]==null].name\" --output table"
   type        = string
   default     = "Standard_D2s_v3"
 }
@@ -68,7 +68,7 @@ variable "admin_username" {
 }
 
 variable "ssh_public_key" {
-  description = "Your SSH public key contents (e.g. contents of ~/.ssh/id_rsa.pub). Required — no default on purpose."
+  description = "Your SSH public key contents (e.g. contents of ~/.ssh/id_rsa.pub). Required - no default on purpose."
   type        = string
 }
 
@@ -88,7 +88,7 @@ variable "sql_admin_username" {
 }
 
 variable "sql_admin_password" {
-  description = "Admin password for the Azure SQL logical server. Pass via TF_VAR_sql_admin_password env var or a .auto.tfvars file that is gitignored — never commit this."
+  description = "Admin password for the Azure SQL logical server. Pass via TF_VAR_sql_admin_password env var or a .auto.tfvars file that is gitignored - never commit this."
   type        = string
   sensitive   = true
 }
@@ -119,7 +119,7 @@ variable "storage_replication_type" {
 # Misconfiguration toggles
 #
 # All sixteen default to the SECURE setting. Flip any of them to true in
-# terraform.tfvars, then re-apply, to deliberately introduce that finding —
+# terraform.tfvars, then re-apply, to deliberately introduce that finding -
 # this is your Week 1 "controlled misconfigurations" catalogue, built into
 # the code instead of bolted on afterwards. Each one maps to a real-world
 # finding Prowler/Checkov/ScoutSuite will flag.

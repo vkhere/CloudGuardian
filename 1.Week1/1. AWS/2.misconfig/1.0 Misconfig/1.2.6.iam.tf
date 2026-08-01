@@ -1,6 +1,6 @@
-# ============================================================
-# iam.tf — Identity and Access Management
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# iam.tf - Identity and Access Management
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Creates IAM role for EC2 web tier
 #
 # MISCONFIGURATIONS INTRODUCED:
@@ -9,11 +9,11 @@
 #   [M03] AdministratorAccess managed policy attached to role
 # ============================================================
 
-# IAM Role — allows EC2 to assume this role
+# IAM Role - allows EC2 to assume this role
 resource "aws_iam_role" "web_role" {
   name = "${var.project}-web-role"
 
-  # Trust policy — only EC2 can assume this role
+  # Trust policy - only EC2 can assume this role
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -27,7 +27,7 @@ resource "aws_iam_role" "web_role" {
 }
 
 # ---------------------------------------------------------------
-# [M01] + [M02] MISCONFIGURATION — Wildcard Action AND Resource
+# [M01] + [M02] MISCONFIGURATION - Wildcard Action AND Resource
 #
 # [M01] Baseline Action: ["s3:GetObject", "s3:ListBucket"]
 #       Misconfig Action: ["*"]
@@ -60,7 +60,7 @@ resource "aws_iam_role_policy" "web_policy" {
 }
 
 # ---------------------------------------------------------------
-# [M03] MISCONFIGURATION — AdministratorAccess attached to EC2 role
+# [M03] MISCONFIGURATION - AdministratorAccess attached to EC2 role
 #  Baseline:  No managed policies attached (SECURE)
 #  Misconfig: AdministratorAccess policy attached (INSECURE)
 #
@@ -79,7 +79,7 @@ resource "aws_iam_role_policy_attachment" "admin_access" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"  # INSECURE: full admin
 }
 
-# IAM Instance Profile — attaches role to EC2
+# IAM Instance Profile - attaches role to EC2
 resource "aws_iam_instance_profile" "web_profile" {
   name = "${var.project}-web-profile"
   role = aws_iam_role.web_role.name

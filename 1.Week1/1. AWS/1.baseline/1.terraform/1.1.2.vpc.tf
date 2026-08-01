@@ -1,11 +1,11 @@
-# ============================================================
-# vpc.tf — Network Infrastructure
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# vpc.tf - Network Infrastructure
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Creates VPC, Public Subnet, Private Subnet,
 #           Internet Gateway, Route Table and Security Group
 # ============================================================
 
-# Main VPC — contains all resources
+# Main VPC - contains all resources
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
@@ -13,7 +13,7 @@ resource "aws_vpc" "main" {
   tags = { Name = "${var.project}-vpc" }
 }
 
-# Public Subnet — Web tier lives here (ap-south-1a)
+# Public Subnet - Web tier lives here (ap-south-1a)
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
@@ -22,7 +22,7 @@ resource "aws_subnet" "public" {
   tags = { Name = "${var.project}-public" }
 }
 
-# Private Subnet — Database lives here (ap-south-1b)
+# Private Subnet - Database lives here (ap-south-1b)
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
@@ -30,13 +30,13 @@ resource "aws_subnet" "private" {
   tags = { Name = "${var.project}-private" }
 }
 
-# Internet Gateway — allows internet access for public subnet
+# Internet Gateway - allows internet access for public subnet
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
   tags   = { Name = "${var.project}-igw" }
 }
 
-# Route Table — routes internet traffic through IGW
+# Route Table - routes internet traffic through IGW
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -48,13 +48,13 @@ resource "aws_route_table" "public" {
   tags = { Name = "${var.project}-public-rt" }
 }
 
-# Route Table Association — links public subnet to route table
+# Route Table Association - links public subnet to route table
 resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
 
-# Security Group — controls inbound/outbound traffic for web tier
+# Security Group - controls inbound/outbound traffic for web tier
 resource "aws_security_group" "web_sg" {
   name   = "${var.project}-web-sg"
   vpc_id = aws_vpc.main.id
@@ -86,7 +86,7 @@ resource "aws_security_group" "web_sg" {
   tags = { Name = "${var.project}-web-sg" }
 }
 
-# RDS Security Group — only allows MySQL from web tier
+# RDS Security Group - only allows MySQL from web tier
 resource "aws_security_group" "rds_sg" {
   name   = "${var.project}-rds-sg"
   vpc_id = aws_vpc.main.id

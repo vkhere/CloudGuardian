@@ -1,4 +1,4 @@
-"""views/overview.py — executive single-pane summary."""
+﻿"""views/overview.py - executive single-pane summary."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""views/mitre.py — ATT&CK technique coverage for open findings."""
+﻿"""views/mitre.py - ATT&CK technique coverage for open findings."""
 
 from __future__ import annotations
 

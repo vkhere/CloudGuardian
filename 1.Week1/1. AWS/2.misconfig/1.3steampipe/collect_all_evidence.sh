@@ -1,7 +1,7 @@
-#!/bin/bash
+﻿#!/bin/bash
 # ============================================================
 # collect_all_evidence.sh
-# Project : CloudGuardian — CAP-CSE-3W (Week 2)
+# Project : CloudGuardian - CAP-CSE-3W (Week 2)
 # Purpose : Run Steampipe queries for ALL misconfigurations
 #           (M01-M12 + CloudTrail) in one shot and export
 #           each result to its own CSV file for evidence.
@@ -36,7 +36,7 @@ run_query () {
 }
 
 # ------------------------------------------------------------
-# IAM — M01, M02, M03
+# IAM - M01, M02, M03
 # ------------------------------------------------------------
 run_query "M01_M02_iam_role_inline_policy_wildcards" "
 select
@@ -60,7 +60,7 @@ where
 "
 
 # ------------------------------------------------------------
-# S3 — M04, M05, M10
+# S3 - M04, M05, M10
 # ------------------------------------------------------------
 run_query "M04_s3_public_access_block_disabled" "
 select
@@ -97,7 +97,7 @@ where
 "
 
 # ------------------------------------------------------------
-# VPC / Security Groups — M06, M07
+# VPC / Security Groups - M06, M07
 # ------------------------------------------------------------
 run_query "M06_sg_ssh_open_to_world" "
 select
@@ -130,7 +130,7 @@ where
 "
 
 # ------------------------------------------------------------
-# RDS — M08, M09, M12
+# RDS - M08, M09, M12
 # ------------------------------------------------------------
 run_query "M08_rds_publicly_accessible" "
 select
@@ -166,7 +166,7 @@ where
 "
 
 # ------------------------------------------------------------
-# EC2 — M11
+# EC2 - M11
 # ------------------------------------------------------------
 run_query "M11_ec2_imdsv2_disabled" "
 select
@@ -182,7 +182,7 @@ where
 "
 
 # ------------------------------------------------------------
-# CloudTrail — logging / validation / region coverage
+# CloudTrail - logging / validation / region coverage
 # ------------------------------------------------------------
 run_query "CloudTrail_logging_validation_region_coverage" "
 select

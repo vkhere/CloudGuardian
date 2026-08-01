@@ -1,1 +1,1 @@
-{"statusCode": 200, "body": "RDS instance 'cloudguardian-db' is unencrypted. This requires a snapshot-restore cycle which causes downtime — routed to human approval queue, NOT auto-remediated."}
+﻿{"statusCode": 200, "body": "RDS instance 'cloudguardian-db' is unencrypted. This requires a snapshot-restore cycle which causes downtime - routed to human approval queue, NOT auto-remediated."}

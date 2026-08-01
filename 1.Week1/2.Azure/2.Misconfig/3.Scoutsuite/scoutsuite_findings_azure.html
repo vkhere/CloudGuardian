@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +31,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>ScoutSuite Audit Report — Azure</h1>
-<h2>CloudGuardian — CAP-CSE-3W | IIT Roorkee × Futurense</h2>
+        <h1>ScoutSuite Audit Report - Azure</h1>
+<h2>CloudGuardian - CAP-CSE-3W | IIT Roorkee × Futurense</h2>
 <h3>PG Certificate in AI/GenAI Powered Cybersecurity</h3>
 <hr />
 <table>
@@ -81,7 +81,7 @@
 <h2>What is ScoutSuite?</h2>
 <p>ScoutSuite is an open-source multi-cloud security auditing tool maintained by NCC Group.
 Unlike Steampipe (SQL-based) or Prowler (CIS benchmark-driven), ScoutSuite uses a
-<strong>rule-engine approach</strong> — it fetches the full configuration of your cloud environment
+<strong>rule-engine approach</strong> - it fetches the full configuration of your cloud environment
 and evaluates it against a library of pre-defined security rules.</p>
 <p>It produces an <strong>interactive HTML dashboard</strong> that lets you drill into each service,
 view flagged rules, and inspect the raw resource configuration.</p>
@@ -127,7 +127,7 @@ python cspm/run_scout.py azure --cli --report-dir scoutsuite-report/insecure
 </tr>
 <tr>
 <td><strong>Misconfigs Detected</strong></td>
-<td>—</td>
+<td>-</td>
 <td>7 / 16</td>
 <td><strong>43.75%</strong></td>
 </tr>
@@ -162,7 +162,7 @@ configuration, and logging granularity. This validates the multi-tool CSPM appro
 used in CloudGuardian.</p>
 </blockquote>
 <hr />
-<h2>Baseline vs Insecure — Delta Analysis</h2>
+<h2>Baseline vs Insecure - Delta Analysis</h2>
 <p>The following table shows the 9 <strong>NEW</strong> findings that appeared only after
 the 16 misconfigurations were injected via Terraform:</p>
 <table>
@@ -241,12 +241,12 @@ the 16 misconfigurations were injected via Terraform:</p>
 </tr>
 </tbody>
 </table>
-<h3>Screenshot (ScoutSuite Dashboard — Summary)</h3>
+<h3>Screenshot (ScoutSuite Dashboard - Summary)</h3>
 <p><img alt="ScoutSuite Summary" src="./images/Scout_Suite_Summary_page_Dashboard.PNG" /></p>
 <hr />
 <h2>Detailed Findings by Service</h2>
 <hr />
-<h3>Service 1 — Storage Accounts (6 flagged)</h3>
+<h3>Service 1 - Storage Accounts (6 flagged)</h3>
 <h4>Finding S1: Public Blob Container</h4>
 <table>
 <thead>
@@ -419,7 +419,7 @@ This is the #1 cause of cloud data breaches.</p>
 </tr>
 <tr>
 <td><strong>Terraform Toggle</strong></td>
-<td>N/A (Azure default — platform-managed key)</td>
+<td>N/A (Azure default - platform-managed key)</td>
 </tr>
 <tr>
 <td><strong>Delta</strong></td>
@@ -468,7 +468,7 @@ This is the #1 cause of cloud data breaches.</p>
 <p><img alt="Storage Dashboard" src="./images/Storage_Account_Dashboard.PNG" />
 <img alt="Storage Configurations" src="./images/Storage_Account_Configurations_Dashboard.PNG" /></p>
 <hr />
-<h3>Service 2 — SQL Database (13 flagged)</h3>
+<h3>Service 2 - SQL Database (13 flagged)</h3>
 <h4>Finding SQL1: Allow Ingress from Any IP ⭐</h4>
 <table>
 <thead>
@@ -488,7 +488,7 @@ This is the #1 cause of cloud data breaches.</p>
 </tr>
 <tr>
 <td><strong>Flagged Items</strong></td>
-<td>2 (AllowAzureServices 0.0.0.0 + MISCONFIG-AllowAllIPs 0.0.0.0–255.255.255.255)</td>
+<td>2 (AllowAzureServices 0.0.0.0 + MISCONFIG-AllowAllIPs 0.0.0.0-255.255.255.255)</td>
 </tr>
 <tr>
 <td><strong>Resource</strong></td>
@@ -536,7 +536,7 @@ This is the #1 cause of cloud data breaches.</p>
 </tr>
 <tr>
 <td><strong>Delta</strong></td>
-<td>Pre-existing (also in baseline — auditing was never configured)</td>
+<td>Pre-existing (also in baseline - auditing was never configured)</td>
 </tr>
 </tbody>
 </table>
@@ -660,7 +660,7 @@ This is the #1 cause of cloud data breaches.</p>
 </tr>
 </tbody>
 </table>
-<h4>Finding SQL8–SQL12: Vulnerability Assessment &amp; Alerts</h4>
+<h4>Finding SQL8-SQL12: Vulnerability Assessment &amp; Alerts</h4>
 <table>
 <thead>
 <tr>
@@ -702,7 +702,7 @@ This is the #1 cause of cloud data breaches.</p>
 <img alt="SQL Configs 1" src="./images/SQL_Configurations_Dashboard1.PNG" />
 <img alt="SQL Configs 2" src="./images/SQL_Configurations_Dashboard2.PNG" /></p>
 <hr />
-<h3>Service 3 — Network (5 flagged)</h3>
+<h3>Service 3 - Network (5 flagged)</h3>
 <p>All 5 findings are <strong>NEW</strong> in the insecure scan and originate from two NSG rules:
 - <code>MISCONFIG-Allow-Any-Any</code> (any protocol, any port, from <code>*</code>)
 - <code>Allow-SSH-Inbound</code> (port 22 from <code>*</code>)</p>
@@ -733,7 +733,7 @@ This is the #1 cause of cloud data breaches.</p>
 </tr>
 <tr>
 <td><strong>Source Rule</strong></td>
-<td><code>MISCONFIG-Allow-Any-Any</code> — priority 100, protocol <code>*</code>, port <code>*</code>, source <code>*</code></td>
+<td><code>MISCONFIG-Allow-Any-Any</code> - priority 100, protocol <code>*</code>, port <code>*</code>, source <code>*</code></td>
 </tr>
 <tr>
 <td><strong>Terraform Toggle</strong></td>
@@ -765,7 +765,7 @@ This is the #1 cause of cloud data breaches.</p>
 </tr>
 </tbody>
 </table>
-<h4>Finding N3–N5: RDP, MsSQL, UDP Access</h4>
+<h4>Finding N3-N5: RDP, MsSQL, UDP Access</h4>
 <table>
 <thead>
 <tr>
@@ -796,7 +796,7 @@ This is the #1 cause of cloud data breaches.</p>
 <p><img alt="Network Dashboard" src="./images/Network_Dashboard.PNG" />
 <img alt="Network Configs" src="./images/Network_Configuration_Dashboard.PNG" /></p>
 <hr />
-<h3>Service 4 — Logging &amp; Monitoring (8 flagged)</h3>
+<h3>Service 4 - Logging &amp; Monitoring (8 flagged)</h3>
 <p>All 8 findings are <strong>pre-existing</strong> (also in baseline). They indicate that
 Activity Log Alerts are not configured for critical administrative actions.</p>
 <table>
@@ -842,7 +842,7 @@ Activity Log Alerts are not configured for critical administrative actions.</p>
 </tbody>
 </table>
 <hr />
-<h3>Service 5 — Security Center (17 flagged)</h3>
+<h3>Service 5 - Security Center (17 flagged)</h3>
 <p>All 17 findings are <strong>pre-existing</strong> (also in baseline). They indicate that
 Azure Defender (Standard Tier) is not enabled for 16 resource types, and
 no security contact email is configured.</p>
@@ -868,7 +868,7 @@ no security contact email is configured.</p>
 </tbody>
 </table>
 <hr />
-<h3>Service 6 — Azure Active Directory (1 flagged)</h3>
+<h3>Service 6 - Azure Active Directory (1 flagged)</h3>
 <table>
 <thead>
 <tr>
@@ -885,9 +885,9 @@ no security contact email is configured.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> Pre-existing tenant-level setting — not caused by Terraform misconfigs.</p>
+<p><strong>Note:</strong> Pre-existing tenant-level setting - not caused by Terraform misconfigs.</p>
 <hr />
-<h3>Service 7 — RBAC (1 flagged)</h3>
+<h3>Service 7 - RBAC (1 flagged)</h3>
 <table>
 <thead>
 <tr>
@@ -904,9 +904,9 @@ no security contact email is configured.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> Pre-existing — no resource lock management role assigned in the subscription.</p>
+<p><strong>Note:</strong> Pre-existing - no resource lock management role assigned in the subscription.</p>
 <hr />
-<h3>Service 8 — Virtual Machines (1 flagged)</h3>
+<h3>Service 8 - Virtual Machines (1 flagged)</h3>
 <table>
 <thead>
 <tr>
@@ -963,42 +963,42 @@ this finding flags the absence of a Customer-Managed Key (CMK).</p>
 <td>M4</td>
 <td>Min TLS Lowered (1.0)</td>
 <td><code>misconfig_storage_min_tls_version</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M5</td>
 <td>Shared Key Access</td>
 <td><code>misconfig_storage_allow_shared_key_access</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M6</td>
 <td>CORS Allow All</td>
 <td><code>misconfig_storage_cors_allow_all</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M7</td>
 <td>Owner Role at RG</td>
 <td><code>misconfig_iam_owner_role_at_rg_scope</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M8</td>
 <td>VM Identity Over-Privileged</td>
 <td><code>misconfig_vm_identity_over_privileged</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M9</td>
 <td>SSH Password Auth</td>
 <td><code>misconfig_vm_allow_password_auth</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
@@ -1019,7 +1019,7 @@ this finding flags the absence of a Customer-Managed Key (CMK).</p>
 <td>M12</td>
 <td>Subnet NSG Removed</td>
 <td><code>misconfig_vm_remove_nsg_association</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
@@ -1033,7 +1033,7 @@ this finding flags the absence of a Customer-Managed Key (CMK).</p>
 <td>M14</td>
 <td>Storage Logging Disabled</td>
 <td><code>misconfig_disable_storage_logging</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
@@ -1047,14 +1047,14 @@ this finding flags the absence of a Customer-Managed Key (CMK).</p>
 <td>M16</td>
 <td>Short Log Retention</td>
 <td><code>misconfig_short_log_retention</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 </tbody>
 </table>
 <h3>Confirmation: 7 / 16 Detected (43.75%)</h3>
 <hr />
-<h2>Gap Analysis — ScoutSuite Blind Spots</h2>
+<h2>Gap Analysis - ScoutSuite Blind Spots</h2>
 <p>The following 9 misconfigurations are <strong>NOT detected</strong> by ScoutSuite.
 These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-tool pipeline.</p>
 <h3>Storage Gaps (3)</h3>
@@ -1068,17 +1068,17 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 </thead>
 <tbody>
 <tr>
-<td>M4 — TLS 1.0</td>
+<td>M4 - TLS 1.0</td>
 <td>No rule checking <code>minimum_tls_version</code> on storage accounts</td>
 <td>Prowler ✅, Steampipe ✅</td>
 </tr>
 <tr>
-<td>M5 — Shared Key Access</td>
+<td>M5 - Shared Key Access</td>
 <td>No rule checking <code>allow_shared_key_access</code> property</td>
 <td>Steampipe ✅</td>
 </tr>
 <tr>
-<td>M6 — CORS wildcard</td>
+<td>M6 - CORS wildcard</td>
 <td>No rule inspecting CORS configuration on blob services</td>
 <td>Steampipe ✅</td>
 </tr>
@@ -1095,12 +1095,12 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 </thead>
 <tbody>
 <tr>
-<td>M7 — Owner at RG scope</td>
+<td>M7 - Owner at RG scope</td>
 <td>Only checks generic RBAC (resource locks), not specific overprivileged role assignments</td>
 <td>Prowler ✅, Steampipe ✅</td>
 </tr>
 <tr>
-<td>M8 — VM Managed Identity</td>
+<td>M8 - VM Managed Identity</td>
 <td>Does not evaluate managed identity role assignments at subscription scope</td>
 <td>Steampipe ✅</td>
 </tr>
@@ -1117,7 +1117,7 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 </thead>
 <tbody>
 <tr>
-<td>M9 — SSH Password Auth</td>
+<td>M9 - SSH Password Auth</td>
 <td>VM checks limited to disk encryption; no SSH authentication method inspection</td>
 <td>Prowler ✅, Steampipe ✅</td>
 </tr>
@@ -1134,7 +1134,7 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 </thead>
 <tbody>
 <tr>
-<td>M12 — Subnet NSG removed</td>
+<td>M12 - Subnet NSG removed</td>
 <td>Checks NSG <em>rules</em> but not whether NSGs are <em>associated</em> with subnets</td>
 <td>Steampipe ✅</td>
 </tr>
@@ -1151,12 +1151,12 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 </thead>
 <tbody>
 <tr>
-<td>M14 — Storage Diagnostics</td>
+<td>M14 - Storage Diagnostics</td>
 <td>Checks Activity Log alerts but not per-resource diagnostic settings</td>
 <td>Steampipe ✅</td>
 </tr>
 <tr>
-<td>M16 — Log Retention</td>
+<td>M16 - Log Retention</td>
 <td>No check on Log Analytics workspace retention period</td>
 <td>Steampipe ✅</td>
 </tr>
@@ -1299,7 +1299,7 @@ These gaps are covered by Prowler and/or Steampipe in the CloudGuardian multi-to
 <blockquote>
 <p><strong>Conclusion:</strong> No single CSPM tool detects all 16 misconfigurations. The combination of
 Prowler (broad CIS coverage), ScoutSuite (visual dashboard + network/storage depth),
-and Steampipe (precision SQL targeting) achieves <strong>100% coverage</strong> — validating the
+and Steampipe (precision SQL targeting) achieves <strong>100% coverage</strong> - validating the
 CloudGuardian multi-tool approach.</p>
 </blockquote>
 <hr />

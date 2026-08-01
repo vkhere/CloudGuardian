@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +31,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Prowler Audit Report — Azure</h1>
-<h2>CloudGuardian — CAP-CSE-3W | IIT Roorkee × Futurense</h2>
+        <h1>Prowler Audit Report - Azure</h1>
+<h2>CloudGuardian - CAP-CSE-3W | IIT Roorkee × Futurense</h2>
 <h3>PG Certificate in AI/GenAI Powered Cybersecurity</h3>
 <hr />
 <table>
@@ -95,7 +95,7 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 </tr>
 <tr>
 <td><strong>Misconfigs Detected</strong></td>
-<td>—</td>
+<td>-</td>
 <td><strong>8 / 16 (50%)</strong></td>
 </tr>
 </tbody>
@@ -105,7 +105,7 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 <p>By running a strict delta analysis (comparing the baseline CSV against the insecure CSV), we isolated exactly which of our 16 injected misconfigurations triggered new Prowler alerts.</p>
 </blockquote>
 <hr />
-<h2>Baseline vs Insecure — Delta Analysis (New Fails)</h2>
+<h2>Baseline vs Insecure - Delta Analysis (New Fails)</h2>
 <p>The following <code>FAIL</code> findings appeared <strong>only</strong> after the 16 misconfigurations were injected. 
 <em>(Note: Resource names have been mapped to reflect the updated <code>stcloudguardianlab6thil</code> storage account).</em></p>
 <table>
@@ -194,7 +194,7 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 <td>M1</td>
 <td>Public Blob Container</td>
 <td><code>misconfig_storage_public_container</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Missed (or masked by baseline)</td>
 </tr>
 <tr>
@@ -229,21 +229,21 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 <td>M6</td>
 <td>CORS Allow All</td>
 <td><code>misconfig_storage_cors_allow_all</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M7</td>
 <td>Owner Role at RG</td>
 <td><code>misconfig_iam_owner_role_at_rg_scope</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
 <td>M8</td>
 <td>VM Identity Overprivileged</td>
 <td><code>misconfig_vm_identity_over_privileged</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Not Detected</td>
 </tr>
 <tr>
@@ -285,28 +285,28 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 <td>M14</td>
 <td>Storage Logging Disabled</td>
 <td><code>misconfig_disable_storage_logging</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Missed (Pre-existing in baseline)</td>
 </tr>
 <tr>
 <td>M15</td>
 <td>SQL Logging Disabled</td>
 <td><code>misconfig_disable_sql_logging</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Missed (Pre-existing in baseline)</td>
 </tr>
 <tr>
 <td>M16</td>
 <td>Short Log Retention</td>
 <td><code>misconfig_short_log_retention</code></td>
-<td>—</td>
+<td>-</td>
 <td>❌ Missed (Pre-existing in baseline)</td>
 </tr>
 </tbody>
 </table>
 <h3>Confirmation: 8 / 16 Detected (50%) in strict delta analysis</h3>
 <hr />
-<h2>Gap Analysis — Prowler Blind Spots</h2>
+<h2>Gap Analysis - Prowler Blind Spots</h2>
 <p>While Prowler is excellent for overarching CIS compliance, it struggles with highly specific configuration drifts when analyzing strict deltas:</p>
 <h3>1. The "Pre-existing Fail" Problem (Logging Gaps)</h3>
 <p>Prowler flags logging configurations (M14, M15, M16) as <code>FAIL</code> even in the secure baseline because our baseline architecture does not implement enterprise-grade Log Analytics for every single resource by default. Therefore, when we <em>explicitly</em> disable them via Terraform in the insecure scan, Prowler doesn't register it as a <em>new</em> threat. It was already failing.</p>

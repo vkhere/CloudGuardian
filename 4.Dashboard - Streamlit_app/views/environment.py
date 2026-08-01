@@ -1,4 +1,4 @@
-"""views/environment.py — resource inventory, health, drift and live toggles."""
+﻿"""views/environment.py - resource inventory, health, drift and live toggles."""
 
 from __future__ import annotations
 
@@ -53,13 +53,13 @@ def render() -> None:
         st.subheader("Configuration drift")
         dr = env.drift_df(snaps)
         if dr.empty:
-            st.success("No drift detected — deployed state matches Terraform.")
+            st.success("No drift detected - deployed state matches Terraform.")
         else:
             st.warning(f"{len(dr)} resource(s) changed outside Terraform.")
             for _, r in dr.iterrows():
                 with st.container(border=True):
                     st.markdown(f"**{r['resource']}** · {r['cloud']}")
-                    st.caption(f"{r['change']} — {r['detail']}")
+                    st.caption(f"{r['change']} - {r['detail']}")
 
         st.subheader("Misconfig toggles live now")
         tg = env.toggles_state(snaps)

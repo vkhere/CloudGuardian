@@ -1,4 +1,4 @@
-resource "azurerm_public_ip" "web" {
+﻿resource "azurerm_public_ip" "web" {
   name                = "pip-${local.vm_name}"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
@@ -32,7 +32,7 @@ resource "azurerm_linux_virtual_machine" "web" {
   ]
   tags = local.tags
 
-  # Always-on system-assigned identity — having an identity isn't itself a
+  # Always-on system-assigned identity - having an identity isn't itself a
   # misconfig. What you grant that identity is. See the role assignment in
   # iam_and_extra_misconfigs.tf, gated behind misconfig_vm_identity_over_privileged.
   identity {
@@ -42,7 +42,7 @@ resource "azurerm_linux_virtual_machine" "web" {
   # Secure default: key-only auth. misconfig_vm_allow_password_auth = true
   # flips this to allow password auth too (the "weak SSH auth" finding).
   # Azure requires admin_password whenever password auth is permitted, even
-  # if you're also supplying an SSH key — hence the conditional below.
+  # if you're also supplying an SSH key - hence the conditional below.
   disable_password_authentication = !var.misconfig_vm_allow_password_auth
   admin_password                  = var.misconfig_vm_allow_password_auth ? var.vm_admin_password : null
 

@@ -1,6 +1,6 @@
-# ============================================================
-# rds.tf — Database Tier
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# rds.tf - Database Tier
+# Project : CloudGuardian - CAP-CSE-3W
 # Purpose : Creates MySQL RDS instance in private subnet
 #
 # MISCONFIGURATIONS INTRODUCED:
@@ -9,7 +9,7 @@
 #   [M12] RDS backup_retention_period = 0 (backups disabled)
 # ============================================================
 
-# DB Subnet Group — RDS requires subnets in at least 2 AZs
+# DB Subnet Group - RDS requires subnets in at least 2 AZs
 resource "aws_db_subnet_group" "main" {
   name       = "${var.project}-db-subnet"
   subnet_ids = [aws_subnet.public.id, aws_subnet.private.id]
@@ -17,7 +17,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 # ---------------------------------------------------------------
-# RDS MySQL Instance — MISCONFIGURED STATE
+# RDS MySQL Instance - MISCONFIGURED STATE
 # ---------------------------------------------------------------
 resource "aws_db_instance" "main" {
   identifier        = "${var.project}-db"
@@ -34,7 +34,7 @@ resource "aws_db_instance" "main" {
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   # ---------------------------------------------------------------
-  # [M08] MISCONFIGURATION — RDS exposed to internet
+  # [M08] MISCONFIGURATION - RDS exposed to internet
   #  Baseline:  publicly_accessible = false   (SECURE)
   #  Misconfig: publicly_accessible = true    (INSECURE)
   #
@@ -46,7 +46,7 @@ resource "aws_db_instance" "main" {
   publicly_accessible = true    # INSECURE: database has public internet endpoint
 
   # ---------------------------------------------------------------
-  # [M09] MISCONFIGURATION — RDS encryption disabled
+  # [M09] MISCONFIGURATION - RDS encryption disabled
   #  Baseline:  storage_encrypted = true    (SECURE)
   #  Misconfig: storage_encrypted = false   (INSECURE)
   #
@@ -57,7 +57,7 @@ resource "aws_db_instance" "main" {
   storage_encrypted = false     # INSECURE: data at rest is unencrypted
 
   # ---------------------------------------------------------------
-  # [M12] MISCONFIGURATION — Automated backups disabled
+  # [M12] MISCONFIGURATION - Automated backups disabled
   #  Baseline:  backup_retention_period not set (defaults to 1 day)
   #  Misconfig: backup_retention_period = 0   (backups DISABLED)
   #

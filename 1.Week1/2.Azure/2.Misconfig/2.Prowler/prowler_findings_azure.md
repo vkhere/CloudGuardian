@@ -1,5 +1,5 @@
-# Prowler Audit Report — Azure
-## CloudGuardian — CAP-CSE-3W | IIT Roorkee × Futurense
+﻿# Prowler Audit Report - Azure
+## CloudGuardian - CAP-CSE-3W | IIT Roorkee × Futurense
 ### PG Certificate in AI/GenAI Powered Cybersecurity
 
 ---
@@ -35,7 +35,7 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 | Metric | Baseline (Secure) | Insecure (16 Misconfigs) |
 |--------|-------------------|--------------------------|
 | **Overall Pass/Fail** | ~14% Pass / 86% Fail | ~12% Pass / 88% Fail |
-| **Misconfigs Detected** | — | **8 / 16 (50%)** |
+| **Misconfigs Detected** | - | **8 / 16 (50%)** |
 
 > **Key Insight:** Prowler generated massive CSV and HTML reports with hundreds of findings. However, a significant portion of these are pre-existing "fails" due to Azure's default configurations not adhering to strict CIS benchmarks (e.g., Azure Defender being turned off by default). 
 > 
@@ -45,7 +45,7 @@ prowler azure --az-cli-auth --output-directory prowler-report/insecure --output-
 
 ---
 
-## Baseline vs Insecure — Delta Analysis (New Fails)
+## Baseline vs Insecure - Delta Analysis (New Fails)
 
 The following `FAIL` findings appeared **only** after the 16 misconfigurations were injected. 
 *(Note: Resource names have been mapped to reflect the updated `stcloudguardianlab6thil` storage account).*
@@ -67,28 +67,28 @@ The following `FAIL` findings appeared **only** after the 16 misconfigurations w
 
 | # | Misconfiguration | Terraform Toggle | Prowler Delta Detection | Status |
 |---|-----------------|-----------------|------------------------|--------|
-| M1 | Public Blob Container | `misconfig_storage_public_container` | — | ❌ Missed (or masked by baseline) |
+| M1 | Public Blob Container | `misconfig_storage_public_container` | - | ❌ Missed (or masked by baseline) |
 | M2 | Public Network Access | `misconfig_storage_allow_public_network_access` | `storage_default_network_access_rule_is_denied` | ✅ Detected |
 | M3 | Secure Transfer Disabled | `misconfig_storage_disable_secure_transfer` | `storage_secure_transfer_required_is_enabled` | ✅ Detected |
 | M4 | Min TLS Lowered (1.0) | `misconfig_storage_min_tls_version` | `storage_ensure_minimum_tls_version_12` | ✅ Detected |
 | M5 | Shared Key Access | `misconfig_storage_allow_shared_key_access` | `storage_default_to_entra_authorization_enabled` | ✅ Detected |
-| M6 | CORS Allow All | `misconfig_storage_cors_allow_all` | — | ❌ Not Detected |
-| M7 | Owner Role at RG | `misconfig_iam_owner_role_at_rg_scope` | — | ❌ Not Detected |
-| M8 | VM Identity Overprivileged | `misconfig_vm_identity_over_privileged` | — | ❌ Not Detected |
+| M6 | CORS Allow All | `misconfig_storage_cors_allow_all` | - | ❌ Not Detected |
+| M7 | Owner Role at RG | `misconfig_iam_owner_role_at_rg_scope` | - | ❌ Not Detected |
+| M8 | VM Identity Overprivileged | `misconfig_vm_identity_over_privileged` | - | ❌ Not Detected |
 | M9 | SSH Password Auth | `misconfig_vm_allow_password_auth` | `vm_linux_enforce_ssh_authentication` | ✅ Detected |
 | M10 | SSH Open to Internet | `misconfig_ssh_open_to_internet` | `network_ssh_internet_access_restricted` | ✅ Detected |
 | M11 | NSG Allow Any-Any | `misconfig_nsg_allow_any_any` | (Caught under M10 alert) | ✅ Detected |
 | M12 | Subnet NSG Removed | `misconfig_vm_remove_nsg_association` | `network_subnet_nsg_associated` | ✅ Detected |
 | M13 | SQL Allow All IPs | `misconfig_sql_allow_all_ips` | `sqlserver_unrestricted_inbound_access` | ✅ Detected |
-| M14 | Storage Logging Disabled | `misconfig_disable_storage_logging` | — | ❌ Missed (Pre-existing in baseline) |
-| M15 | SQL Logging Disabled | `misconfig_disable_sql_logging` | — | ❌ Missed (Pre-existing in baseline) |
-| M16 | Short Log Retention | `misconfig_short_log_retention` | — | ❌ Missed (Pre-existing in baseline) |
+| M14 | Storage Logging Disabled | `misconfig_disable_storage_logging` | - | ❌ Missed (Pre-existing in baseline) |
+| M15 | SQL Logging Disabled | `misconfig_disable_sql_logging` | - | ❌ Missed (Pre-existing in baseline) |
+| M16 | Short Log Retention | `misconfig_short_log_retention` | - | ❌ Missed (Pre-existing in baseline) |
 
 ### Confirmation: 8 / 16 Detected (50%) in strict delta analysis
 
 ---
 
-## Gap Analysis — Prowler Blind Spots
+## Gap Analysis - Prowler Blind Spots
 
 While Prowler is excellent for overarching CIS compliance, it struggles with highly specific configuration drifts when analyzing strict deltas:
 

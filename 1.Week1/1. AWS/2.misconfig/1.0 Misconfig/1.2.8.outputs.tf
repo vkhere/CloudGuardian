@@ -1,6 +1,6 @@
-# ============================================================
-# outputs.tf — Output Values
-# Project : CloudGuardian — CAP-CSE-3W
+﻿# ============================================================
+# outputs.tf - Output Values
+# Project : CloudGuardian - CAP-CSE-3W
 # Status  : UNCHANGED FROM BASELINE
 # ============================================================
 
@@ -20,7 +20,7 @@ output "private_subnet_id" {
 }
 
 output "web_public_ip" {
-  description = "Public IP of the web server — open in browser"
+  description = "Public IP of the web server - open in browser"
   value       = aws_instance.web.public_ip
 }
 

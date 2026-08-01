@@ -1,7 +1,7 @@
-"""
+﻿"""
 core/metrics.py
 ===============
-Pure calculation helpers. No Streamlit, no I/O — just DataFrame in, numbers
+Pure calculation helpers. No Streamlit, no I/O - just DataFrame in, numbers
 out. Keeping the maths here (instead of inside the pages) means each figure
 can be unit-tested and reused across views.
 """
@@ -54,7 +54,7 @@ def remediation_funnel(open_with_decisions: pd.DataFrame) -> dict:
 
 
 def trend_data(df: pd.DataFrame) -> pd.DataFrame:
-    """FAIL counts per scan over time, per cloud — the Week 1->3 story."""
+    """FAIL counts per scan over time, per cloud - the Week 1->3 story."""
     if df.empty:
         return df
     fails = df[df["status"] == "FAIL"]

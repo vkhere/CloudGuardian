@@ -1,4 +1,4 @@
-"""
+﻿"""
 core/database.py
 ================
 Stores reviewer DECISIONS on top of the read-only findings, plus a full audit
@@ -6,7 +6,7 @@ trail. Findings come from CSV (input); decisions are state, so they live in a
 small SQLite file (data/console.db) that survives restarts. This is the human
 approval gate + audit history (Week 3 requirements).
 
-Decisions are keyed by finding_id, which is STABLE across scans — so a decision
+Decisions are keyed by finding_id, which is STABLE across scans - so a decision
 you make survives a re-scan of the same issue.
 """
 

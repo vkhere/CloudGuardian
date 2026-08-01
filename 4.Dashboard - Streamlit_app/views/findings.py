@@ -1,4 +1,4 @@
-"""views/findings.py — findings table + review/approval gate."""
+﻿"""views/findings.py - findings table + review/approval gate."""
 
 from __future__ import annotations
 
@@ -53,22 +53,22 @@ def render(open_dec, approver: str) -> None:
                     unsafe_allow_html=True)
         st.write({
             "Risk score": int(row["risk_score"]),
-            "CVSS": row["cvss"] or "—",
-            "Exposure": row["exposure"] or "—",
-            "Source tool": row["source_tool"] or "—",
-            "LLM confidence": row["llm_confidence"] or "—",
-            "LLM verification": row["verification_status"] or "—",
-            "ISO 27001": row["iso_27001"] or "—",
-            "CIS": row["cis_control"] or "—",
-            "MITRE": row["mitre_attck"] or "—",
-            "Deliberate misconfig": row["is_catalogued_misconfig"] or "—",
+            "CVSS": row["cvss"] or "-",
+            "Exposure": row["exposure"] or "-",
+            "Source tool": row["source_tool"] or "-",
+            "LLM confidence": row["llm_confidence"] or "-",
+            "LLM verification": row["verification_status"] or "-",
+            "ISO 27001": row["iso_27001"] or "-",
+            "CIS": row["cis_control"] or "-",
+            "MITRE": row["mitre_attck"] or "-",
+            "Deliberate misconfig": row["is_catalogued_misconfig"] or "-",
         })
         if row["approver"]:
             st.caption(f"Last actioned by {row['approver']} at {row['decided_at']}")
 
     st.markdown("#### Decision")
     if str(row["verification_status"]).strip().lower() == "flagged":
-        st.warning("⚠️ LLM remediation is **Flagged** by verification — check it against the raw scanner data before approving.")
+        st.warning("⚠️ LLM remediation is **Flagged** by verification - check it against the raw scanner data before approving.")
 
     note = st.text_input("Note (optional)", key=f"note_{chosen}")
     disabled = not approver.strip()

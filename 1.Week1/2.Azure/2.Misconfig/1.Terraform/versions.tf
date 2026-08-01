@@ -1,4 +1,4 @@
-terraform {
+﻿terraform {
   required_version = ">= 1.7.0"
 
   required_providers {
@@ -12,7 +12,7 @@ terraform {
     }
   }
 
-  # Local state by default — fine for a capstone lab.
+  # Local state by default - fine for a capstone lab.
   # For team use / CI, swap this for an azurerm backend block pointing at a
   # storage account + container dedicated to tfstate (see README "Remote state").
   # backend "azurerm" {}

@@ -1,4 +1,4 @@
-resource "aws_cloudtrail" "main" {
+﻿resource "aws_cloudtrail" "main" {
   name                          = "cloudguardian-trail"
   s3_bucket_name                = aws_s3_bucket.data.id
   enable_log_file_validation    = false
@@ -9,7 +9,7 @@ resource "aws_cloudtrail" "main" {
 }
 
 # ---------------------------------------------------------------
-# S3 Bucket Policy — required so CloudTrail can write logs
+# S3 Bucket Policy - required so CloudTrail can write logs
 #  Without this, AWS rejects trail creation with:
 #  "InsufficientS3BucketPolicyException"
 # ---------------------------------------------------------------

@@ -1,4 +1,4 @@
-# CloudGuardian — Azure 3-Tier Reference Workload (Terraform)
+﻿# CloudGuardian - Azure 3-Tier Reference Workload (Terraform)
 
 Maps the capstone's brief onto Azure:
 
@@ -11,7 +11,7 @@ Maps the capstone's brief onto Azure:
 | (implicit) logging | `azurerm_log_analytics_workspace` + diagnostic settings on Storage/SQL |
 
 Eleven `.tf` files, all secure-by-default, with **sixteen boolean toggles**
-that let you intentionally introduce specific misconfigurations on demand —
+that let you intentionally introduce specific misconfigurations on demand -
 see "Misconfiguration toggles" below. That's your Week 1 catalogue built
 into the code instead of bolted on afterwards.
 
@@ -42,7 +42,7 @@ After apply, `terraform output web_vm_ssh_command` gives you the SSH command,
 and the VM serves a placeholder nginx page on its public IP over HTTP.
 
 **Tear down when you're done for the day:** `terraform destroy`. The VM,
-public IP, and SQL Basic tier all cost a little even when idle — don't leave
+public IP, and SQL Basic tier all cost a little even when idle - don't leave
 this running unattended on a free-account budget.
 
 ## 3. Misconfiguration toggles (Week 1 deliverable)
@@ -55,7 +55,7 @@ that finding:
 |---|---|---|
 | `misconfig_storage_public_container` | Blob container readable by anyone | Storage |
 | `misconfig_storage_allow_public_network_access` | Storage account reachable from any network | Storage / Network |
-| `misconfig_sql_allow_all_ips` | SQL firewall rule `0.0.0.0–255.255.255.255` | Network / Database |
+| `misconfig_sql_allow_all_ips` | SQL firewall rule `0.0.0.0-255.255.255.255` | Network / Database |
 | `misconfig_ssh_open_to_internet` | NSG allows SSH (22) from `0.0.0.0/0` | Network |
 | `misconfig_vm_allow_password_auth` | VM accepts SSH password auth, not just keys | IAM / Auth |
 | `misconfig_disable_storage_logging` | Storage diagnostic settings skipped entirely | Logging |
@@ -64,7 +64,7 @@ that finding:
 | `misconfig_vm_identity_over_privileged` | Web VM's managed identity granted Contributor at subscription scope | IAM |
 | `misconfig_storage_disable_secure_transfer` | Storage account reachable over plain HTTP | Encryption |
 | `misconfig_storage_min_tls_version` | Storage account minimum TLS lowered to TLS1_0 | Encryption |
-| `misconfig_vm_remove_nsg_association` | NSG detached from the web subnet entirely — no firewall at all | Network |
+| `misconfig_vm_remove_nsg_association` | NSG detached from the web subnet entirely - no firewall at all | Network |
 | `misconfig_nsg_allow_any_any` | Standalone NSG rule allowing any protocol/port from any source | Network |
 | `misconfig_disable_sql_logging` | SQL diagnostic setting skipped, independently of storage logging | Logging |
 | `misconfig_short_log_retention` | Log Analytics retention shortened from 90 to 30 days | Logging |
@@ -83,7 +83,7 @@ Networking, Encryption, Logging).
 > `misconfig_vm_identity_over_privileged`:** both create a real Azure role
 > assignment, which needs `Microsoft.Authorization/roleAssignments/write`
 > permission. On a free/student subscription the signup account is normally
-> the subscription's Owner, so this should just work — but if `apply` fails
+> the subscription's Owner, so this should just work - but if `apply` fails
 > with `AuthorizationFailed` on either one, document that finding manually
 > instead via Portal → Resource Group → Access control (IAM) → Add role
 > assignment, the same way you've already handled Prowler's AAD-level check
@@ -91,7 +91,7 @@ Networking, Encryption, Logging).
 
 > **Note on `misconfig_vm_allow_password_auth`:** also requires setting
 > `vm_admin_password` (Azure requires a password whenever password auth is
-> permitted, even alongside an SSH key) — set it via
+> permitted, even alongside an SSH key) - set it via
 > `TF_VAR_vm_admin_password`, never in `terraform.tfvars` directly.
 
 ## 4. Detecting these with your Week 2 stack
@@ -113,8 +113,8 @@ steampipe query "select name, allow_blob_public_access from azure_storage_accoun
 ## 5. Cost / free-account notes
 
 - VM `Standard_D2s_v3`: check your subscription's quota; destroy between sessions if budget-conscious
-- SQL `Basic` tier: ~$5/month if left running — destroy between sessions
-- Storage account, Log Analytics (7–30 day retention), NSG, VNet: negligible/free at this scale
+- SQL `Basic` tier: ~$5/month if left running - destroy between sessions
+- Storage account, Log Analytics (7-30 day retention), NSG, VNet: negligible/free at this scale
 - Nothing here touches management groups or tenant-level resources, so it works fine on a constrained student/guest subscription
 
 ## 6. File map

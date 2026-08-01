@@ -1,4 +1,4 @@
-"""views/planner.py — what-if remediation simulator."""
+﻿"""views/planner.py - what-if remediation simulator."""
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ def render(current, view_label: str) -> None:
         selected = []
         for _, r in gains.iterrows():
             label = (f"{r['finding_id']} · {r['severity']} · "
-                     f"+{r['gain']} pts — {r['title']}")
+                     f"+{r['gain']} pts - {r['title']}")
             if st.checkbox(label, key=f"fix_{r['finding_id']}"):
                 selected.append(r["finding_id"])
 

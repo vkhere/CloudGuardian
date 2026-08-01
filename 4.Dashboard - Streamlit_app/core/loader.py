@@ -1,4 +1,4 @@
-"""
+﻿"""
 core/loader.py
 ==============
 Ingests every scan report you drop into the reports/ folder and normalizes
@@ -16,7 +16,7 @@ MENTAL MODEL
     produces these CSVs (your PowerShell catalogue generator already does this
     for Azure; the AWS teammate produces the same shape).
 
-To add a cloud or a scan, you add a CSV — no dashboard code changes.
+To add a cloud or a scan, you add a CSV - no dashboard code changes.
 See reports/README_reports.md for the exact column contract.
 """
 
@@ -185,7 +185,7 @@ def select_view(df: pd.DataFrame, stage: str = "Latest") -> pd.DataFrame:
 
 
 def open_findings(current: pd.DataFrame) -> pd.DataFrame:
-    """FAIL rows only — the issues that actually need review/remediation."""
+    """FAIL rows only - the issues that actually need review/remediation."""
     if current.empty:
         return current
     return (

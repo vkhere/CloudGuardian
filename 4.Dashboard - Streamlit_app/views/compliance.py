@@ -1,4 +1,4 @@
-"""views/compliance.py — control posture and the ISO x CIS x DPDP crosswalk."""
+﻿"""views/compliance.py - control posture and the ISO x CIS x DPDP crosswalk."""
 
 from __future__ import annotations
 
@@ -55,7 +55,7 @@ def render(current, view_label: str) -> None:
 
             if dpdp.empty:
                 st.warning(
-                    "No DPDP mapping file found — the DPDP columns will show as '-'. "
+                    "No DPDP mapping file found - the DPDP columns will show as '-'. "
                     "Create **catalogue/dpdp_map.csv** mapping each ISO control to a "
                     "DPDP Act section."
                 )

@@ -1,5 +1,5 @@
-"""
-CloudGuardian Console — single pane of glass for Azure + AWS
+﻿"""
+CloudGuardian Console - single pane of glass for Azure + AWS
 ============================================================
 Runs locally on your laptop. Reads normalized scan reports from reports/,
 reference data from catalogue/, environment snapshots from data/, and stores

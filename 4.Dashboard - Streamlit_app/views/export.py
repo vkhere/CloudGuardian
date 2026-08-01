@@ -1,4 +1,4 @@
-"""views/export.py — one-click executive PDF and CSV exports."""
+﻿"""views/export.py - one-click executive PDF and CSV exports."""
 
 from __future__ import annotations
 

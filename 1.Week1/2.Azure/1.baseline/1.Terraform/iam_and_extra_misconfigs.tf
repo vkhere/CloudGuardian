@@ -1,4 +1,4 @@
-data "azurerm_client_config" "current" {}
+﻿data "azurerm_client_config" "current" {}
 
 # IAM misconfig: Owner role assigned at Resource Group scope to the
 # deploying identity, instead of a narrower role like Contributor.
@@ -12,7 +12,7 @@ resource "azurerm_role_assignment" "misconfig_owner_at_rg" {
 }
 
 # IAM misconfig: the web VM's own managed identity granted Contributor at
-# the *subscription* scope — far broader than a web server needs.
+# the *subscription* scope - far broader than a web server needs.
 # This is the "over-privileged service identity" finding.
 resource "azurerm_role_assignment" "misconfig_vm_identity_contributor" {
   count                = var.misconfig_vm_identity_over_privileged ? 1 : 0
@@ -24,7 +24,7 @@ resource "azurerm_role_assignment" "misconfig_vm_identity_contributor" {
 # --- A note on these two toggles -----------------------------------------
 # Creating a role assignment needs Microsoft.Authorization/roleAssignments/
 # write permission. On a free/student subscription, the account that signed
-# up is normally the subscription's Owner, so this should just work — but
+# up is normally the subscription's Owner, so this should just work - but
 # if `terraform apply` returns AuthorizationFailed on either resource above,
 # your account doesn't have that right on this subscription. In that case,
 # document the same misconfig manually instead: Azure Portal -> your

@@ -1,14 +1,14 @@
-"""
+﻿"""
 CloudGuardian Auto-Remediation: Default Encryption (S3 / RDS)
 Finding: M07/M09 - S3 bucket / RDS instance without default encryption
 Severity: HIGH
 
 Safe because: Enabling default (SSE-S3/SSE-KMS) encryption is NON-DESTRUCTIVE.
-For S3, it only affects how NEW objects are encrypted going forward — existing
+For S3, it only affects how NEW objects are encrypted going forward - existing
 objects and bucket contents are untouched. For RDS, this function only flags
 unencrypted instances for reporting (RDS encryption cannot be toggled on an
 existing instance without a snapshot-restore, which IS potentially disruptive
-and destroys the original instance identity — so that case is explicitly
+and destroys the original instance identity - so that case is explicitly
 routed to "requires human approval" rather than auto-remediated).
 
 Event input example:
@@ -154,7 +154,7 @@ def remediate_rds(resource_id, dry_run, requested_by):
     return {
         "statusCode": 200,
         "body": f"RDS instance '{resource_id}' is unencrypted. This requires a "
-                f"snapshot-restore cycle which causes downtime — routed to human "
+                f"snapshot-restore cycle which causes downtime - routed to human "
                 f"approval queue, NOT auto-remediated."
     }
 

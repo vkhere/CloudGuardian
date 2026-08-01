@@ -1,4 +1,4 @@
-resource "azurerm_storage_account" "main" {
+﻿resource "azurerm_storage_account" "main" {
   name                     = local.storage_account_name
   resource_group_name      = azurerm_resource_group.main.name
   location                 = azurerm_resource_group.main.location
@@ -6,18 +6,18 @@ resource "azurerm_storage_account" "main" {
   account_replication_type = var.storage_replication_type
 
   # Secure default: TLS1_2. misconfig_storage_min_tls_version = true lowers
-  # this to TLS1_0 — outdated transport encryption permitted.
+  # this to TLS1_0 - outdated transport encryption permitted.
   min_tls_version = var.misconfig_storage_min_tls_version ? "TLS1_0" : "TLS1_2"
 
   # Secure default: HTTPS-only. misconfig_storage_disable_secure_transfer =
-  # true allows plain HTTP — unencrypted data in transit.
+  # true allows plain HTTP - unencrypted data in transit.
   https_traffic_only_enabled = !var.misconfig_storage_disable_secure_transfer
 
   # Secure default: Azure AD-first. misconfig_storage_allow_shared_key_access
   # = true makes the account default to Shared Key auth in the Portal/tools
   # instead of Microsoft Entra ID (the CIS/Defender "default to Azure AD
   # authorization" finding). Note: we deliberately do NOT disable
-  # shared_access_key_enabled outright here — Azure's provider hard-requires
+  # shared_access_key_enabled outright here - Azure's provider hard-requires
   # Shared Key auth specifically to update an existing container's public-
   # access setting, which would conflict with misconfig_storage_public_
   # container being independently toggleable. This achieves the same IAM
@@ -37,7 +37,7 @@ resource "azurerm_storage_account" "main" {
   }
 
   # Secure default: no CORS rule at all. misconfig_storage_cors_allow_all =
-  # true adds one permitting any origin/method — overly permissive
+  # true adds one permitting any origin/method - overly permissive
   # cross-origin access.
   blob_properties {
     dynamic "cors_rule" {
@@ -59,7 +59,7 @@ resource "azurerm_storage_container" "data" {
   name                 = "app-data"
   storage_account_id   = azurerm_storage_account.main.id
   # Secure default: private. misconfig_storage_public_container = true makes
-  # it world-readable — the classic "public S3/blob bucket" finding.
+  # it world-readable - the classic "public S3/blob bucket" finding.
   container_access_type = var.misconfig_storage_public_container ? "blob" : "private"
 }
 
@@ -90,7 +90,7 @@ resource "azurerm_monitor_diagnostic_setting" "storage_blob" {
 }
 
 # Secure default: SQL diagnostic logging ON. misconfig_disable_sql_logging
-# = true skips this independently of the storage logging toggle above —
+# = true skips this independently of the storage logging toggle above -
 # a distinct "missing database-tier logging" finding.
 resource "azurerm_monitor_diagnostic_setting" "sql_db" {
   count = var.misconfig_disable_sql_logging ? 0 : 1

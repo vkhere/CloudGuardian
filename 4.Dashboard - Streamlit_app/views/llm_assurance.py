@@ -1,4 +1,4 @@
-"""views/llm_assurance.py — verification of LLM-generated remediation guidance."""
+﻿"""views/llm_assurance.py - verification of LLM-generated remediation guidance."""
 
 from __future__ import annotations
 

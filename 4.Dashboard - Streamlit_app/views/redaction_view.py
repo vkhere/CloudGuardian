@@ -1,4 +1,4 @@
-"""views/redaction_view.py — live privacy-preserving redaction demonstration."""
+﻿"""views/redaction_view.py - live privacy-preserving redaction demonstration."""
 
 from __future__ import annotations
 
@@ -60,17 +60,17 @@ def render(current) -> None:
     c3.metric("Distinct token types", len({h["kind"] for h in hits}))
 
     if leaks:
-        st.error(f"Leak detected — these values survived redaction: {', '.join(leaks)}")
+        st.error(f"Leak detected - these values survived redaction: {', '.join(leaks)}")
     else:
         st.success("No original identifier survives in the redacted prompt.")
 
     st.divider()
     left, right = st.columns(2)
     with left:
-        st.subheader("Before — stays local")
+        st.subheader("Before - stays local")
         st.code(text, language="text")
     with right:
-        st.subheader("After — sent to the model")
+        st.subheader("After - sent to the model")
         st.code(safe, language="text")
 
     st.subheader("Token mapping")

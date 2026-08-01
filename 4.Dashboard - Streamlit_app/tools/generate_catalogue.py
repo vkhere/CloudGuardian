@@ -1,9 +1,9 @@
-"""
+﻿"""
 tools/generate_catalogue.py
 ===========================
 Writes the three reference tables into ../catalogue.
 
-These are hand-maintained in real use — this script just seeds them with a
+These are hand-maintained in real use - this script just seeds them with a
 worked example matching the sample reports, and documents the columns.
 
 Run:  python tools/generate_catalogue.py
