@@ -1,6 +1,6 @@
-streamlit>=1.35
-pandas>=2.0
-numpy>=1.24
-scikit-learn>=1.3
-imbalanced-learn>=0.12
-requests>=2.31
+# CloudGuardian Console dependencies
+streamlit>=1.40        # the app framework
+pandas>=2.0            # all data handling
+plotly>=5.20           # charts and gauges
+reportlab>=4.0         # executive PDF export
+cryptography>=42.0     # self-signed wildcard certificate for HTTPS

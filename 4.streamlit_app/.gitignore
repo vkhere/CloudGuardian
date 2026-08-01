@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Runtime state - decisions and audit trail
+data/console.db
+
+# Environment snapshots may contain subscription IDs
+data/*_snapshot.json
+
+# TLS material - NEVER commit the private key
+certs/
+*.key
+*.pfx
+
+.streamlit/secrets.toml

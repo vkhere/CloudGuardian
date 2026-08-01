@@ -1,0 +1,16 @@
+# CloudGuardian Console theme.
+#
+# NOTE ON HTTPS: the SSL certificate paths are deliberately NOT set here.
+# If they were, the app would refuse to start whenever the certificate files
+# are missing. HTTPS is opt-in instead - run .\run_https.ps1, which passes
+# --server.sslCertFile and --server.sslKeyFile on the command line.
+
+[theme]
+primaryColor = "#2563eb"
+backgroundColor = "#0f1116"
+secondaryBackgroundColor = "#1a1d24"
+textColor = "#e6e6e6"
+font = "sans serif"
+
+[server]
+headless = true

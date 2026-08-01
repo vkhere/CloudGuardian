@@ -1,0 +1,17 @@
+toggle_id,cloud,toggle_name,category,expected_finding,severity,rationale,revert
+AZ-T01,Azure,misconfig_storage_public_container,Storage,AZ-STG-PUBLIC-CONTAINER,Critical,Simulates the classic public bucket that repeatedly fails ISO audits.,Set misconfig_storage_public_container = false and re-apply.
+AZ-T02,Azure,misconfig_ssh_open_to_internet,Networking,AZ-NET-SSH-OPEN,Critical,Exposes management plane to the internet; primary brute-force vector.,Set misconfig_ssh_open_to_internet = false and re-apply.
+AZ-T03,Azure,misconfig_sql_allow_all_ips,Networking,AZ-SQL-FW-ALLOWALL,Critical,"Database reachable from any host, mirroring a common lift-and-shift error.",Set misconfig_sql_allow_all_ips = false and re-apply.
+AZ-T04,Azure,misconfig_vm_allow_password_auth,Identity,AZ-VM-PWD-AUTH,High,"Weakens SSH to password auth, enabling credential stuffing.",Set misconfig_vm_allow_password_auth = false and re-apply.
+AZ-T05,Azure,misconfig_storage_allow_public_network_access,Networking,AZ-STG-PUBNET,High,Removes network restriction from the storage account.,Set misconfig_storage_allow_public_network_access = false and re-apply.
+AZ-T06,Azure,misconfig_disable_storage_logging,Logging,AZ-STG-LOG-OFF,Medium,"Removes the audit trail, covering the 'missing logging' control.",Set misconfig_disable_storage_logging = false and re-apply.
+AZ-T07,Azure,misconfig_keyvault_public_access,Encryption,AZ-KV-PUBLIC,High,Key material reachable from any network.,Set misconfig_keyvault_public_access = false and re-apply.
+AZ-T08,Azure,(no toggle) managed identity absent,Identity,AZ-IAM-MI-MISSING,Low,Baseline gap retained deliberately to test absence-of-control detection.,Assign a system-assigned managed identity to the VM.
+AZ-T09,Azure,(no toggle) activity-log alert absent,Monitoring,AZ-MON-ACTLOG-ALERT,Low,Baseline gap retained to test detection of missing monitoring.,Create an activity-log alert for NSG and firewall changes.
+AZ-T10,Azure,(manual) SQL TDE verification,Encryption,AZ-SQL-TDE,Medium,TDE is on by default; retained to show MANUAL-status handling.,Confirm TDE enabled on the SQL database.
+AWS-T01,AWS,misconfig_s3_public_read,Storage,AWS-S3-PUBLIC,Critical,"Public object storage, the AWS twin of the Azure container toggle.",Enable S3 Block Public Access at account and bucket level.
+AWS-T02,AWS,misconfig_sg_ssh_open,Networking,AWS-EC2-SSH-OPEN,Critical,Security group open on 22 to the world.,Restrict the inbound rule to a known CIDR.
+AWS-T03,AWS,misconfig_iam_admin_policy,Identity,AWS-IAM-ADMIN,High,"Over-privileged IAM user, the 'over-privileged role' control.",Detach AdministratorAccess and attach a scoped policy.
+AWS-T04,AWS,misconfig_rds_unencrypted,Encryption,AWS-RDS-UNENCRYPTED,High,Unencrypted database storage at rest.,Recreate from an encrypted snapshot with KMS.
+AWS-T05,AWS,misconfig_disable_cloudtrail,Logging,AWS-CLOUDTRAIL-OFF,Medium,Removes multi-region audit logging.,Create a multi-region trail with log-file validation.
+AWS-T06,AWS,(no toggle) root access keys,Identity,AWS-ROOT-KEYS,Critical,Baseline gap retained; long-lived root credentials.,Delete root access keys and enforce MFA.

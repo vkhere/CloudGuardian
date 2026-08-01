@@ -1,0 +1,12 @@
+path_id,path_name,cloud,severity,step_order,node_label,node_type,finding_id,note
+AP-01,Internet to database exfiltration,Azure,Critical,1,Internet,entry,AZ-NET-SSH-OPEN,"SSH is reachable from any address, so the attacker can attempt credential attacks against the web VM."
+AP-01,Internet to database exfiltration,Azure,Critical,2,Web VM,pivot,AZ-VM-PWD-AUTH,"Password authentication is enabled, so a successful guess yields an interactive session."
+AP-01,Internet to database exfiltration,Azure,Critical,3,SQL database,target,AZ-SQL-FW-ALLOWALL,"The SQL firewall permits every address, so the compromised host can connect and read data."
+AP-02,Anonymous data harvesting,Azure,Critical,1,Internet,entry,AZ-STG-PUBNET,The storage account accepts traffic from any network.
+AP-02,Anonymous data harvesting,Azure,Critical,2,Blob container,target,AZ-STG-PUBLIC-CONTAINER,"Anonymous read is permitted, so objects can be downloaded without credentials."
+AP-02,Anonymous data harvesting,Azure,Critical,3,Undetected exfiltration,target,AZ-STG-LOG-OFF,"Diagnostic logging is disabled, so the download leaves no audit record."
+AP-03,Credential theft to privilege escalation,AWS,Critical,1,Internet,entry,AWS-EC2-SSH-OPEN,The security group exposes SSH to the world.
+AP-03,Credential theft to privilege escalation,AWS,Critical,2,IAM user,pivot,AWS-IAM-ADMIN,"A reachable IAM user holds AdministratorAccess, granting full control if compromised."
+AP-03,Credential theft to privilege escalation,AWS,Critical,3,Account takeover,target,AWS-ROOT-KEYS,Active root access keys allow persistence that survives remediation of the IAM user.
+AP-04,Secret disclosure,Azure,High,1,Internet,entry,AZ-KV-PUBLIC,"Key Vault has no network restriction, so the endpoint is reachable."
+AP-04,Secret disclosure,Azure,High,2,Stored secrets,target,AZ-IAM-MI-MISSING,"Without managed identity, applications hold static credentials that are worth stealing."

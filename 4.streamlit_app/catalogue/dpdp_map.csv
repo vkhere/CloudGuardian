@@ -1,0 +1,10 @@
+iso_27001,dpdp_section,dpdp_obligation
+A.8.3 Access restriction,S.8(5),Reasonable security safeguards to prevent personal data breach
+A.8.20 Network security,S.8(5),Reasonable security safeguards to prevent personal data breach
+A.8.24 Cryptography,S.8(5),Protection of personal data at rest and in transit
+A.8.15 Logging,S.8(6),Ability to detect and report a personal data breach to the Board and affected principals
+A.8.16 Monitoring,S.8(6),Detection of breach events supporting the notification obligation
+A.8.5 Secure authentication,S.8(5),Access control safeguards over systems processing personal data
+A.5.15 Access control,S.8(5),Least-privilege access to personal data
+A.5.16 Identity management,S.8(5),Accountable identity for every principal accessing personal data
+A.5.17 Authentication info,S.8(5),Protection of credentials used to access personal data
