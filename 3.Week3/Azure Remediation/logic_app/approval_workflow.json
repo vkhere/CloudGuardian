@@ -1,0 +1,12 @@
+{
+  "_superseded": true,
+  "_read_this_first": "This file is NOT deployed by the current Terraform (terraform/logic_app.tf). It was the raw Logic App workflow definition for an earlier design that used the Office 365 Outlook connector's 'Send approval email' action, deployed via the azapi provider. That design required a Microsoft 365 / Exchange Online mailbox and a manual one-time OAuth authorization click - unworkable for a lab environment without an M365 tenant.",
+  "_current_design": "The Logic App is now pure native-azurerm HCL (see terraform/logic_app.tf): a Request trigger plus one HTTP action that forwards the finding to the Function App's /api/request-approval endpoint. The Function App (functions/function_app.py + functions/shared/notifications.py) builds the approval email itself and sends it via Azure Communication Services Email, authenticated with its own Managed Identity - no mailbox, no OAuth, no connection string.",
+  "_why_kept_in_the_repo": "Files already written to this project's output folder can't be deleted from this environment, so this file remains as a documented artifact of the design's evolution rather than being silently replaced. Feel free to delete it yourself once you've copied this project to your own machine/GitHub repo - it has no functional role.",
+  "_see_also": [
+    "terraform/logic_app.tf",
+    "terraform/acs_email.tf",
+    "functions/function_app.py (request_approval, approval_decision)",
+    "functions/shared/notifications.py"
+  ]
+}

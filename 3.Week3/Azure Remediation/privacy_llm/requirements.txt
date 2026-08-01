@@ -1,0 +1,9 @@
+# CloudGuardian Week 3 - Privacy-preserving LLM pipeline
+azure-identity==1.17.1
+azure-keyvault-secrets==4.8.0
+cryptography==43.0.1
+
+# Pick ONE LLM SDK depending on which provider you wire up in
+# llm_client.py - both are listed so either path works out of the box.
+openai==1.51.0          # if you route through Azure OpenAI
+anthropic==0.34.2        # if you call the Claude API directly

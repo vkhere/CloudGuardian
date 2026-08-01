@@ -1,0 +1,20 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "LOG_ANALYTICS_WORKSPACE_ID": "<from Week 1 terraform output>",
+    "TARGET_SUBSCRIPTION_ID": "<az account show --query id -o tsv>",
+    "TARGET_RESOURCE_GROUP": "rg-cloudguardian-lab",
+    "TARGET_STORAGE_ACCOUNT_NAME": "stcloudguardianxxxxx",
+    "TARGET_SQL_SERVER_NAME": "sql-cloudguardian-lab-xxxxx",
+    "TARGET_SQL_DATABASE_NAME": "sqldb-cloudguardian-lab",
+    "TARGET_KEY_VAULT_NAME": "kv-cloudguardian-xxxxx",
+    "DRY_RUN_DEFAULT": "true",
+    "ACS_ENDPOINT": "<terraform output acs endpoint, e.g. https://acs-cloudguardian-lab.communication.azure.com>",
+    "ACS_SENDER_ADDRESS": "<terraform output acs_sender_address>",
+    "APPROVER_EMAIL": "you@yourdomain.com",
+    "CALLBACK_SHARED_SECRET": "<any random string for local testing - terraform generates the real one>"
+  }
+}

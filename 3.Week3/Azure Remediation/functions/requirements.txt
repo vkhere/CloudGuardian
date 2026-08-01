@@ -1,0 +1,29 @@
+# CloudGuardian Week 3 - Remediation Function App
+# Pin versions deliberately - a capstone reviewer should be able
+# to `pip install -r requirements.txt` a year from now and get
+# the exact same behavior you tested.
+
+azure-functions==1.21.0
+
+# Authentication - works locally via `az login` (DefaultAzureCredential
+# falls back to Azure CLI credential) and in Azure via the Function
+# App's System-Assigned Managed Identity, with no code branching needed.
+azure-identity==1.17.1
+
+# Management-plane SDKs - one per Azure service this engine touches.
+azure-mgmt-storage==21.2.1
+azure-mgmt-sql==3.0.1
+azure-mgmt-keyvault==10.3.1
+azure-mgmt-monitor==6.0.2
+azure-mgmt-resource==23.1.1
+
+# Data-plane, used only if you extend remediation to individual
+# blob containers rather than the account-level setting.
+azure-storage-blob==12.20.0
+
+# Sends the approval-request and confirmation emails via Azure
+# Communication Services, authenticated with the same Managed
+# Identity as everything else (see shared/notifications.py) -
+# no Office 365 mailbox, no connection string.
+azure-communication-email==1.0.0
+
