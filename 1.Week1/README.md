@@ -190,6 +190,14 @@ steampipe query "SELECT name, enable_https_traffic_only FROM azure_storage_accou
 | ScoutSuite | 1031 | 43 flagged | 52 flagged | +9 | **7/16 (44%)** |
 | Steampipe | 16 targeted | 0/16 | 14/16 | +14 | **14/16 (88%)** |
 
+```mermaid
+%%{init: {"theme": "base", "themeVariables": { "pie1": "#D32F2F", "pie2": "#F57C00", "pie3": "#1976D2", "pieTitleTextSize": "20px", "pieLegendTextSize": "14px" } } }%%
+pie title Azure Misconfigs Detected by Tool
+    "Prowler" : 8
+    "ScoutSuite" : 7
+    "Steampipe" : 14
+```
+
 **Prowler Misconfig Scan (Azure) - Severity Breakdown:**
 
 | Service | FAIL Count | Critical | High | Medium | Low |
