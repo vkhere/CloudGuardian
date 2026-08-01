@@ -179,6 +179,7 @@ python cspm/run_scout.py azure --cli \
 ```bash
 steampipe query "SELECT name, enable_https_traffic_only FROM azure_storage_account;"
 ```
+![Steampipe Action](./1.%20AWS/2.misconfig/5.snapshots/7.steampipe/mo-m1.JPG)
 
 ---
 
