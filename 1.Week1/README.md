@@ -173,6 +173,7 @@ conda activate scout_env
 python cspm/run_scout.py azure --cli \
   --report-dir scoutsuite-report/insecure
 ```
+![ScoutSuite Dashboard](./2.Azure/2.Misconfig/3.Scoutsuite/images/Scout_Suite_Summary_page_Dashboard.PNG)
 
 **Steampipe:**
 ```bash
