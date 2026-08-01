@@ -165,6 +165,7 @@ prowler azure --az-cli-auth \
 prowler aws --profile default \
   --output-directory prowler-report/aws-insecure
 ```
+![Prowler in Action](./2.Azure/2.Misconfig/2.Prowler/Prowler_in_action.PNG)
 
 **ScoutSuite:**
 ```bash
