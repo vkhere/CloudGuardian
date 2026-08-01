@@ -139,6 +139,7 @@ Week 1 Scan Outputs
 | P3 - LOW | ~1,333 | 87.5% |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": { "pie1": "#D32F2F", "pie2": "#F57C00", "pie3": "#FBC02D", "pie4": "#388E3C", "pieTitleTextSize": "20px", "pieLegendTextSize": "14px" } } }%%
 pie title Priority Band Distribution
     "P0 - CRITICAL" : 2
     "P1 - HIGH" : 58
@@ -154,6 +155,7 @@ pie title Priority Band Distribution
 | Azure | ~1,025 (67%) |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": { "pie1": "#FF9900", "pie2": "#007FFF", "pieTitleTextSize": "20px", "pieLegendTextSize": "14px" } } }%%
 pie title Cloud Provider Split
     "AWS" : 497
     "Azure" : 1025
