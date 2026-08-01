@@ -718,8 +718,8 @@ Expected output:
 | # | Member | Role |
 |---|--------|------|
 | 1 | **Megha Sharma** | Web Application Co-Lead — CSPM pipeline, ML prioritization, RAG remediation, Streamlit app, Week 3 auto-remediation |
-| 2 | **Vinay Kumar** | Web Application Security Lead | Azure Security Architect
-| 3 | **Kedar Pavaskar** | Azure Cloud Security Architect, Threat Modelling Lead; Documentation Lead, Observability and Streamlit Dashboarding Lead |
+| 2 | **Vinay Kumar** | Web Application Security Lead | Azure Security Architect | Test Evidence & Validation Lead | Project Manager  
+| 3 | **Kedar Pavaskar** | Azure Cloud Security Architect | Threat Modelling Lead |Security Testing & Remediation Verification Lead| Observability and Streamlit Dashboarding Lead | Report Authoring & Executive Presentation Lead   
 
 ---
 
