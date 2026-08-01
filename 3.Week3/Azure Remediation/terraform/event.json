@@ -1,0 +1,1 @@
+[{"id":"t1","eventType":"CloudGuardian.Finding.Detected","subject":"test","eventTime":"2026-07-11T00:00:00Z","dataVersion":"1.0","data":{"finding_id":"t1","control_id":"tagging","remediation_type":"tagging","severity":"Critical","resource_id":"/subscriptions/524e42fc-65bd-4b6c-b65d-da2abce9b1d9/resourceGroups/rg-cloudguardian-lab"}}]
