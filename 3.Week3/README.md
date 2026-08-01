@@ -665,13 +665,6 @@ The screenshots below are from a real run against `rg-cloudguardian-lab`, findin
 <tr>
 <td width="50%">
 
-**Repository layout**
-
-<img src="assets/azure-week3-folder-structure.png" alt="Week 3 folder structure" width="100%">
-
-</td>
-<td width="50%">
-
 **Approval email — tagging (Finding `t1`)**
 
 <img src="assets/azure-approval-email-tagging.png" alt="Approval email for tagging finding" width="100%">
