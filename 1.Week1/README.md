@@ -146,9 +146,10 @@ Three tools are used in combination to maximise detection coverage. Each has com
 | **Approach** | CIS Benchmark checks | Rule-engine config audit | SQL-based targeted queries |
 | **Output** | CSV + HTML + OCSF JSON | Interactive HTML dashboard | CSV tables |
 | **Azure detection rate** | 8/16 (50%) | 7/16 (44%) | 14/16 (88%) |
+| **AWS detection rate** | 11/12 (91%) | 8/12 (66%) | 12/12 (100%) |
 | **Strengths** | Compliance breadth (50+ frameworks) | Visual drill-down, network/storage rules | Precise, targeted verification |
 | **Blind spots** | Context-dependent IAM | IAM privilege analysis, logging granularity | Requires custom query per check |
-| **Combined** | **-** | **-** | **~15/16 (93%+) combined** |
+| **Combined** | **-** | **-** | **~15/16 (93%+) Azure, 12/12 (100%) AWS** |
 
 ### Running the Scans
 
