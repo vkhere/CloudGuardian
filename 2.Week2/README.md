@@ -198,9 +198,11 @@ Where:
 
 ### `learning_curve.png`
 Learning curve for the baseline Random Forest model. Shows training score vs cross-validation score as training set size increases. Gap of 0.042 indicates a well-fitted model with no significant overfitting.
+![Learning Curve Baseline](./learning_curve.png)
 
 ### `learning_curve_smote.png`
 Learning curve for the SMOTE-balanced model. Gap narrows to 0.019, confirming improved generalization for minority classes (HIGH/CRITICAL findings).
+![Learning Curve SMOTE](./learning_curve_smote.png)
 
 ### `ml_model_dashboard_multicloud.png`
 6-panel dashboard (baseline model):
@@ -211,8 +213,11 @@ Learning curve for the SMOTE-balanced model. Gap narrows to 0.019, confirming im
 - **Panel 5:** Risk Label Distribution - class imbalance visualization
 - **Panel 6:** AI Confidence Distribution - histogram of model confidence scores
 
+![ML Model Dashboard Baseline](./ml_model_dashboard_multicloud.png)
+
 ### `ml_model_dashboard_smote_multicloud.png`
 Same 6-panel layout for the SMOTE model. Notable improvements visible in confusion matrix (fewer HIGH misclassifications) and CV stability.
+![ML Model Dashboard SMOTE](./ml_model_dashboard_smote_multicloud.png)
 
 ### `before_after_smote_comparison.png`
 4-panel direct comparison:
@@ -220,6 +225,8 @@ Same 6-panel layout for the SMOTE model. Notable improvements visible in confusi
 - HIGH-Risk Precision (before vs after)
 - HIGH-Risk Recall (before vs after)
 - Confusion Matrix side-by-side (Baseline | SMOTE)
+
+![SMOTE Before/After Comparison](./before_after_smote_comparison.png)
 
 ### `week2_dashboard.png`
 Full Streamlit dashboard screenshot showing:
@@ -229,6 +236,8 @@ Full Streamlit dashboard screenshot showing:
 - Top 10 most-affected services bar chart
 - CSPM Tool breakdown
 - Priority Band by Cloud Provider grouped bar
+
+![Week 2 Dashboard](./week2_dashboard.png)
 
 ---
 
