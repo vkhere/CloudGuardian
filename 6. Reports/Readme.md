@@ -6,10 +6,6 @@
 
 ![Frameworks](https://img.shields.io/badge/Frameworks-ISO%2027001%20%C2%B7%20HIPAA%20%C2%B7%20CIS%20v8%20%C2%B7%20DPDP%202023-1E2761?style=flat-square) ![Cloud](https://img.shields.io/badge/Cloud-AWS%20%7C%20Azure-232F3E?style=flat-square) ![Findings](https://img.shields.io/badge/Findings-729%20Consolidated-B85042?style=flat-square) ![Status](https://img.shields.io/badge/Status-Final%20v1.0-2C5F2D?style=flat-square)
 
-> **Confidential — Academic / Portfolio Use** · Project Code CAP-CSE-3W
-> PG Certificate in AI/GenAI-Powered Cybersecurity — IIT Roorkee × Futurense (Cohort 2025–26)
-> **Team:** Kedar Pavaskar (Threat Modelling Lead) · Megha Sharma (Web Application Co-Lead) · Vinay Kumar (Azure Cloud Security Architect)
-> Source repository: `github.com/vkhere/CloudGuardian` (MIT License) · Report issued 31 July 2026
 
 ---
 
