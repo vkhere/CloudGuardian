@@ -96,8 +96,8 @@ A health-tech scale-up keeps failing ISO 27001 / HIPAA audits due to recurring c
 | # | Member | Role |
 |---|--------|------|
 | 1 | **Megha Sharma** | Web Application Co-Lead — CSPM pipeline, ML prioritization, RAG remediation, Streamlit app, Week 3 auto-remediation |
-| 2 | **Vinay Kumar** | Web Application Security Lead |
-| 3 | **Kedar Pavaskar** | Threat Modelling Lead |
+| 2 | **Vinay Kumar** | Web Application Security Lead | Azure Security Architect
+| 3 | **Kedar Pavaskar** |Azure Cloud Security Architect, Threat Modelling Lead; Documentation Lead, Observability and Streamlit Dashboarding Lead
 
 ---
 
