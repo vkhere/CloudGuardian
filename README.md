@@ -43,6 +43,7 @@
 
 - [🎯 Project Overview](#-project-overview)
 - [🧭 Project Objectives](#-project-objectives)
+- [🔬 Methodology](#-methodology)
 - [🏗️ Architecture](#️-architecture)
   - [Overall Architecture](#overall-architecture)
   - [Azure Architecture](#azure-architecture)
@@ -133,6 +134,65 @@ CSPM platforms shift security from **periodic, manual review** to **continuous, 
 | 🔧 | **Automate Remediation** | Semi-automatic (human-invoked) and fully automated (human-approval-gated) tracks |
 | 📊 | **Generate Reports** | Consolidated findings, dashboards, and executive-ready outputs |
 | 📜 | **Govern Compliance** | Live crosswalk across ISO 27001, HIPAA, CIS, PCI-DSS, DPDP |
+
+---
+
+## 🔬 Methodology
+
+### 3.1 Overall Approach
+
+CloudGuardian followed a phased **build-detect-remediate** methodology executed across three weeks: **Week 1 (Build and Break)**, **Week 2 (Detect and Prioritize)**, and **Week 3 (Remediate and Govern)**, aligned to the CAP-CSE-3W program brief. Each phase produced a concrete, independently verifiable artifact before the next phase began.
+
+### 3.2 Research Methodology
+
+A design-science approach was followed throughout: the CSPM pipeline itself is the research artifact, evaluated against explicit, falsifiable success criteria (detection coverage against a known-injected misconfiguration catalogue, ML model performance against a held-out test set with cross-validation, RAG output correctness against independent grounding checks) rather than subjective judgment alone.
+
+### 3.3 Threat Modeling
+
+The twelve-item misconfiguration catalogue (Section 5.4) was derived from real-world breach patterns - the Terraform code comments explicitly reference incidents such as the **Capital One** and **Twitch S3 exposure** cases as justification for the M04/M05 storage misconfigurations - rather than being contrived for convenience. Each misconfiguration is documented with an explicit before/after Terraform diff and a stated real-world exploitation scenario.
+
+```mermaid
+flowchart LR
+    S1["STEP 1<br/>Asset Inventory<br/><sub>Catalogue AWS + Azure<br/>3-tier workload assets:<br/>network, compute, DB, storage</sub>"]
+    S2["STEP 2<br/>Real-World Breach-Pattern Mapping<br/><sub>e.g. Capital One, Twitch<br/>S3 exposure incidents</sub>"]
+    S3["STEP 3<br/>M01-M12 Catalogue<br/><sub>12 misconfigurations:<br/>IAM, storage, encryption, logging</sub>"]
+    S4["STEP 4<br/>Terraform Diff Authoring<br/><sub>Before/after .tf resource<br/>blocks + inline per-finding comments</sub>"]
+    S5["STEP 5<br/>Controlled Injection<br/><sub>terraform apply against<br/>AWS/Azure baseline<br/>ready for detection</sub>"]
+
+    S1 --> S2 --> S3 --> S4 --> S5
+    S5 -.-> FEED["Feeds Section 5.5 Detection<br/>Prowler / ScoutSuite / Steampipe"]
+    FEED -.-> S1
+```
+
+*Figure 1: Threat Modelling and Misconfiguration Injection Workflow*
+
+### 3.4 Implementation Methodology
+
+*Table 8: Phase-wise methodology summary*
+
+| Phase | Primary Activities | Verified Deliverable |
+|---|---|---|
+| **Week 1 - Build and Break** | Terraform provisioning (AWS: 19 baseline / 21 misconfig resources; Azure: 24 resources); Prowler/ScoutSuite/Steampipe baseline scans; controlled injection of M01-M12 | Terraform code, baseline + misconfig scan exports, misconfiguration catalogue |
+| **Week 2 - Detect and Prioritize** | Multi-tool consolidation into 729-finding schema; rule-based Priority Score; RandomForest + SMOTE classification with ablation study; OWASP LLM06 redaction; RAG remediation guidance with dual verification | `consolidated_findings.csv/json`, ML dashboards, `llm_remediation_guidance.csv`, `rag_retrieval_audit.csv`, redaction proof |
+| **Week 3 - Remediate and Govern** | 3 Lambda remediation functions (dry-run + live), Prowler before/after re-scan, Step Functions human-approval pipeline, compliance crosswalk across 4 frameworks | Remediation code + CloudWatch/Prowler evidence, `crosswalk.csv` (729 rows), SOP documentation |
+
+### 3.5 Testing and Validation Strategy
+
+Validation operated at three levels, each with concrete artifacts in the repository:
+
+1. **Infrastructure validation** - Terraform plan/apply outputs and resource inventories confirm the intended topology was provisioned on both clouds.
+2. **Detection validation** - each of the 12 injected misconfigurations is traceable to at least one scanner finding, with ScoutSuite before/after "flagged" counts and a dedicated Prowler delta-findings export showing new FAILs introduced by the injection.
+3. **Remediation validation** - a live Prowler before/after re-scan (Section 6, Table 15) and CloudWatch structured logs confirm remediation functions achieved their intended effect.
+
+### 3.6 Success Criteria and Honest Evaluation
+
+| Dimension | Success Criterion | Result |
+|---|---|---|
+| **Detection** | All 12 injected misconfigurations traceable to scanner evidence | ✅ Achieved (Section 5.5, Section 6) |
+| **Prioritization** | ML model must outperform a naive rule-only baseline in a way attributable to genuine learned signal, not to copying the severity feature | ✅ Achieved - an ablation run that removed the severity feature still reached 95% accuracy with materially different precision/recall trade-offs, evidencing real model contribution (Section 5.12) |
+| **LLM Guidance** | Must be independently verifiable against source documents rather than accepted on trust | ✅ Achieved via the dual-verification gate - 93% automatic pass rate, with explicit escalation of the remainder (Section 5.13) |
+| **Remediation** | Must be demonstrably safe (dry-run first, non-destructive by design, reversible) before any live execution | ✅ Achieved - the RDS-encryption case was explicitly excluded from auto-remediation because it is not reversible without downtime (Section 5.10) |
+| **Compliance** | 100% of findings mapped to at least one framework control | ✅ Achieved (Section 7) |
 
 ---
 
